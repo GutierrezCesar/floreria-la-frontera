@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Florería La Frontera | Detalles Inolvidables</title>
 <meta name="description" content="Florería La Frontera - Ramos de autor, tulipanes y arreglos florales con entrega rápida. Detalles Inolvidables.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%F0%9F%8C%B7</text></svg>">
 
 <!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -110,6 +111,35 @@
   }
 
   input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.4) sepia(1) saturate(4) hue-rotate(300deg); cursor: pointer; }
+
+  /* Animated hero tulip: draws in petal by petal, then sways gently */
+  .tulip-part {
+    opacity: 0;
+    transform: scale(0.4);
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    animation: tulipBloom 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, tulipSway 4.5s ease-in-out 1.6s infinite;
+  }
+  .tulip-stem {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: tulipDraw 0.9s ease-out 0.1s forwards;
+  }
+  @keyframes tulipBloom {
+    0% { opacity: 0; transform: scale(0.4); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  @keyframes tulipDraw {
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes tulipSway {
+    0%, 100% { rotate: 0deg; }
+    50% { rotate: 1.5deg; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tulip-part { opacity: 1; transform: scale(1); animation: none; }
+    .tulip-stem { stroke-dashoffset: 0; animation: none; }
+  }
 
   /* Social icon brand hovers */
   .social-icon { transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
@@ -240,6 +270,20 @@
   <div class="absolute -top-24 -left-24 w-72 h-72 bg-blossom-light/40 rounded-full blur-3xl"></div>
   <div class="absolute -bottom-16 -right-16 w-80 h-80 bg-cream-deep rounded-full blur-3xl"></div>
 
+  <!-- Decorative tulip pattern background -->
+  <div class="absolute inset-0 opacity-[0.06] pointer-events-none" aria-hidden="true">
+    <svg width="100%" height="100%">
+      <defs>
+        <pattern id="tulipPattern" x="0" y="0" width="84" height="104" patternUnits="userSpaceOnUse" patternTransform="rotate(6)">
+          <path d="M42,18 C33,20 28,36 31,50 C33,61 39,68 42,69 C45,68 51,61 53,50 C56,36 51,20 42,18 Z" fill="none" stroke="#3a5a40" stroke-width="1.6"/>
+          <path d="M42,69 L42,92" fill="none" stroke="#3a5a40" stroke-width="1.6"/>
+          <path d="M42,80 C34,78 28,82 24,90" fill="none" stroke="#3a5a40" stroke-width="1.4"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#tulipPattern)"/>
+    </svg>
+  </div>
+
   <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
     <!-- Text -->
     <div class="text-center lg:text-left animate-fade-in-up">
@@ -276,9 +320,18 @@
     <div class="relative flex justify-center lg:justify-end animate-fade-in">
       <div class="relative w-full max-w-md">
         <div class="absolute inset-0 bg-blossom-light rounded-[2.5rem] rotate-3 scale-95"></div>
-        <img src="images/ramo-rosas-blancas-libro.jpg"
-             alt="Ramo de rosas y alstroemerias con libro de regalo, Florería La Frontera"
-             class="relative rounded-[2.5rem] w-full h-[420px] sm:h-[480px] object-cover shadow-2xl">
+        <div class="relative rounded-[2.5rem] w-full h-[420px] sm:h-[480px] shadow-2xl bg-gradient-to-br from-cream-deep via-cream to-blossom-light/50 flex items-center justify-center overflow-hidden"
+             role="img" aria-label="Ilustración animada de un tulipán rosado, Florería La Frontera">
+          <div class="absolute w-64 h-64 sm:w-80 sm:h-80 bg-blossom-light/40 rounded-full blur-2xl"></div>
+          <svg viewBox="0 0 240 340" class="relative w-48 sm:w-64 h-auto drop-shadow-xl">
+            <path class="tulip-part tulip-leaf" style="animation-delay:.75s" d="M118,255 C85,250 55,268 35,300 C68,308 100,292 118,272 Z" fill="#3a5a40"/>
+            <path class="tulip-part tulip-leaf" style="animation-delay:.9s" d="M122,275 C155,268 185,282 205,308 C173,318 140,304 122,285 Z" fill="#4d7355"/>
+            <path class="tulip-stem" pathLength="1" d="M120,206 C118,240 124,270 120,320" fill="none" stroke="#3a5a40" stroke-width="6" stroke-linecap="round"/>
+            <path class="tulip-part tulip-petal" style="animation-delay:.15s" d="M120,90 C88,95 75,135 82,172 C86,193 102,204 120,206 C119,167 118,128 120,90 Z" fill="#f06292"/>
+            <path class="tulip-part tulip-petal" style="animation-delay:.3s" d="M120,90 C152,95 165,135 158,172 C154,193 138,204 120,206 C121,167 122,128 120,90 Z" fill="#f06292"/>
+            <path class="tulip-part tulip-petal" style="animation-delay:.45s" d="M120,58 C98,64 90,110 93,152 C95,182 106,200 120,207 C134,200 145,182 147,152 C150,110 142,64 120,58 Z" fill="#f8bbd0"/>
+          </svg>
+        </div>
 
         <!-- Floating badge: Freshness guarantee -->
         <div class="absolute -bottom-6 -left-6 sm:-left-10 bg-white rounded-2xl shadow-xl px-5 py-4 flex items-center gap-3 animate-float">
