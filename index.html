@@ -87,6 +87,11 @@
   #checkoutModal { transition: opacity 0.3s ease; }
   #checkoutModal .modal-panel { transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease; }
 
+  /* Lightbox transition */
+  #imageLightbox { transition: opacity 0.3s ease; }
+  #imageLightbox .lightbox-panel { transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease; }
+  .product-image-btn { cursor: zoom-in; }
+
   /* Filter pill active state handled via JS toggling classes */
   .filter-pill { transition: all 0.25s ease; }
 
@@ -271,8 +276,8 @@
     <div class="relative flex justify-center lg:justify-end animate-fade-in">
       <div class="relative w-full max-w-md">
         <div class="absolute inset-0 bg-blossom-light rounded-[2.5rem] rotate-3 scale-95"></div>
-        <img src="https://images.unsplash.com/photo-1520763185298-1b434c919102?q=80&w=1000&auto=format&fit=crop"
-             alt="Ramo elegante de tulipanes rosados, Florería La Frontera"
+        <img src="images/ramo-rosas-blancas-libro.jpg"
+             alt="Ramo de rosas y alstroemerias con libro de regalo, Florería La Frontera"
              class="relative rounded-[2.5rem] w-full h-[420px] sm:h-[480px] object-cover shadow-2xl">
 
         <!-- Floating badge: Freshness guarantee -->
@@ -427,6 +432,21 @@
     </div>
   </div>
 </footer>
+
+<!-- ================= IMAGE LIGHTBOX ================= -->
+<div id="imageLightbox" class="fixed inset-0 z-[70] hidden">
+  <div id="lightboxOverlay" class="absolute inset-0 bg-ink/90 backdrop-blur-sm"></div>
+  <button id="closeLightboxBtn" aria-label="Cerrar imagen"
+          class="absolute top-4 right-4 sm:top-6 sm:right-6 z-10 text-white/80 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-2.5 transition-colors">
+    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+  </button>
+  <div class="relative h-full flex items-center justify-center p-4 sm:p-10">
+    <figure class="lightbox-panel opacity-0 scale-95 max-w-3xl w-full">
+      <img id="lightboxImg" src="" alt="" class="w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl">
+      <figcaption id="lightboxCaption" class="text-center text-cream/90 font-medium mt-4 text-sm sm:text-base"></figcaption>
+    </figure>
+  </div>
+</div>
 
 <!-- ================= FLOATING WHATSAPP BUTTON ================= -->
 <a href="https://wa.me/message/2OMDBGCGOVGSI1?text=Hola%20Florer%C3%ADa%20La%20Frontera%2C%20quisiera%20informaci%C3%B3n%20sobre%20un%20arreglo%20floral"
@@ -629,10 +649,15 @@
       card.style.animationDelay = (i * 0.05) + "s";
 
       card.innerHTML = `
-        <div class="relative h-56 overflow-hidden">
+        <button type="button" data-product-id="${p.id}" class="product-image-btn group relative h-56 w-full overflow-hidden" aria-label="Ver imagen ampliada de ${p.name}">
           <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover" loading="lazy">
           ${p.tag ? `<span class="absolute top-3 left-3 bg-blossom-dark text-white text-xs font-bold px-3 py-1.5 rounded-full shadow">${p.tag}</span>` : ""}
-        </div>
+          <span class="absolute inset-0 bg-ink/0 group-hover:bg-ink/20 transition-colors flex items-center justify-center">
+            <span class="opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 rounded-full p-2.5">
+              <svg class="w-5 h-5 text-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M11 8v6M8 11h6"/></svg>
+            </span>
+          </span>
+        </button>
         <div class="p-5 flex flex-col flex-1">
           <h3 class="font-serif text-lg font-bold text-ink mb-1">${p.name}</h3>
           <p class="text-sm text-ink/60 mb-4 flex-1">${p.description}</p>
@@ -649,6 +674,9 @@
 
     document.querySelectorAll(".personalize-btn").forEach((btn) => {
       btn.addEventListener("click", () => openModal(Number(btn.dataset.productId)));
+    });
+    document.querySelectorAll(".product-image-btn").forEach((btn) => {
+      btn.addEventListener("click", () => openLightbox(Number(btn.dataset.productId)));
     });
   }
 
@@ -768,6 +796,45 @@
   modalOverlay.addEventListener("click", closeModal);
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !checkoutModal.classList.contains("hidden")) closeModal();
+  });
+
+  /* ---------------- Image Lightbox ---------------- */
+  const imageLightbox = document.getElementById("imageLightbox");
+  const lightboxPanel = imageLightbox.querySelector(".lightbox-panel");
+  const lightboxOverlay = document.getElementById("lightboxOverlay");
+  const lightboxImg = document.getElementById("lightboxImg");
+  const lightboxCaption = document.getElementById("lightboxCaption");
+  const closeLightboxBtn = document.getElementById("closeLightboxBtn");
+
+  function openLightbox(productId) {
+    const product = products.find((p) => p.id === productId);
+    if (!product) return;
+
+    lightboxImg.src = product.img;
+    lightboxImg.alt = product.name;
+    lightboxCaption.textContent = `${product.name} — ${product.description}`;
+
+    imageLightbox.classList.remove("hidden");
+    document.body.classList.add("overflow-hidden");
+    requestAnimationFrame(() => {
+      lightboxPanel.classList.remove("opacity-0", "scale-95");
+    });
+  }
+
+  function closeLightbox() {
+    lightboxPanel.classList.add("opacity-0", "scale-95");
+    setTimeout(() => {
+      imageLightbox.classList.add("hidden");
+      if (checkoutModal.classList.contains("hidden")) {
+        document.body.classList.remove("overflow-hidden");
+      }
+    }, 300);
+  }
+
+  closeLightboxBtn.addEventListener("click", closeLightbox);
+  lightboxOverlay.addEventListener("click", closeLightbox);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !imageLightbox.classList.contains("hidden")) closeLightbox();
   });
 
   dedicationMsg.addEventListener("input", () => {
