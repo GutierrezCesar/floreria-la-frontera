@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Florería La Frontera | Detalles Inolvidables</title>
+<meta name="description" content="Florería La Frontera - Ramos de autor, tulipanes y arreglos florales con entrega rápida. Detalles Inolvidables.">
+
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          'blossom': {
+            light: '#f8bbd0',
+            DEFAULT: '#f06292',
+            dark: '#e05285',
+          },
+          'cream': {
+            DEFAULT: '#fff0f5',
+            deep: '#fce4ec',
+          },
+          'ink': '#1a1a1a',
+          'botanical': '#3a5a40',
+        },
+        fontFamily: {
+          serif: ['"Playfair Display"', 'serif'],
+          sans: ['Poppins', 'sans-serif'],
+        },
+        animation: {
+          'float': 'float 3.5s ease-in-out infinite',
+          'fade-in': 'fadeIn 0.6s ease-out both',
+          'fade-in-up': 'fadeInUp 0.7s ease-out both',
+        },
+        keyframes: {
+          float: {
+            '0%, 100%': { transform: 'translateY(0)' },
+            '50%': { transform: 'translateY(-10px)' },
+          },
+          fadeIn: {
+            '0%': { opacity: 0 },
+            '100%': { opacity: 1 },
+          },
+          fadeInUp: {
+            '0%': { opacity: 0, transform: 'translateY(24px)' },
+            '100%': { opacity: 1, transform: 'translateY(0)' },
+          },
+        },
+      },
+    },
+  }
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Poppins', sans-serif; background-color: #fff0f5; color: #1a1a1a; }
+  .font-serif { font-family: 'Playfair Display', serif; }
+
+  /* Custom scrollbar for filter row on mobile */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Product card hover lift */
+  .product-card { transition: transform 0.35s ease, box-shadow 0.35s ease; }
+  .product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px -12px rgba(240, 98, 146, 0.28); }
+
+  /* Nav link underline animation */
+  .nav-link { position: relative; }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -4px;
+    width: 0; height: 2px;
+    background: #f06292;
+    transition: width 0.3s ease;
+  }
+  .nav-link:hover::after { width: 100%; }
+
+  /* Modal transition */
+  #checkoutModal { transition: opacity 0.3s ease; }
+  #checkoutModal .modal-panel { transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease; }
+
+  /* Filter pill active state handled via JS toggling classes */
+  .filter-pill { transition: all 0.25s ease; }
+
+  /* WhatsApp pulse */
+  .wa-pulse::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: #25D366;
+    animation: pulseRing 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  @keyframes pulseRing {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(1.9); opacity: 0; }
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.4) sepia(1) saturate(4) hue-rotate(300deg); cursor: pointer; }
+
+  /* Social icon brand hovers */
+  .social-icon { transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .social-icon:hover, .social-icon:focus-visible { transform: translateY(-3px) scale(1.08); }
+  .social-circle { transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; }
+  .social-ig:hover .social-circle, .social-ig:focus-visible .social-circle {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    border-color: transparent;
+    color: #fff;
+  }
+  .social-fb:hover .social-circle, .social-fb:focus-visible .social-circle {
+    background: #1877F2;
+    border-color: #1877F2;
+    color: #fff;
+  }
+  .social-tt:hover .social-circle, .social-tt:focus-visible .social-circle {
+    background: #000;
+    border-color: #000;
+    color: #fff;
+    box-shadow: 3px 3px 0 #25F4EE, -3px -3px 0 #FE2C55;
+  }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- ================= TOP BAR ================= -->
+<div class="bg-ink text-cream text-center text-xs sm:text-sm py-2 px-4 tracking-wide">
+  🌷 Hoy es un buen día para regalar amor. Envíos y atención rápida por WhatsApp.
+</div>
+
+<!-- ================= HEADER ================= -->
+<header id="siteHeader" class="sticky top-0 z-40 bg-cream/90 backdrop-blur-md border-b border-blossom-light/40 transition-all">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      <!-- Logo -->
+      <a href="#inicio" class="flex flex-col leading-none group">
+        <span class="font-serif text-2xl sm:text-3xl font-bold text-ink group-hover:text-blossom-dark transition-colors">Florería <span class="text-blossom-dark">La Frontera</span></span>
+        <span class="text-[10px] sm:text-xs tracking-[0.25em] uppercase text-botanical mt-1">Detalles Inolvidables</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-ink/80">
+        <a href="#inicio" class="nav-link hover:text-blossom-dark transition-colors">Inicio</a>
+        <a href="#catalogo" data-filter-scroll="Cumpleaños" class="nav-link hover:text-blossom-dark transition-colors">Cumpleaños</a>
+        <a href="#catalogo" data-filter-scroll="Aniversarios" class="nav-link hover:text-blossom-dark transition-colors">Aniversarios</a>
+        <a href="#catalogo" data-filter-scroll="Románticos" class="nav-link hover:text-blossom-dark transition-colors">Tulipanes &amp; Ramos</a>
+        <a href="#contacto" class="nav-link hover:text-blossom-dark transition-colors">Contacto</a>
+      </nav>
+
+      <!-- CTA + Mobile toggle -->
+      <div class="flex items-center gap-3">
+        <div class="hidden sm:flex items-center gap-2">
+          <a href="https://www.instagram.com/florerialafrontera" target="_blank" rel="noopener"
+             aria-label="Síguenos en Instagram" class="social-icon social-ig">
+            <span class="social-circle inline-flex items-center justify-center w-10 h-10 rounded-full border-2 border-blossom-light text-ink/70">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-[18px] h-[18px] fill-current"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153a4.908 4.908 0 011.153 1.772c.247.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 01-1.153 1.772 4.915 4.915 0 01-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 01-1.772-1.153 4.904 4.904 0 01-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.066.217-1.79.465-2.428a4.88 4.88 0 011.153-1.772A4.897 4.897 0 015.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2zm0 1.802c-2.67 0-2.986.01-4.04.059-.976.045-1.505.207-1.858.344-.466.181-.8.398-1.15.748-.35.35-.566.683-.747 1.15-.137.352-.3.881-.344 1.857-.05 1.054-.06 1.37-.06 4.04 0 2.67.01 2.986.06 4.04.045.976.207 1.505.344 1.858.181.466.397.8.747 1.15.35.35.684.566 1.15.747.353.137.882.3 1.858.344 1.054.05 1.37.06 4.04.06 2.67 0 2.987-.01 4.04-.06.977-.045 1.506-.207 1.858-.344.466-.181.8-.398 1.15-.748.35-.35.566-.683.747-1.15.137-.352.3-.881.344-1.857.05-1.054.06-1.37.06-4.04 0-2.67-.01-2.986-.06-4.04-.045-.976-.207-1.505-.344-1.858a3.09 3.09 0 00-.747-1.15 3.096 3.096 0 00-1.15-.747c-.352-.137-.881-.3-1.857-.344-1.054-.05-1.37-.06-4.04-.06zm0 4.595a5.603 5.603 0 110 11.206 5.603 5.603 0 010-11.206zm0 1.802a3.801 3.801 0 100 7.602 3.801 3.801 0 000-7.602zm5.723-1.998a1.31 1.31 0 11-2.62 0 1.31 1.31 0 012.62 0z"/></svg>
+            </span>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=61564404956914" target="_blank" rel="noopener"
+             aria-label="Síguenos en Facebook" class="social-icon social-fb">
+            <span class="social-circle inline-flex items-center justify-center w-10 h-10 rounded-full border-2 border-blossom-light text-ink/70">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="w-[18px] h-[18px] fill-current"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/></svg>
+            </span>
+          </a>
+          <a href="https://www.tiktok.com/@florerialafrontera" target="_blank" rel="noopener"
+             aria-label="Síguenos en TikTok" class="social-icon social-tt">
+            <span class="social-circle inline-flex items-center justify-center w-10 h-10 rounded-full border-2 border-blossom-light text-ink/70">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="w-[18px] h-[18px] fill-current"><path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z"/></svg>
+            </span>
+          </a>
+        </div>
+        <a href="https://wa.me/message/2OMDBGCGOVGSI1?text=Hola%20Florer%C3%ADa%20La%20Frontera%2C%20quisiera%20informaci%C3%B3n%20sobre%20un%20arreglo%20floral"
+           target="_blank" rel="noopener"
+           class="hidden sm:inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5a] text-white font-semibold text-sm px-4 py-2.5 rounded-full shadow-md hover:shadow-lg transition-all hover:scale-105">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-5 h-5 fill-white"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.706 4.605 1.92 6.463L4 29l7.72-1.885A11.94 11.94 0 0 0 16 27c6.628 0 12-5.373 12-12S22.629 3 16.001 3zm0 21.75c-1.994 0-3.85-.583-5.41-1.587l-.388-.24-4.59 1.121 1.169-4.475-.253-.401A9.71 9.71 0 0 1 5.25 15c0-5.937 4.813-10.75 10.751-10.75S26.752 9.063 26.752 15 21.939 24.75 16.001 24.75zm5.55-8.079c-.303-.152-1.794-.885-2.072-.986-.278-.101-.48-.152-.682.152-.202.303-.784.986-.961 1.189-.177.202-.354.227-.657.076-.303-.152-1.28-.472-2.438-1.505-.901-.804-1.51-1.797-1.687-2.1-.177-.303-.019-.467.133-.618.137-.136.303-.354.455-.531.152-.177.202-.303.303-.505.101-.202.05-.379-.025-.531-.076-.152-.682-1.646-.934-2.253-.246-.591-.497-.511-.682-.52l-.581-.01c-.202 0-.531.076-.809.379-.278.303-1.061 1.037-1.061 2.529s1.086 2.935 1.238 3.138c.152.202 2.138 3.266 5.181 4.579.724.313 1.288.5 1.729.64.726.231 1.387.198 1.909.12.582-.087 1.794-.734 2.047-1.443.253-.708.253-1.315.177-1.443-.076-.127-.278-.202-.581-.354z"/></svg>
+          WhatsApp
+        </a>
+        <button id="mobileMenuBtn" class="lg:hidden p-2 text-ink" aria-label="Abrir menú">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Nav Panel -->
+  <div id="mobileMenu" class="hidden lg:hidden bg-cream border-t border-blossom-light/40 px-4 pb-5 pt-2">
+    <nav class="flex flex-col gap-1 text-ink/85 font-medium">
+      <a href="#inicio" class="py-3 border-b border-blossom-light/30">Inicio</a>
+      <a href="#catalogo" data-filter-scroll="Cumpleaños" class="py-3 border-b border-blossom-light/30">Cumpleaños</a>
+      <a href="#catalogo" data-filter-scroll="Aniversarios" class="py-3 border-b border-blossom-light/30">Aniversarios</a>
+      <a href="#catalogo" data-filter-scroll="Románticos" class="py-3 border-b border-blossom-light/30">Tulipanes &amp; Ramos</a>
+      <a href="#contacto" class="py-3">Contacto</a>
+      <a href="https://wa.me/message/2OMDBGCGOVGSI1?text=Hola%20Florer%C3%ADa%20La%20Frontera%2C%20quisiera%20informaci%C3%B3n%20sobre%20un%20arreglo%20floral"
+         target="_blank" rel="noopener"
+         class="mt-3 inline-flex items-center justify-center gap-2 bg-[#25D366] text-white font-semibold text-sm px-4 py-3 rounded-full shadow-md">
+        Escribir por WhatsApp
+      </a>
+      <p class="mt-4 mb-2 text-center text-[11px] font-semibold tracking-widest uppercase text-ink/40">Síguenos</p>
+      <div class="flex items-center justify-center gap-3 pb-1">
+        <a href="https://www.instagram.com/florerialafrontera" target="_blank" rel="noopener"
+           aria-label="Síguenos en Instagram" class="social-icon social-ig">
+          <span class="social-circle inline-flex items-center justify-center w-12 h-12 rounded-full border-2 border-blossom-light text-ink/70">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153a4.908 4.908 0 011.153 1.772c.247.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 01-1.153 1.772 4.915 4.915 0 01-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 01-1.772-1.153 4.904 4.904 0 01-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.066.217-1.79.465-2.428a4.88 4.88 0 011.153-1.772A4.897 4.897 0 015.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2zm0 1.802c-2.67 0-2.986.01-4.04.059-.976.045-1.505.207-1.858.344-.466.181-.8.398-1.15.748-.35.35-.566.683-.747 1.15-.137.352-.3.881-.344 1.857-.05 1.054-.06 1.37-.06 4.04 0 2.67.01 2.986.06 4.04.045.976.207 1.505.344 1.858.181.466.397.8.747 1.15.35.35.684.566 1.15.747.353.137.882.3 1.858.344 1.054.05 1.37.06 4.04.06 2.67 0 2.987-.01 4.04-.06.977-.045 1.506-.207 1.858-.344.466-.181.8-.398 1.15-.748.35-.35.566-.683.747-1.15.137-.352.3-.881.344-1.857.05-1.054.06-1.37.06-4.04 0-2.67-.01-2.986-.06-4.04-.045-.976-.207-1.505-.344-1.858a3.09 3.09 0 00-.747-1.15 3.096 3.096 0 00-1.15-.747c-.352-.137-.881-.3-1.857-.344-1.054-.05-1.37-.06-4.04-.06zm0 4.595a5.603 5.603 0 110 11.206 5.603 5.603 0 010-11.206zm0 1.802a3.801 3.801 0 100 7.602 3.801 3.801 0 000-7.602zm5.723-1.998a1.31 1.31 0 11-2.62 0 1.31 1.31 0 012.62 0z"/></svg>
+          </span>
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61564404956914" target="_blank" rel="noopener"
+           aria-label="Síguenos en Facebook" class="social-icon social-fb">
+          <span class="social-circle inline-flex items-center justify-center w-12 h-12 rounded-full border-2 border-blossom-light text-ink/70">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="w-5 h-5 fill-current"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/></svg>
+          </span>
+        </a>
+        <a href="https://www.tiktok.com/@florerialafrontera" target="_blank" rel="noopener"
+           aria-label="Síguenos en TikTok" class="social-icon social-tt">
+          <span class="social-circle inline-flex items-center justify-center w-12 h-12 rounded-full border-2 border-blossom-light text-ink/70">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="w-5 h-5 fill-current"><path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z"/></svg>
+          </span>
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section id="inicio" class="relative overflow-hidden pt-14 pb-20 sm:pt-20 sm:pb-28">
+  <!-- Decorative blobs -->
+  <div class="absolute -top-24 -left-24 w-72 h-72 bg-blossom-light/40 rounded-full blur-3xl"></div>
+  <div class="absolute -bottom-16 -right-16 w-80 h-80 bg-cream-deep rounded-full blur-3xl"></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+    <!-- Text -->
+    <div class="text-center lg:text-left animate-fade-in-up">
+      <span class="inline-block bg-blossom-light/50 text-blossom-dark text-xs font-semibold tracking-wider uppercase px-4 py-1.5 rounded-full mb-5">
+        Ramos de Autor · Entrega el mismo día
+      </span>
+      <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-ink leading-[1.1] mb-6">
+        Crea momentos e historias <span class="text-blossom-dark italic">inolvidables</span> con nuestras flores
+      </h1>
+      <p class="text-base sm:text-lg text-ink/70 max-w-xl mx-auto lg:mx-0 mb-8">
+        Flores frescas seleccionadas a diario y entregadas con cuidado el mismo día. Cada arreglo se arma a mano para que tu detalle diga exactamente lo que sientes.
+      </p>
+
+      <!-- Quick search -->
+      <form id="searchForm" class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto lg:mx-0 mb-6">
+        <div class="relative flex-1">
+          <svg class="w-5 h-5 text-ink/40 absolute left-4 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+          <input id="heroSearchInput" type="text" placeholder="Busca por ocasión o flor: tulipanes, girasoles..."
+                 class="w-full pl-11 pr-4 py-3.5 rounded-full border border-blossom-light bg-white/80 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blossom text-sm placeholder:text-ink/40">
+        </div>
+        <button type="submit" class="bg-blossom-dark hover:bg-ink text-white font-semibold px-6 py-3.5 rounded-full transition-colors shadow-md hover:shadow-lg whitespace-nowrap">
+          Buscar Arreglo
+        </button>
+      </form>
+      <div class="flex flex-wrap gap-2 justify-center lg:justify-start">
+        <button data-quick-search="Tulipanes" class="quick-tag text-xs font-medium bg-white/70 hover:bg-blossom-light text-ink/70 px-3.5 py-1.5 rounded-full border border-blossom-light/60 transition-colors">Tulipanes</button>
+        <button data-quick-search="Rosas" class="quick-tag text-xs font-medium bg-white/70 hover:bg-blossom-light text-ink/70 px-3.5 py-1.5 rounded-full border border-blossom-light/60 transition-colors">Rosas</button>
+        <button data-quick-search="Girasoles" class="quick-tag text-xs font-medium bg-white/70 hover:bg-blossom-light text-ink/70 px-3.5 py-1.5 rounded-full border border-blossom-light/60 transition-colors">Girasoles</button>
+        <button data-quick-search="Cumpleaños" class="quick-tag text-xs font-medium bg-white/70 hover:bg-blossom-light text-ink/70 px-3.5 py-1.5 rounded-full border border-blossom-light/60 transition-colors">Cumpleaños</button>
+      </div>
+    </div>
+
+    <!-- Image -->
+    <div class="relative flex justify-center lg:justify-end animate-fade-in">
+      <div class="relative w-full max-w-md">
+        <div class="absolute inset-0 bg-blossom-light rounded-[2.5rem] rotate-3 scale-95"></div>
+        <img src="https://images.unsplash.com/photo-1520763185298-1b434c919102?q=80&w=1000&auto=format&fit=crop"
+             alt="Ramo elegante de tulipanes rosados, Florería La Frontera"
+             class="relative rounded-[2.5rem] w-full h-[420px] sm:h-[480px] object-cover shadow-2xl">
+
+        <!-- Floating badge: Freshness guarantee -->
+        <div class="absolute -bottom-6 -left-6 sm:-left-10 bg-white rounded-2xl shadow-xl px-5 py-4 flex items-center gap-3 animate-float">
+          <div class="bg-botanical/10 rounded-full p-2.5">
+            <svg class="w-6 h-6 text-botanical" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <div>
+            <p class="text-sm font-bold text-ink leading-tight">Garantía de<br>Frescura 100%</p>
+          </div>
+        </div>
+
+        <!-- Floating badge: delivery -->
+        <div class="absolute top-4 -right-4 sm:-right-8 bg-white rounded-2xl shadow-xl px-4 py-3 animate-float" style="animation-delay: -1.5s;">
+          <p class="text-xs font-semibold text-blossom-dark flex items-center gap-1.5">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            Entrega Rápida Hoy
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CATÁLOGO ================= -->
+<section id="catalogo" class="py-16 sm:py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <span class="text-botanical font-semibold text-sm tracking-widest uppercase">Nuestro Catálogo</span>
+      <h2 class="font-serif text-3xl sm:text-4xl font-bold text-ink mt-2 mb-4">Arreglos hechos para cada historia</h2>
+      <p class="text-ink/60">Elige un momento especial y personaliza tu ramo con mensaje, fecha y complementos.</p>
+    </div>
+
+    <!-- Filters -->
+    <div class="flex gap-3 overflow-x-auto no-scrollbar pb-2 mb-10 justify-start sm:justify-center" id="filterRow">
+      <button data-filter="Todos" class="filter-pill active-filter shrink-0 px-5 py-2.5 rounded-full text-sm font-semibold border-2 border-blossom-dark bg-blossom-dark text-white">Todos</button>
+      <button data-filter="Cumpleaños" class="filter-pill shrink-0 px-5 py-2.5 rounded-full text-sm font-semibold border-2 border-blossom-light text-ink/70 hover:border-blossom-dark">Cumpleaños</button>
+      <button data-filter="Aniversarios" class="filter-pill shrink-0 px-5 py-2.5 rounded-full text-sm font-semibold border-2 border-blossom-light text-ink/70 hover:border-blossom-dark">Aniversarios</button>
+      <button data-filter="Románticos" class="filter-pill shrink-0 px-5 py-2.5 rounded-full text-sm font-semibold border-2 border-blossom-light text-ink/70 hover:border-blossom-dark">Románticos</button>
+    </div>
+
+    <!-- Product grid -->
+    <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+
+    <p id="noResults" class="hidden text-center text-ink/50 py-10">No encontramos arreglos con ese criterio. Prueba con otra búsqueda o escríbenos por WhatsApp.</p>
+  </div>
+</section>
+
+<!-- ================= CONFIANZA / VALORES ================= -->
+<section class="py-16 bg-cream-deep">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid sm:grid-cols-3 gap-8 text-center">
+    <div class="flex flex-col items-center gap-3">
+      <div class="bg-white rounded-full p-4 shadow-md text-blossom-dark">
+        <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      </div>
+      <h3 class="font-serif font-bold text-lg">Entrega el mismo día</h3>
+      <p class="text-sm text-ink/60 max-w-xs">Pide antes de las 4pm y llevamos tu detalle el mismo día.</p>
+    </div>
+    <div class="flex flex-col items-center gap-3">
+      <div class="bg-white rounded-full p-4 shadow-md text-blossom-dark">
+        <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+      </div>
+      <h3 class="font-serif font-bold text-lg">Frescura garantizada</h3>
+      <p class="text-sm text-ink/60 max-w-xs">Seleccionamos flores frescas cada mañana para cada pedido.</p>
+    </div>
+    <div class="flex flex-col items-center gap-3">
+      <div class="bg-white rounded-full p-4 shadow-md text-blossom-dark">
+        <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h10M7 16h6"/></svg>
+      </div>
+      <h3 class="font-serif font-bold text-lg">Mensaje personalizado</h3>
+      <p class="text-sm text-ink/60 max-w-xs">Agrega una tarjeta con tus propias palabras, sin costo extra.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACTO ================= -->
+<section id="contacto" class="py-16 sm:py-24">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <span class="text-botanical font-semibold text-sm tracking-widest uppercase">Contáctanos</span>
+    <h2 class="font-serif text-3xl sm:text-4xl font-bold text-ink mt-2 mb-4">¿Tienes una ocasión especial?</h2>
+    <p class="text-ink/60 mb-8 max-w-xl mx-auto">Escríbenos directo por WhatsApp y te ayudamos a armar el arreglo perfecto para ese momento inolvidable.</p>
+    <div class="flex items-center justify-center">
+      <a href="https://wa.me/message/2OMDBGCGOVGSI1?text=Hola%20Florer%C3%ADa%20La%20Frontera%2C%20quisiera%20informaci%C3%B3n%20sobre%20un%20arreglo%20floral"
+         target="_blank" rel="noopener"
+         class="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5a] text-white font-semibold px-6 py-3.5 rounded-full shadow-md hover:shadow-lg transition-all hover:scale-105">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-5 h-5 fill-white"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.706 4.605 1.92 6.463L4 29l7.72-1.885A11.94 11.94 0 0 0 16 27c6.628 0 12-5.373 12-12S22.629 3 16.001 3zm0 21.75c-1.994 0-3.85-.583-5.41-1.587l-.388-.24-4.59 1.121 1.169-4.475-.253-.401A9.71 9.71 0 0 1 5.25 15c0-5.937 4.813-10.75 10.751-10.75S26.752 9.063 26.752 15 21.939 24.75 16.001 24.75zm5.55-8.079c-.303-.152-1.794-.885-2.072-.986-.278-.101-.48-.152-.682.152-.202.303-.784.986-.961 1.189-.177.202-.354.227-.657.076-.303-.152-1.28-.472-2.438-1.505-.901-.804-1.51-1.797-1.687-2.1-.177-.303-.019-.467.133-.618.137-.136.303-.354.455-.531.152-.177.202-.303.303-.505.101-.202.05-.379-.025-.531-.076-.152-.682-1.646-.934-2.253-.246-.591-.497-.511-.682-.52l-.581-.01c-.202 0-.531.076-.809.379-.278.303-1.061 1.037-1.061 2.529s1.086 2.935 1.238 3.138c.152.202 2.138 3.266 5.181 4.579.724.313 1.288.5 1.729.64.726.231 1.387.198 1.909.12.582-.087 1.794-.734 2.047-1.443.253-.708.253-1.315.177-1.443-.076-.127-.278-.202-.581-.354z"/></svg>
+        957 219 600
+      </a>
+    </div>
+
+    <div class="mt-12 pt-10 border-t border-blossom-light/40">
+      <p class="text-xs font-semibold tracking-[0.2em] uppercase text-ink/40 mb-6">Síguenos en nuestras redes</p>
+      <div class="flex items-center justify-center gap-5">
+        <a href="https://www.instagram.com/florerialafrontera" target="_blank" rel="noopener"
+           aria-label="Síguenos en Instagram"
+           class="social-icon social-ig group flex flex-col items-center gap-2">
+          <span class="social-circle inline-flex items-center justify-center w-14 h-14 rounded-full border-2 border-blossom-light text-ink/70">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-6 h-6 fill-current"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153a4.908 4.908 0 011.153 1.772c.247.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 01-1.153 1.772 4.915 4.915 0 01-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 01-1.772-1.153 4.904 4.904 0 01-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.066.217-1.79.465-2.428a4.88 4.88 0 011.153-1.772A4.897 4.897 0 015.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2zm0 1.802c-2.67 0-2.986.01-4.04.059-.976.045-1.505.207-1.858.344-.466.181-.8.398-1.15.748-.35.35-.566.683-.747 1.15-.137.352-.3.881-.344 1.857-.05 1.054-.06 1.37-.06 4.04 0 2.67.01 2.986.06 4.04.045.976.207 1.505.344 1.858.181.466.397.8.747 1.15.35.35.684.566 1.15.747.353.137.882.3 1.858.344 1.054.05 1.37.06 4.04.06 2.67 0 2.987-.01 4.04-.06.977-.045 1.506-.207 1.858-.344.466-.181.8-.398 1.15-.748.35-.35.566-.683.747-1.15.137-.352.3-.881.344-1.857.05-1.054.06-1.37.06-4.04 0-2.67-.01-2.986-.06-4.04-.045-.976-.207-1.505-.344-1.858a3.09 3.09 0 00-.747-1.15 3.096 3.096 0 00-1.15-.747c-.352-.137-.881-.3-1.857-.344-1.054-.05-1.37-.06-4.04-.06zm0 4.595a5.603 5.603 0 110 11.206 5.603 5.603 0 010-11.206zm0 1.802a3.801 3.801 0 100 7.602 3.801 3.801 0 000-7.602zm5.723-1.998a1.31 1.31 0 11-2.62 0 1.31 1.31 0 012.62 0z"/></svg>
+          </span>
+          <span class="text-xs font-medium text-ink/50 group-hover:text-ink/80 transition-colors">Instagram</span>
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61564404956914" target="_blank" rel="noopener"
+           aria-label="Síguenos en Facebook"
+           class="social-icon social-fb group flex flex-col items-center gap-2">
+          <span class="social-circle inline-flex items-center justify-center w-14 h-14 rounded-full border-2 border-blossom-light text-ink/70">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="w-6 h-6 fill-current"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/></svg>
+          </span>
+          <span class="text-xs font-medium text-ink/50 group-hover:text-ink/80 transition-colors">Facebook</span>
+        </a>
+        <a href="https://www.tiktok.com/@florerialafrontera" target="_blank" rel="noopener"
+           aria-label="Síguenos en TikTok"
+           class="social-icon social-tt group flex flex-col items-center gap-2">
+          <span class="social-circle inline-flex items-center justify-center w-14 h-14 rounded-full border-2 border-blossom-light text-ink/70">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="w-6 h-6 fill-current"><path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z"/></svg>
+          </span>
+          <span class="text-xs font-medium text-ink/50 group-hover:text-ink/80 transition-colors">TikTok</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="bg-ink text-cream/80 py-10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+    <div class="text-center sm:text-left">
+      <p class="font-serif text-xl font-bold text-white">Florería La Frontera</p>
+      <p class="text-xs tracking-widest uppercase text-blossom-light">Detalles Inolvidables</p>
+    </div>
+    <div class="flex flex-col sm:flex-row items-center gap-5">
+      <div class="flex items-center gap-2">
+        <a href="https://www.instagram.com/florerialafrontera" target="_blank" rel="noopener"
+           aria-label="Síguenos en Instagram" class="social-icon social-ig">
+          <span class="social-circle inline-flex items-center justify-center w-10 h-10 rounded-full border border-cream/20 text-cream/70">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-[18px] h-[18px] fill-current"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153a4.908 4.908 0 011.153 1.772c.247.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 01-1.153 1.772 4.915 4.915 0 01-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 01-1.772-1.153 4.904 4.904 0 01-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.066.217-1.79.465-2.428a4.88 4.88 0 011.153-1.772A4.897 4.897 0 015.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2zm0 1.802c-2.67 0-2.986.01-4.04.059-.976.045-1.505.207-1.858.344-.466.181-.8.398-1.15.748-.35.35-.566.683-.747 1.15-.137.352-.3.881-.344 1.857-.05 1.054-.06 1.37-.06 4.04 0 2.67.01 2.986.06 4.04.045.976.207 1.505.344 1.858.181.466.397.8.747 1.15.35.35.684.566 1.15.747.353.137.882.3 1.858.344 1.054.05 1.37.06 4.04.06 2.67 0 2.987-.01 4.04-.06.977-.045 1.506-.207 1.858-.344.466-.181.8-.398 1.15-.748.35-.35.566-.683.747-1.15.137-.352.3-.881.344-1.857.05-1.054.06-1.37.06-4.04 0-2.67-.01-2.986-.06-4.04-.045-.976-.207-1.505-.344-1.858a3.09 3.09 0 00-.747-1.15 3.096 3.096 0 00-1.15-.747c-.352-.137-.881-.3-1.857-.344-1.054-.05-1.37-.06-4.04-.06zm0 4.595a5.603 5.603 0 110 11.206 5.603 5.603 0 010-11.206zm0 1.802a3.801 3.801 0 100 7.602 3.801 3.801 0 000-7.602zm5.723-1.998a1.31 1.31 0 11-2.62 0 1.31 1.31 0 012.62 0z"/></svg>
+          </span>
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61564404956914" target="_blank" rel="noopener"
+           aria-label="Síguenos en Facebook" class="social-icon social-fb">
+          <span class="social-circle inline-flex items-center justify-center w-10 h-10 rounded-full border border-cream/20 text-cream/70">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="w-[18px] h-[18px] fill-current"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/></svg>
+          </span>
+        </a>
+        <a href="https://www.tiktok.com/@florerialafrontera" target="_blank" rel="noopener"
+           aria-label="Síguenos en TikTok" class="social-icon social-tt">
+          <span class="social-circle inline-flex items-center justify-center w-10 h-10 rounded-full border border-cream/20 text-cream/70">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="w-[18px] h-[18px] fill-current"><path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z"/></svg>
+          </span>
+        </a>
+      </div>
+      <p class="text-xs text-cream/50 text-center">© 2026 Florería La Frontera. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= FLOATING WHATSAPP BUTTON ================= -->
+<a href="https://wa.me/message/2OMDBGCGOVGSI1?text=Hola%20Florer%C3%ADa%20La%20Frontera%2C%20quisiera%20informaci%C3%B3n%20sobre%20un%20arreglo%20floral"
+   target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp"
+   class="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-[#25D366] rounded-full shadow-2xl hover:scale-110 transition-transform">
+  <span class="wa-pulse absolute inset-0 rounded-full"></span>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="relative w-7 h-7 sm:w-8 sm:h-8 fill-white"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.706 4.605 1.92 6.463L4 29l7.72-1.885A11.94 11.94 0 0 0 16 27c6.628 0 12-5.373 12-12S22.629 3 16.001 3zm0 21.75c-1.994 0-3.85-.583-5.41-1.587l-.388-.24-4.59 1.121 1.169-4.475-.253-.401A9.71 9.71 0 0 1 5.25 15c0-5.937 4.813-10.75 10.751-10.75S26.752 9.063 26.752 15 21.939 24.75 16.001 24.75zm5.55-8.079c-.303-.152-1.794-.885-2.072-.986-.278-.101-.48-.152-.682.152-.202.303-.784.986-.961 1.189-.177.202-.354.227-.657.076-.303-.152-1.28-.472-2.438-1.505-.901-.804-1.51-1.797-1.687-2.1-.177-.303-.019-.467.133-.618.137-.136.303-.354.455-.531.152-.177.202-.303.303-.505.101-.202.05-.379-.025-.531-.076-.152-.682-1.646-.934-2.253-.246-.591-.497-.511-.682-.52l-.581-.01c-.202 0-.531.076-.809.379-.278.303-1.061 1.037-1.061 2.529s1.086 2.935 1.238 3.138c.152.202 2.138 3.266 5.181 4.579.724.313 1.288.5 1.729.64.726.231 1.387.198 1.909.12.582-.087 1.794-.734 2.047-1.443.253-.708.253-1.315.177-1.443-.076-.127-.278-.202-.581-.354z"/></svg>
+</a>
+
+<!-- ================= CHECKOUT / PERSONALIZACIÓN MODAL ================= -->
+<div id="checkoutModal" class="fixed inset-0 z-[60] hidden">
+  <div id="modalOverlay" class="absolute inset-0 bg-ink/60 backdrop-blur-sm"></div>
+  <div class="relative min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="modal-panel opacity-0 translate-y-8 bg-white w-full sm:max-w-2xl sm:rounded-3xl rounded-t-3xl max-h-[92vh] overflow-y-auto shadow-2xl">
+
+      <!-- Modal header -->
+      <div class="sticky top-0 bg-white z-10 flex items-start justify-between gap-4 px-6 sm:px-8 pt-6 pb-4 border-b border-blossom-light/40">
+        <div class="flex items-center gap-4">
+          <img id="modalProductImg" src="" alt="" class="w-16 h-16 rounded-xl object-cover shrink-0">
+          <div>
+            <p class="text-xs font-semibold text-botanical uppercase tracking-wide">Personaliza tu pedido</p>
+            <h3 id="modalProductName" class="font-serif text-xl font-bold text-ink leading-tight"></h3>
+            <p id="modalProductPrice" class="text-blossom-dark font-bold text-sm mt-1"></p>
+          </div>
+        </div>
+        <button id="closeModalBtn" aria-label="Cerrar" class="shrink-0 text-ink/40 hover:text-ink transition-colors p-1">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Modal body / form -->
+      <form id="orderForm" class="px-6 sm:px-8 py-6 space-y-6">
+
+        <!-- Delivery date & time -->
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-semibold text-ink mb-2">Fecha de entrega</label>
+            <input type="date" id="deliveryDate" required
+                   class="w-full px-4 py-3 rounded-xl border border-blossom-light bg-cream/40 focus:outline-none focus:ring-2 focus:ring-blossom text-sm">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-ink mb-2">Horario de entrega</label>
+            <select id="deliveryTime" required
+                    class="w-full px-4 py-3 rounded-xl border border-blossom-light bg-cream/40 focus:outline-none focus:ring-2 focus:ring-blossom text-sm">
+              <option value="">Selecciona un rango</option>
+              <option value="09:00 - 12:00">09:00 am - 12:00 pm</option>
+              <option value="12:00 - 15:00">12:00 pm - 03:00 pm</option>
+              <option value="15:00 - 18:00">03:00 pm - 06:00 pm</option>
+              <option value="18:00 - 20:00">06:00 pm - 08:00 pm</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Dedication message -->
+        <div>
+          <label class="block text-sm font-semibold text-ink mb-2">Mensaje para la tarjeta de dedicatoria</label>
+          <textarea id="dedicationMsg" rows="3" maxlength="220" placeholder="Escribe aquí tu mensaje especial..."
+                    class="w-full px-4 py-3 rounded-xl border border-blossom-light bg-cream/40 focus:outline-none focus:ring-2 focus:ring-blossom text-sm resize-none"></textarea>
+          <p class="text-xs text-ink/40 mt-1 text-right"><span id="msgCount">0</span>/220</p>
+        </div>
+
+        <!-- Add-ons -->
+        <div>
+          <label class="block text-sm font-semibold text-ink mb-3">Complementos opcionales</label>
+          <div class="grid sm:grid-cols-3 gap-3">
+            <label class="addon-option cursor-pointer flex flex-col items-center gap-2 border-2 border-blossom-light/60 rounded-2xl p-4 text-center hover:border-blossom transition-colors">
+              <input type="checkbox" class="addon-checkbox hidden" data-name="Caja de Chocolates" data-price="25">
+              <span class="text-3xl">🍫</span>
+              <span class="text-sm font-semibold text-ink">Chocolates</span>
+              <span class="text-xs text-botanical font-bold">+ S/ 25</span>
+            </label>
+            <label class="addon-option cursor-pointer flex flex-col items-center gap-2 border-2 border-blossom-light/60 rounded-2xl p-4 text-center hover:border-blossom transition-colors">
+              <input type="checkbox" class="addon-checkbox hidden" data-name="Peluche" data-price="35">
+              <span class="text-3xl">🧸</span>
+              <span class="text-sm font-semibold text-ink">Peluche</span>
+              <span class="text-xs text-botanical font-bold">+ S/ 35</span>
+            </label>
+            <label class="addon-option cursor-pointer flex flex-col items-center gap-2 border-2 border-blossom-light/60 rounded-2xl p-4 text-center hover:border-blossom transition-colors">
+              <input type="checkbox" class="addon-checkbox hidden" data-name="Globos con Helio" data-price="20">
+              <span class="text-3xl">🎈</span>
+              <span class="text-sm font-semibold text-ink">Globos c/ Helio</span>
+              <span class="text-xs text-botanical font-bold">+ S/ 20</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Total summary -->
+        <div class="bg-cream-deep rounded-2xl p-5 flex items-center justify-between">
+          <span class="font-semibold text-ink">Total estimado</span>
+          <span id="orderTotal" class="font-serif text-2xl font-bold text-blossom-dark">S/ 0.00</span>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit"
+                class="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1ebe5a] text-white font-bold text-base px-6 py-4 rounded-full shadow-md hover:shadow-lg transition-all hover:scale-[1.02]">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-5 h-5 fill-white"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.706 4.605 1.92 6.463L4 29l7.72-1.885A11.94 11.94 0 0 0 16 27c6.628 0 12-5.373 12-12S22.629 3 16.001 3zm0 21.75c-1.994 0-3.85-.583-5.41-1.587l-.388-.24-4.59 1.121 1.169-4.475-.253-.401A9.71 9.71 0 0 1 5.25 15c0-5.937 4.813-10.75 10.751-10.75S26.752 9.063 26.752 15 21.939 24.75 16.001 24.75zm5.55-8.079c-.303-.152-1.794-.885-2.072-.986-.278-.101-.48-.152-.682.152-.202.303-.784.986-.961 1.189-.177.202-.354.227-.657.076-.303-.152-1.28-.472-2.438-1.505-.901-.804-1.51-1.797-1.687-2.1-.177-.303-.019-.467.133-.618.137-.136.303-.354.455-.531.152-.177.202-.303.303-.505.101-.202.05-.379-.025-.531-.076-.152-.682-1.646-.934-2.253-.246-.591-.497-.511-.682-.52l-.581-.01c-.202 0-.531.076-.809.379-.278.303-1.061 1.037-1.061 2.529s1.086 2.935 1.238 3.138c.152.202 2.138 3.266 5.181 4.579.724.313 1.288.5 1.729.64.726.231 1.387.198 1.909.12.582-.087 1.794-.734 2.047-1.443.253-.708.253-1.315.177-1.443-.076-.127-.278-.202-.581-.354z"/></svg>
+          Confirmar y Pedir por WhatsApp
+        </button>
+        <p class="text-xs text-center text-ink/40">Al confirmar, se abrirá WhatsApp con el resumen de tu pedido para coordinar el pago y la entrega.</p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  const WHATSAPP_LINK = "https://wa.me/message/2OMDBGCGOVGSI1";
+
+  /* ---------------- Product Data ---------------- */
+  const products = [
+    {
+      id: 1,
+      name: "Ilusión de Tulipanes",
+      description: "12 tulipanes rosados + eucalipto fresco",
+      price: 129.90,
+      category: "Románticos",
+      tag: "Más vendido",
+      keywords: "tulipanes rosados romantico aniversario",
+      img: "https://images.unsplash.com/photo-1520763185298-1b434c919102?q=80&w=800&auto=format&fit=crop",
+    },
+    {
+      id: 2,
+      name: "Alegría de Cumpleaños",
+      description: "Rosas y gerberas de colores + globo mini",
+      price: 99.90,
+      category: "Cumpleaños",
+      tag: "Entrega Hoy",
+      keywords: "cumpleaños gerberas colores fiesta",
+      img: "https://images.unsplash.com/photo-1487070183336-b863922373d4?q=80&w=800&auto=format&fit=crop",
+    },
+    {
+      id: 3,
+      name: "Eterno Amor",
+      description: "24 rosas rojas premium + caja elegante",
+      price: 189.90,
+      category: "Aniversarios",
+      tag: "Más vendido",
+      keywords: "rosas rojas aniversario amor romantico",
+      img: "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=800&auto=format&fit=crop",
+    },
+    {
+      id: 4,
+      name: "Sol de Girasoles",
+      description: "6 girasoles + flores de temporada",
+      price: 89.90,
+      category: "Cumpleaños",
+      tag: "",
+      keywords: "girasoles cumpleaños alegria",
+      img: "https://images.unsplash.com/photo-1470509037663-253afd7f0f51?q=80&w=800&auto=format&fit=crop",
+    },
+    {
+      id: 5,
+      name: "Susurro Romántico",
+      description: "Rosas rosadas + peluche incluido",
+      price: 149.90,
+      category: "Románticos",
+      tag: "Entrega Hoy",
+      keywords: "rosas romantico peluche enamorados",
+      img: "https://images.unsplash.com/photo-1455659817273-f96807779a8a?q=80&w=800&auto=format&fit=crop",
+    },
+    {
+      id: 6,
+      name: "Bodas de Oro",
+      description: "Arreglo mixto premium + tarjeta dorada",
+      price: 219.90,
+      category: "Aniversarios",
+      tag: "",
+      keywords: "aniversario boda premium elegante",
+      img: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?q=80&w=800&auto=format&fit=crop",
+    },
+  ];
+
+  let currentFilter = "Todos";
+  let currentSearch = "";
+
+  /* ---------------- Render Products ---------------- */
+  const grid = document.getElementById("productGrid");
+  const noResults = document.getElementById("noResults");
+
+  function formatPrice(n) {
+    return "S/ " + n.toFixed(2);
+  }
+
+  function renderProducts() {
+    const filtered = products.filter((p) => {
+      const matchesFilter = currentFilter === "Todos" || p.category === currentFilter;
+      const haystack = (p.name + " " + p.description + " " + p.keywords + " " + p.category).toLowerCase();
+      const matchesSearch = currentSearch === "" || haystack.includes(currentSearch.toLowerCase());
+      return matchesFilter && matchesSearch;
+    });
+
+    grid.innerHTML = "";
+    noResults.classList.toggle("hidden", filtered.length !== 0);
+
+    filtered.forEach((p, i) => {
+      const card = document.createElement("div");
+      card.className = "product-card animate-fade-in-up bg-cream rounded-3xl overflow-hidden shadow-sm border border-blossom-light/30 flex flex-col";
+      card.style.animationDelay = (i * 0.05) + "s";
+
+      card.innerHTML = `
+        <div class="relative h-56 overflow-hidden">
+          <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover" loading="lazy">
+          ${p.tag ? `<span class="absolute top-3 left-3 bg-blossom-dark text-white text-xs font-bold px-3 py-1.5 rounded-full shadow">${p.tag}</span>` : ""}
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <h3 class="font-serif text-lg font-bold text-ink mb-1">${p.name}</h3>
+          <p class="text-sm text-ink/60 mb-4 flex-1">${p.description}</p>
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <span class="font-bold text-blossom-dark text-lg">${formatPrice(p.price)}</span>
+            <button data-product-id="${p.id}" class="personalize-btn w-full sm:w-auto bg-ink hover:bg-blossom-dark text-white text-sm font-semibold px-4 py-3 sm:py-2.5 rounded-full transition-colors hover:scale-105">
+              Personalizar &amp; Pedir
+            </button>
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    document.querySelectorAll(".personalize-btn").forEach((btn) => {
+      btn.addEventListener("click", () => openModal(Number(btn.dataset.productId)));
+    });
+  }
+
+  renderProducts();
+
+  /* ---------------- Filters ---------------- */
+  const filterRow = document.getElementById("filterRow");
+  filterRow.addEventListener("click", (e) => {
+    const btn = e.target.closest(".filter-pill");
+    if (!btn) return;
+    currentFilter = btn.dataset.filter;
+
+    filterRow.querySelectorAll(".filter-pill").forEach((p) => {
+      p.classList.remove("active-filter", "bg-blossom-dark", "text-white", "border-blossom-dark");
+      p.classList.add("border-blossom-light", "text-ink/70");
+    });
+    btn.classList.add("active-filter", "bg-blossom-dark", "text-white", "border-blossom-dark");
+    btn.classList.remove("border-blossom-light", "text-ink/70");
+
+    renderProducts();
+  });
+
+  function setFilterByLabel(label) {
+    const btn = filterRow.querySelector(`[data-filter="${label}"]`);
+    if (btn) btn.click();
+  }
+
+  /* Nav links that jump to catalog & pre-filter */
+  document.querySelectorAll("[data-filter-scroll]").forEach((link) => {
+    link.addEventListener("click", () => {
+      setFilterByLabel(link.dataset.filterScroll);
+      document.getElementById("mobileMenu").classList.add("hidden");
+    });
+  });
+
+  /* ---------------- Search ---------------- */
+  const searchForm = document.getElementById("searchForm");
+  const heroSearchInput = document.getElementById("heroSearchInput");
+
+  searchForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    currentSearch = heroSearchInput.value.trim();
+    currentFilter = "Todos";
+    filterRow.querySelectorAll(".filter-pill").forEach((p) => {
+      p.classList.remove("active-filter", "bg-blossom-dark", "text-white", "border-blossom-dark");
+      p.classList.add("border-blossom-light", "text-ink/70");
+    });
+    filterRow.querySelector('[data-filter="Todos"]').classList.add("active-filter", "bg-blossom-dark", "text-white", "border-blossom-dark");
+    renderProducts();
+    document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
+  });
+
+  document.querySelectorAll(".quick-tag").forEach((tag) => {
+    tag.addEventListener("click", () => {
+      const term = tag.dataset.quickSearch;
+      heroSearchInput.value = term;
+      currentSearch = term;
+      renderProducts();
+      document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
+    });
+  });
+
+  /* ---------------- Mobile Menu ---------------- */
+  const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+  const mobileMenu = document.getElementById("mobileMenu");
+  mobileMenuBtn.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
+
+  /* ---------------- Checkout Modal ---------------- */
+  const checkoutModal = document.getElementById("checkoutModal");
+  const modalPanel = checkoutModal.querySelector(".modal-panel");
+  const modalOverlay = document.getElementById("modalOverlay");
+  const closeModalBtn = document.getElementById("closeModalBtn");
+  const orderForm = document.getElementById("orderForm");
+  const deliveryDate = document.getElementById("deliveryDate");
+  const deliveryTime = document.getElementById("deliveryTime");
+  const dedicationMsg = document.getElementById("dedicationMsg");
+  const msgCount = document.getElementById("msgCount");
+  const orderTotal = document.getElementById("orderTotal");
+
+  let activeProduct = null;
+
+  function openModal(productId) {
+    activeProduct = products.find((p) => p.id === productId);
+    if (!activeProduct) return;
+
+    document.getElementById("modalProductImg").src = activeProduct.img;
+    document.getElementById("modalProductImg").alt = activeProduct.name;
+    document.getElementById("modalProductName").textContent = activeProduct.name;
+    document.getElementById("modalProductPrice").textContent = formatPrice(activeProduct.price);
+
+    orderForm.reset();
+    msgCount.textContent = "0";
+    document.querySelectorAll(".addon-option").forEach((el) => el.classList.remove("border-blossom", "bg-blossom-light/30"));
+
+    const today = new Date().toISOString().split("T")[0];
+    deliveryDate.min = today;
+    deliveryDate.value = today;
+
+    updateTotal();
+
+    checkoutModal.classList.remove("hidden");
+    document.body.classList.add("overflow-hidden");
+    requestAnimationFrame(() => {
+      modalPanel.classList.remove("opacity-0", "translate-y-8");
+    });
+  }
+
+  function closeModal() {
+    modalPanel.classList.add("opacity-0", "translate-y-8");
+    setTimeout(() => {
+      checkoutModal.classList.add("hidden");
+      document.body.classList.remove("overflow-hidden");
+    }, 300);
+  }
+
+  closeModalBtn.addEventListener("click", closeModal);
+  modalOverlay.addEventListener("click", closeModal);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !checkoutModal.classList.contains("hidden")) closeModal();
+  });
+
+  dedicationMsg.addEventListener("input", () => {
+    msgCount.textContent = dedicationMsg.value.length;
+  });
+
+  document.querySelectorAll(".addon-option").forEach((label) => {
+    label.addEventListener("click", () => {
+      const checkbox = label.querySelector(".addon-checkbox");
+      // allow the native checkbox toggle to happen, then sync styles
+      setTimeout(() => {
+        label.classList.toggle("border-blossom", checkbox.checked);
+        label.classList.toggle("bg-blossom-light/30", checkbox.checked);
+        updateTotal();
+      }, 0);
+    });
+  });
+
+  function getSelectedAddons() {
+    return Array.from(document.querySelectorAll(".addon-checkbox:checked")).map((cb) => ({
+      name: cb.dataset.name,
+      price: parseFloat(cb.dataset.price),
+    }));
+  }
+
+  function updateTotal() {
+    if (!activeProduct) return;
+    const addonsTotal = getSelectedAddons().reduce((sum, a) => sum + a.price, 0);
+    orderTotal.textContent = formatPrice(activeProduct.price + addonsTotal);
+  }
+
+  orderForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!activeProduct) return;
+
+    const addons = getSelectedAddons();
+    const addonsText = addons.length ? addons.map((a) => `• ${a.name} (+${formatPrice(a.price)})`).join("\n") : "Ninguno";
+    const total = activeProduct.price + addons.reduce((s, a) => s + a.price, 0);
+
+    const dateFormatted = new Date(deliveryDate.value + "T00:00:00").toLocaleDateString("es-PE", {
+      weekday: "long", year: "numeric", month: "long", day: "numeric",
+    });
+
+    const message =
+`Hola Florería La Frontera, quisiera pedir:
+
+🌸 Arreglo: ${activeProduct.name}
+📝 Descripción: ${activeProduct.description}
+📅 Fecha de entrega: ${dateFormatted}
+🕐 Horario: ${deliveryTime.value || "No especificado"}
+💌 Mensaje de tarjeta: ${dedicationMsg.value.trim() || "Sin mensaje"}
+🎁 Complementos:
+${addonsText}
+
+💰 Total estimado: ${formatPrice(total)}
+
+¡Quedo atento(a) para coordinar el pago y la entrega!`;
+
+    const encoded = encodeURIComponent(message);
+    window.open(`${WHATSAPP_LINK}?text=${encoded}`, "_blank");
+    closeModal();
+  });
+
+})();
+</script>
+</body>
+</html>
