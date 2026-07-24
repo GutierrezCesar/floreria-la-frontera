@@ -112,22 +112,31 @@
 
   input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.4) sepia(1) saturate(4) hue-rotate(300deg); cursor: pointer; }
 
-  /* Animated hero tulip: draws in petal by petal, then sways gently */
-  .tulip-part {
-    opacity: 0;
-    transform: scale(0.4);
+  /* Animated hero tulip: builds itself in 3D, petal by petal, then sways gently */
+  .tulip-stage { perspective: 700px; }
+  .tulip-sway {
     transform-box: fill-box;
     transform-origin: 50% 100%;
-    animation: tulipBloom 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, tulipSway 4.5s ease-in-out 1.6s infinite;
+    animation: tulipSway 4.5s ease-in-out 2.3s infinite;
   }
+  .tulip-part {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    transform: rotateX(-80deg) translateY(16px) scale(0.6);
+    animation: tulipBloom3d 0.85s cubic-bezier(0.22, 0.85, 0.35, 1.2) forwards;
+    filter: drop-shadow(0 6px 8px rgba(176, 50, 96, 0.28));
+  }
+  .tulip-leaf { filter: drop-shadow(0 4px 6px rgba(20, 40, 20, 0.3)); }
   .tulip-stem {
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
-    animation: tulipDraw 0.9s ease-out 0.1s forwards;
+    animation: tulipDraw 0.8s ease-out 0.3s forwards;
   }
-  @keyframes tulipBloom {
-    0% { opacity: 0; transform: scale(0.4); }
-    100% { opacity: 1; transform: scale(1); }
+  @keyframes tulipBloom3d {
+    0% { opacity: 0; transform: rotateX(-80deg) translateY(16px) scale(0.6); }
+    60% { opacity: 1; }
+    100% { opacity: 1; transform: rotateX(0deg) translateY(0) scale(1); }
   }
   @keyframes tulipDraw {
     to { stroke-dashoffset: 0; }
@@ -137,8 +146,9 @@
     50% { rotate: 1.5deg; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .tulip-part { opacity: 1; transform: scale(1); animation: none; }
+    .tulip-part { opacity: 1; transform: none; animation: none; }
     .tulip-stem { stroke-dashoffset: 0; animation: none; }
+    .tulip-sway { animation: none; }
   }
 
   /* Social icon brand hovers */
@@ -320,16 +330,43 @@
     <div class="relative flex justify-center lg:justify-end animate-fade-in">
       <div class="relative w-full max-w-md">
         <div class="absolute inset-0 bg-blossom-light rounded-[2.5rem] rotate-3 scale-95"></div>
-        <div class="relative rounded-[2.5rem] w-full h-[420px] sm:h-[480px] shadow-2xl bg-gradient-to-br from-cream-deep via-cream to-blossom-light/50 flex items-center justify-center overflow-hidden"
+        <div class="relative rounded-[2.5rem] w-full h-[420px] sm:h-[480px] shadow-2xl bg-gradient-to-br from-cream-deep via-cream to-blossom-light/50 flex items-center justify-center overflow-hidden tulip-stage"
              role="img" aria-label="Ilustración animada de un tulipán rosado, Florería La Frontera">
-          <div class="absolute w-64 h-64 sm:w-80 sm:h-80 bg-blossom-light/40 rounded-full blur-2xl"></div>
-          <svg viewBox="0 0 240 340" class="relative w-48 sm:w-64 h-auto drop-shadow-xl">
-            <path class="tulip-part tulip-leaf" style="animation-delay:.75s" d="M118,255 C85,250 55,268 35,300 C68,308 100,292 118,272 Z" fill="#3a5a40"/>
-            <path class="tulip-part tulip-leaf" style="animation-delay:.9s" d="M122,275 C155,268 185,282 205,308 C173,318 140,304 122,285 Z" fill="#4d7355"/>
-            <path class="tulip-stem" pathLength="1" d="M120,206 C118,240 124,270 120,320" fill="none" stroke="#3a5a40" stroke-width="6" stroke-linecap="round"/>
-            <path class="tulip-part tulip-petal" style="animation-delay:.15s" d="M120,90 C88,95 75,135 82,172 C86,193 102,204 120,206 C119,167 118,128 120,90 Z" fill="#f06292"/>
-            <path class="tulip-part tulip-petal" style="animation-delay:.3s" d="M120,90 C152,95 165,135 158,172 C154,193 138,204 120,206 C121,167 122,128 120,90 Z" fill="#f06292"/>
-            <path class="tulip-part tulip-petal" style="animation-delay:.45s" d="M120,58 C98,64 90,110 93,152 C95,182 106,200 120,207 C134,200 145,182 147,152 C150,110 142,64 120,58 Z" fill="#f8bbd0"/>
+          <div class="absolute w-64 h-64 sm:w-80 sm:h-80 bg-blossom-light/50 rounded-full blur-2xl"></div>
+          <svg viewBox="0 0 240 340" class="relative w-48 sm:w-64 h-auto">
+            <defs>
+              <linearGradient id="gradPetalSide" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#d8447a"/>
+                <stop offset="45%" stop-color="#f06292"/>
+                <stop offset="100%" stop-color="#c93d70"/>
+              </linearGradient>
+              <linearGradient id="gradPetalCenter" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#f06292"/>
+                <stop offset="48%" stop-color="#ffe6f0"/>
+                <stop offset="100%" stop-color="#f06292"/>
+              </linearGradient>
+              <linearGradient id="gradLeafA" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#5c8a63"/>
+                <stop offset="100%" stop-color="#25391f"/>
+              </linearGradient>
+              <linearGradient id="gradLeafB" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#3a5a40"/>
+                <stop offset="100%" stop-color="#1c2e1a"/>
+              </linearGradient>
+              <linearGradient id="gradStem" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#25391f"/>
+                <stop offset="50%" stop-color="#4d7355"/>
+                <stop offset="100%" stop-color="#25391f"/>
+              </linearGradient>
+            </defs>
+            <g class="tulip-sway">
+              <path class="tulip-part tulip-leaf" style="animation-delay:0s" d="M118,255 C85,250 55,268 35,300 C68,308 100,292 118,272 Z" fill="url(#gradLeafA)"/>
+              <path class="tulip-part tulip-leaf" style="animation-delay:.15s" d="M122,275 C155,268 185,282 205,308 C173,318 140,304 122,285 Z" fill="url(#gradLeafB)"/>
+              <path class="tulip-stem" pathLength="1" d="M120,206 C118,240 124,270 120,320" fill="none" stroke="url(#gradStem)" stroke-width="7" stroke-linecap="round"/>
+              <path class="tulip-part tulip-petal" style="animation-delay:.9s" d="M120,90 C88,95 75,135 82,172 C86,193 102,204 120,206 C119,167 118,128 120,90 Z" fill="url(#gradPetalSide)"/>
+              <path class="tulip-part tulip-petal" style="animation-delay:1.05s" d="M120,90 C152,95 165,135 158,172 C154,193 138,204 120,206 C121,167 122,128 120,90 Z" fill="url(#gradPetalSide)"/>
+              <path class="tulip-part tulip-petal" style="animation-delay:1.2s" d="M120,58 C98,64 90,110 93,152 C95,182 106,200 120,207 C134,200 145,182 147,152 C150,110 142,64 120,58 Z" fill="url(#gradPetalCenter)"/>
+            </g>
           </svg>
         </div>
 
