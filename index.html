@@ -6,6 +6,30 @@
 <title>Florería La Frontera | Detalles Inolvidables</title>
 <meta name="description" content="Florería La Frontera - Ramos de autor, tulipanes y arreglos florales con entrega rápida. Detalles Inolvidables.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%F0%9F%8C%B7</text></svg>">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Florist",
+  "name": "Florería La Frontera",
+  "description": "Ramos de autor, tulipanes y arreglos florales con entrega rápida en Ayacucho, Perú.",
+  "image": "https://floreria-la-frontera.vercel.app/images/ramo-rosas-blancas-libro.jpg",
+  "telephone": "+51957219600",
+  "email": "gloriagutierrezrayme5@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Jr. José Olaya 681 - Emadi",
+    "addressLocality": "Ayacucho",
+    "postalCode": "05001",
+    "addressCountry": "PE"
+  },
+  "openingHours": "Mo-Su 00:00-23:59",
+  "sameAs": [
+    "https://www.instagram.com/florerialafrontera",
+    "https://www.facebook.com/profile.php?id=61564404956914",
+    "https://www.tiktok.com/@florerialafrontera"
+  ]
+}
+</script>
 
 <!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -112,34 +136,65 @@
 
   input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.4) sepia(1) saturate(4) hue-rotate(300deg); cursor: pointer; }
 
-  /* Animated hero tulip: builds itself in 3D, petal by petal, then sways gently */
+  /* Animated hero tulip: rebuilds itself in 3D on a slow 5s loop, every part in sync */
   .tulip-stage { perspective: 700px; }
   .tulip-sway {
     transform-box: fill-box;
     transform-origin: 50% 100%;
-    animation: tulipSway 4.5s ease-in-out 2.3s infinite;
+    animation: tulipSway 6s ease-in-out infinite;
   }
   .tulip-part {
     opacity: 0;
     transform-box: fill-box;
     transform-origin: 50% 100%;
-    transform: rotateX(-80deg) translateY(16px) scale(0.6);
-    animation: tulipBloom3d 0.85s cubic-bezier(0.22, 0.85, 0.35, 1.2) forwards;
     filter: drop-shadow(0 6px 8px rgba(176, 50, 96, 0.28));
   }
   .tulip-leaf { filter: drop-shadow(0 4px 6px rgba(20, 40, 20, 0.3)); }
+  .tulip-leaf-a { animation: tulipLeafA 5s ease-in-out infinite; }
+  .tulip-leaf-b { animation: tulipLeafB 5s ease-in-out infinite; }
+  .tulip-petal-l { animation: tulipPetalL 5s ease-in-out infinite; }
+  .tulip-petal-r { animation: tulipPetalR 5s ease-in-out infinite; }
+  .tulip-petal-c { animation: tulipPetalC 5s ease-in-out infinite; }
   .tulip-stem {
     stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-    animation: tulipDraw 0.8s ease-out 0.3s forwards;
+    animation: tulipStem 5s ease-in-out infinite;
   }
-  @keyframes tulipBloom3d {
-    0% { opacity: 0; transform: rotateX(-80deg) translateY(16px) scale(0.6); }
-    60% { opacity: 1; }
-    100% { opacity: 1; transform: rotateX(0deg) translateY(0) scale(1); }
+
+  @keyframes tulipLeafA {
+    0%, 100% { opacity: 0; transform: rotateX(-80deg) translateY(16px) scale(0.6); }
+    10% { opacity: 1; transform: rotateX(0deg) translateY(0) scale(1); }
+    88% { opacity: 1; transform: rotateX(0deg) translateY(0) scale(1); }
+    97% { opacity: 0; transform: rotateX(-80deg) translateY(16px) scale(0.6); }
   }
-  @keyframes tulipDraw {
-    to { stroke-dashoffset: 0; }
+  @keyframes tulipLeafB {
+    0%, 100% { opacity: 0; transform: rotateX(-80deg) translateY(16px) scale(0.6); }
+    14% { opacity: 1; transform: rotateX(0deg) translateY(0) scale(1); }
+    88% { opacity: 1; transform: rotateX(0deg) translateY(0) scale(1); }
+    97% { opacity: 0; transform: rotateX(-80deg) translateY(16px) scale(0.6); }
+  }
+  @keyframes tulipStem {
+    0%, 100% { stroke-dashoffset: 1; }
+    26% { stroke-dashoffset: 0; }
+    88% { stroke-dashoffset: 0; }
+    97% { stroke-dashoffset: 1; }
+  }
+  @keyframes tulipPetalL {
+    0%, 100% { opacity: 0; transform: rotateX(-80deg) translateY(16px) scale(0.6); }
+    46% { opacity: 1; transform: rotateX(0deg) translateY(0) scale(1); }
+    88% { opacity: 1; transform: rotateX(0deg) translateY(0) scale(1); }
+    97% { opacity: 0; transform: rotateX(-80deg) translateY(16px) scale(0.6); }
+  }
+  @keyframes tulipPetalR {
+    0%, 100% { opacity: 0; transform: rotateX(-80deg) translateY(16px) scale(0.6); }
+    52% { opacity: 1; transform: rotateX(0deg) translateY(0) scale(1); }
+    88% { opacity: 1; transform: rotateX(0deg) translateY(0) scale(1); }
+    97% { opacity: 0; transform: rotateX(-80deg) translateY(16px) scale(0.6); }
+  }
+  @keyframes tulipPetalC {
+    0%, 100% { opacity: 0; transform: rotateX(-80deg) translateY(16px) scale(0.6); }
+    58% { opacity: 1; transform: rotateX(0deg) translateY(0) scale(1); }
+    88% { opacity: 1; transform: rotateX(0deg) translateY(0) scale(1); }
+    97% { opacity: 0; transform: rotateX(-80deg) translateY(16px) scale(0.6); }
   }
   @keyframes tulipSway {
     0%, 100% { rotate: 0deg; }
@@ -360,12 +415,12 @@
               </linearGradient>
             </defs>
             <g class="tulip-sway">
-              <path class="tulip-part tulip-leaf" style="animation-delay:0s" d="M118,255 C85,250 55,268 35,300 C68,308 100,292 118,272 Z" fill="url(#gradLeafA)"/>
-              <path class="tulip-part tulip-leaf" style="animation-delay:.15s" d="M122,275 C155,268 185,282 205,308 C173,318 140,304 122,285 Z" fill="url(#gradLeafB)"/>
+              <path class="tulip-part tulip-leaf tulip-leaf-a" d="M118,255 C85,250 55,268 35,300 C68,308 100,292 118,272 Z" fill="url(#gradLeafA)"/>
+              <path class="tulip-part tulip-leaf tulip-leaf-b" d="M122,275 C155,268 185,282 205,308 C173,318 140,304 122,285 Z" fill="url(#gradLeafB)"/>
               <path class="tulip-stem" pathLength="1" d="M120,206 C118,240 124,270 120,320" fill="none" stroke="url(#gradStem)" stroke-width="7" stroke-linecap="round"/>
-              <path class="tulip-part tulip-petal" style="animation-delay:.9s" d="M120,90 C88,95 75,135 82,172 C86,193 102,204 120,206 C119,167 118,128 120,90 Z" fill="url(#gradPetalSide)"/>
-              <path class="tulip-part tulip-petal" style="animation-delay:1.05s" d="M120,90 C152,95 165,135 158,172 C154,193 138,204 120,206 C121,167 122,128 120,90 Z" fill="url(#gradPetalSide)"/>
-              <path class="tulip-part tulip-petal" style="animation-delay:1.2s" d="M120,58 C98,64 90,110 93,152 C95,182 106,200 120,207 C134,200 145,182 147,152 C150,110 142,64 120,58 Z" fill="url(#gradPetalCenter)"/>
+              <path class="tulip-part tulip-petal tulip-petal-l" d="M120,90 C88,95 75,135 82,172 C86,193 102,204 120,206 C119,167 118,128 120,90 Z" fill="url(#gradPetalSide)"/>
+              <path class="tulip-part tulip-petal tulip-petal-r" d="M120,90 C152,95 165,135 158,172 C154,193 138,204 120,206 C121,167 122,128 120,90 Z" fill="url(#gradPetalSide)"/>
+              <path class="tulip-part tulip-petal tulip-petal-c" d="M120,58 C98,64 90,110 93,152 C95,182 106,200 120,207 C134,200 145,182 147,152 C150,110 142,64 120,58 Z" fill="url(#gradPetalCenter)"/>
             </g>
           </svg>
         </div>
@@ -455,6 +510,24 @@
          class="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5a] text-white font-semibold px-6 py-3.5 rounded-full shadow-md hover:shadow-lg transition-all hover:scale-105">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-5 h-5 fill-white"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.706 4.605 1.92 6.463L4 29l7.72-1.885A11.94 11.94 0 0 0 16 27c6.628 0 12-5.373 12-12S22.629 3 16.001 3zm0 21.75c-1.994 0-3.85-.583-5.41-1.587l-.388-.24-4.59 1.121 1.169-4.475-.253-.401A9.71 9.71 0 0 1 5.25 15c0-5.937 4.813-10.75 10.751-10.75S26.752 9.063 26.752 15 21.939 24.75 16.001 24.75zm5.55-8.079c-.303-.152-1.794-.885-2.072-.986-.278-.101-.48-.152-.682.152-.202.303-.784.986-.961 1.189-.177.202-.354.227-.657.076-.303-.152-1.28-.472-2.438-1.505-.901-.804-1.51-1.797-1.687-2.1-.177-.303-.019-.467.133-.618.137-.136.303-.354.455-.531.152-.177.202-.303.303-.505.101-.202.05-.379-.025-.531-.076-.152-.682-1.646-.934-2.253-.246-.591-.497-.511-.682-.52l-.581-.01c-.202 0-.531.076-.809.379-.278.303-1.061 1.037-1.061 2.529s1.086 2.935 1.238 3.138c.152.202 2.138 3.266 5.181 4.579.724.313 1.288.5 1.729.64.726.231 1.387.198 1.909.12.582-.087 1.794-.734 2.047-1.443.253-.708.253-1.315.177-1.443-.076-.127-.278-.202-.581-.354z"/></svg>
         957 219 600
+      </a>
+    </div>
+
+    <div class="mt-10 grid sm:grid-cols-3 gap-4 max-w-2xl mx-auto text-left">
+      <a href="https://www.google.com/maps/search/?api=1&query=Jr.+Jose+Olaya+681+Emadi+Ayacucho+Peru"
+         target="_blank" rel="noopener"
+         class="flex items-start gap-3 bg-cream rounded-2xl p-4 hover:bg-cream-deep transition-colors">
+        <svg class="w-5 h-5 text-blossom-dark shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <span class="text-sm text-ink/70">Jr. José Olaya 681 - Emadi<br>Ayacucho, Perú 05001</span>
+      </a>
+      <div class="flex items-start gap-3 bg-cream rounded-2xl p-4">
+        <svg class="w-5 h-5 text-blossom-dark shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span class="text-sm text-ink/70">Siempre abierto<br>Delivery y recojo en tienda</span>
+      </div>
+      <a href="mailto:gloriagutierrezrayme5@gmail.com"
+         class="flex items-start gap-3 bg-cream rounded-2xl p-4 hover:bg-cream-deep transition-colors">
+        <svg class="w-5 h-5 text-blossom-dark shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        <span class="text-sm text-ink/70 break-all">gloriagutierrezrayme5@gmail.com</span>
       </a>
     </div>
 
