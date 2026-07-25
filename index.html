@@ -111,6 +111,9 @@
   /* Modal transition */
   #checkoutModal { transition: opacity 0.3s ease; }
   #checkoutModal .modal-panel { transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease; }
+  #packBuilderModal { transition: opacity 0.3s ease; }
+  #packBuilderModal .modal-panel { transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease; }
+  .pack-presentation-btn.active-presentation { border-color: #e05285; background-color: rgba(248, 187, 208, 0.2); }
 
   /* Lightbox transition */
   #imageLightbox { transition: opacity 0.3s ease; }
@@ -182,6 +185,7 @@
         <a href="#catalogo" data-filter-scroll="Cumpleaños" class="nav-link hover:text-blossom-dark transition-colors">Cumpleaños</a>
         <a href="#catalogo" data-filter-scroll="Aniversarios" class="nav-link hover:text-blossom-dark transition-colors">Aniversarios</a>
         <a href="#catalogo" data-filter-scroll="Románticos" class="nav-link hover:text-blossom-dark transition-colors">Tulipanes &amp; Ramos</a>
+        <a href="#arma-tu-pack" class="nav-link hover:text-blossom-dark transition-colors">Arma tu Pack</a>
         <a href="#contacto" class="nav-link hover:text-blossom-dark transition-colors">Contacto</a>
       </nav>
 
@@ -229,6 +233,7 @@
       <a href="#catalogo" data-filter-scroll="Cumpleaños" class="py-3 border-b border-blossom-light/30">Cumpleaños</a>
       <a href="#catalogo" data-filter-scroll="Aniversarios" class="py-3 border-b border-blossom-light/30">Aniversarios</a>
       <a href="#catalogo" data-filter-scroll="Románticos" class="py-3 border-b border-blossom-light/30">Tulipanes &amp; Ramos</a>
+      <a href="#arma-tu-pack" class="py-3 border-b border-blossom-light/30">Arma tu Pack</a>
       <a href="#contacto" class="py-3">Contacto</a>
       <a href="https://wa.me/message/2OMDBGCGOVGSI1?text=Hola%20Florer%C3%ADa%20La%20Frontera%2C%20quisiera%20informaci%C3%B3n%20sobre%20un%20arreglo%20floral"
          target="_blank" rel="noopener"
@@ -349,6 +354,51 @@
     <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
 
     <p id="noResults" class="hidden text-center text-ink/50 py-10">No encontramos arreglos con ese criterio. Prueba con otra búsqueda o escríbenos por WhatsApp.</p>
+  </div>
+</section>
+
+<!-- ================= ARMA TU PACK ================= -->
+<section id="arma-tu-pack" class="py-16 sm:py-24 bg-cream">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+    <div class="order-2 lg:order-1 text-center lg:text-left">
+      <span class="text-botanical font-semibold text-sm tracking-widest uppercase">Hecho a tu manera</span>
+      <h2 class="font-serif text-3xl sm:text-4xl font-bold text-ink mt-2 mb-4">Arma tu Pack perfecto</h2>
+      <p class="text-ink/60 mb-6 max-w-lg mx-auto lg:mx-0">Elige cuántas rosas, chocolates y peluches quieres, y nosotros lo armamos hermoso a tu medida — en ramo de mano o canastita, tú decides.</p>
+      <ul class="space-y-3 mb-8 text-sm text-ink/70 inline-block text-left">
+        <li class="flex items-center gap-2"><svg class="w-5 h-5 text-botanical shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Rosas y girasoles por unidad</li>
+        <li class="flex items-center gap-2"><svg class="w-5 h-5 text-botanical shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Chocolates Vizio o D'onofrio</li>
+        <li class="flex items-center gap-2"><svg class="w-5 h-5 text-botanical shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Peluches de regalo</li>
+        <li class="flex items-center gap-2"><svg class="w-5 h-5 text-botanical shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Ramo de mano o canasta, tú eliges</li>
+      </ul>
+      <div>
+        <button id="openPackBuilderBtn" type="button" class="bg-blossom-dark hover:bg-ink text-white font-semibold px-8 py-4 rounded-full shadow-md hover:shadow-lg transition-all hover:scale-105">
+          Personalizar mi Pack
+        </button>
+      </div>
+    </div>
+
+    <div class="order-1 lg:order-2 flex justify-center">
+      <div class="relative w-full max-w-sm rounded-[2.5rem] shadow-2xl bg-gradient-to-br from-cream-deep via-cream to-blossom-light/50 p-8 sm:p-10">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-white rounded-2xl p-5 flex flex-col items-center gap-2 shadow-sm">
+            <span class="text-4xl">🌹</span>
+            <span class="text-xs font-semibold text-ink/60">Rosas</span>
+          </div>
+          <div class="bg-white rounded-2xl p-5 flex flex-col items-center gap-2 shadow-sm">
+            <span class="text-4xl">🍫</span>
+            <span class="text-xs font-semibold text-ink/60">Chocolates</span>
+          </div>
+          <div class="bg-white rounded-2xl p-5 flex flex-col items-center gap-2 shadow-sm">
+            <span class="text-4xl">🧸</span>
+            <span class="text-xs font-semibold text-ink/60">Peluche</span>
+          </div>
+          <div class="bg-white rounded-2xl p-5 flex flex-col items-center gap-2 shadow-sm">
+            <span class="text-4xl">🧺</span>
+            <span class="text-xs font-semibold text-ink/60">Canasta</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -492,6 +542,29 @@
   </div>
 </div>
 
+<!-- ================= CHATBOT WIDGET ================= -->
+<button id="chatToggleBtn" type="button" aria-label="Chatea con nosotros"
+        class="fixed bottom-24 right-6 sm:bottom-28 z-50 flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-blossom-dark rounded-full shadow-2xl hover:scale-110 transition-transform">
+  <svg id="chatIconOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-7 h-7 sm:w-8 sm:h-8 fill-white"><path d="M12 2C6.477 2 2 5.925 2 10.75c0 2.716 1.427 5.144 3.66 6.744-.12.99-.457 2.316-1.284 3.626-.16.253.036.58.334.552 1.86-.174 3.55-.892 4.796-1.633.807.19 1.652.29 2.494.29 5.523 0 10-3.925 10-8.75S17.523 2 12 2z"/></svg>
+  <svg id="chatIconClose" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="hidden w-7 h-7 sm:w-8 sm:h-8 stroke-white" fill="none" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+</button>
+
+<div id="chatPanel" class="hidden fixed bottom-[152px] right-4 sm:bottom-[184px] sm:right-6 z-50 w-[calc(100%-2rem)] max-w-sm h-[65vh] max-h-[500px] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-blossom-light/40">
+  <div class="bg-blossom-dark text-white px-5 py-4 flex items-center justify-between shrink-0">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-lg">🌷</div>
+      <div>
+        <p class="font-semibold text-sm leading-tight">Florería La Frontera</p>
+        <p class="text-xs text-white/80 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-green-400 inline-block"></span>Asistente virtual</p>
+      </div>
+    </div>
+    <button id="chatCloseBtn" aria-label="Cerrar chat" class="text-white/80 hover:text-white transition-colors p-1">
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div id="chatMessages" class="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-cream/40"></div>
+</div>
+
 <!-- ================= FLOATING WHATSAPP BUTTON ================= -->
 <a href="https://wa.me/message/2OMDBGCGOVGSI1?text=Hola%20Florer%C3%ADa%20La%20Frontera%2C%20quisiera%20informaci%C3%B3n%20sobre%20un%20arreglo%20floral"
    target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp"
@@ -499,6 +572,110 @@
   <span class="wa-pulse absolute inset-0 rounded-full"></span>
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="relative w-7 h-7 sm:w-8 sm:h-8 fill-white"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.706 4.605 1.92 6.463L4 29l7.72-1.885A11.94 11.94 0 0 0 16 27c6.628 0 12-5.373 12-12S22.629 3 16.001 3zm0 21.75c-1.994 0-3.85-.583-5.41-1.587l-.388-.24-4.59 1.121 1.169-4.475-.253-.401A9.71 9.71 0 0 1 5.25 15c0-5.937 4.813-10.75 10.751-10.75S26.752 9.063 26.752 15 21.939 24.75 16.001 24.75zm5.55-8.079c-.303-.152-1.794-.885-2.072-.986-.278-.101-.48-.152-.682.152-.202.303-.784.986-.961 1.189-.177.202-.354.227-.657.076-.303-.152-1.28-.472-2.438-1.505-.901-.804-1.51-1.797-1.687-2.1-.177-.303-.019-.467.133-.618.137-.136.303-.354.455-.531.152-.177.202-.303.303-.505.101-.202.05-.379-.025-.531-.076-.152-.682-1.646-.934-2.253-.246-.591-.497-.511-.682-.52l-.581-.01c-.202 0-.531.076-.809.379-.278.303-1.061 1.037-1.061 2.529s1.086 2.935 1.238 3.138c.152.202 2.138 3.266 5.181 4.579.724.313 1.288.5 1.729.64.726.231 1.387.198 1.909.12.582-.087 1.794-.734 2.047-1.443.253-.708.253-1.315.177-1.443-.076-.127-.278-.202-.581-.354z"/></svg>
 </a>
+
+<!-- ================= PACK BUILDER MODAL ================= -->
+<div id="packBuilderModal" class="fixed inset-0 z-[60] hidden">
+  <div id="packModalOverlay" class="absolute inset-0 bg-ink/60 backdrop-blur-sm"></div>
+  <div class="relative min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="modal-panel opacity-0 translate-y-8 bg-white w-full sm:max-w-2xl sm:rounded-3xl rounded-t-3xl max-h-[92vh] overflow-y-auto shadow-2xl">
+
+      <!-- Modal header -->
+      <div class="sticky top-0 bg-white z-10 flex items-start justify-between gap-4 px-6 sm:px-8 pt-6 pb-4 border-b border-blossom-light/40">
+        <div>
+          <p class="text-xs font-semibold text-botanical uppercase tracking-wide">Hecho a tu manera</p>
+          <h3 class="font-serif text-xl font-bold text-ink leading-tight">Arma tu Pack</h3>
+        </div>
+        <button id="closePackModalBtn" aria-label="Cerrar" class="shrink-0 text-ink/40 hover:text-ink transition-colors p-1">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="px-6 sm:px-8 py-6 space-y-6">
+
+        <!-- Presentación -->
+        <div>
+          <label class="block text-sm font-semibold text-ink mb-3">Presentación</label>
+          <div class="grid grid-cols-2 gap-3" id="packPresentationRow">
+            <button type="button" data-presentation="Ramo de mano" data-price="0"
+                    class="pack-presentation-btn active-presentation border-2 border-blossom-dark bg-blossom-light/20 rounded-2xl p-4 text-center transition-colors">
+              <span class="text-2xl block mb-1">💐</span>
+              <span class="text-sm font-semibold text-ink">Ramo de mano</span>
+              <span class="block text-xs text-ink/50">Incluido</span>
+            </button>
+            <button type="button" data-presentation="Canasta" data-price="15"
+                    class="pack-presentation-btn border-2 border-blossom-light/60 rounded-2xl p-4 text-center transition-colors hover:border-blossom">
+              <span class="text-2xl block mb-1">🧺</span>
+              <span class="text-sm font-semibold text-ink">Canasta</span>
+              <span class="block text-xs text-ink/50">+ S/ 15.00</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Flores -->
+        <div>
+          <label class="block text-sm font-semibold text-ink mb-3">Flores</label>
+          <div class="space-y-2" id="packFlowersRow"></div>
+        </div>
+
+        <!-- Chocolates -->
+        <div>
+          <label class="block text-sm font-semibold text-ink mb-3">Chocolates</label>
+          <div class="space-y-2" id="packChocolatesRow"></div>
+        </div>
+
+        <!-- Peluches -->
+        <div>
+          <label class="block text-sm font-semibold text-ink mb-3">Peluches</label>
+          <div class="space-y-2" id="packPlushiesRow"></div>
+        </div>
+
+        <!-- Dedicatoria -->
+        <div>
+          <label class="block text-sm font-semibold text-ink mb-2">Mensaje para la tarjeta (opcional)</label>
+          <textarea id="packDedicationMsg" rows="2" maxlength="220" placeholder="Escribe aquí tu mensaje especial..."
+                    class="w-full px-4 py-3 rounded-xl border border-blossom-light bg-cream/40 focus:outline-none focus:ring-2 focus:ring-blossom text-sm resize-none"></textarea>
+        </div>
+
+        <!-- Fecha y horario -->
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-semibold text-ink mb-2">Fecha de entrega</label>
+            <input type="date" id="packDeliveryDate"
+                   class="w-full px-4 py-3 rounded-xl border border-blossom-light bg-cream/40 focus:outline-none focus:ring-2 focus:ring-blossom text-sm">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-ink mb-2">Horario de entrega</label>
+            <select id="packDeliveryTime"
+                    class="w-full px-4 py-3 rounded-xl border border-blossom-light bg-cream/40 focus:outline-none focus:ring-2 focus:ring-blossom text-sm">
+              <option value="">Selecciona un rango</option>
+              <option value="09:00 - 12:00">09:00 am - 12:00 pm</option>
+              <option value="12:00 - 15:00">12:00 pm - 03:00 pm</option>
+              <option value="15:00 - 18:00">03:00 pm - 06:00 pm</option>
+              <option value="18:00 - 20:00">06:00 pm - 08:00 pm</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Total summary -->
+        <div class="bg-cream-deep rounded-2xl p-5 flex items-center justify-between">
+          <span class="font-semibold text-ink">Total estimado</span>
+          <span id="packTotal" class="font-serif text-2xl font-bold text-blossom-dark">S/ 0.00</span>
+        </div>
+
+        <p id="packEmptyHint" class="text-xs text-center text-blossom-dark font-medium">Selecciona al menos un producto para continuar.</p>
+
+        <!-- Submit -->
+        <button type="button" id="packSubmitBtn" disabled
+                class="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1ebe5a] disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-base px-6 py-4 rounded-full shadow-md hover:shadow-lg transition-all hover:scale-[1.02] disabled:hover:scale-100">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-5 h-5 fill-white"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.706 4.605 1.92 6.463L4 29l7.72-1.885A11.94 11.94 0 0 0 16 27c6.628 0 12-5.373 12-12S22.629 3 16.001 3zm0 21.75c-1.994 0-3.85-.583-5.41-1.587l-.388-.24-4.59 1.121 1.169-4.475-.253-.401A9.71 9.71 0 0 1 5.25 15c0-5.937 4.813-10.75 10.751-10.75S26.752 9.063 26.752 15 21.939 24.75 16.001 24.75zm5.55-8.079c-.303-.152-1.794-.885-2.072-.986-.278-.101-.48-.152-.682.152-.202.303-.784.986-.961 1.189-.177.202-.354.227-.657.076-.303-.152-1.28-.472-2.438-1.505-.901-.804-1.51-1.797-1.687-2.1-.177-.303-.019-.467.133-.618.137-.136.303-.354.455-.531.152-.177.202-.303.303-.505.101-.202.05-.379-.025-.531-.076-.152-.682-1.646-.934-2.253-.246-.591-.497-.511-.682-.52l-.581-.01c-.202 0-.531.076-.809.379-.278.303-1.061 1.037-1.061 2.529s1.086 2.935 1.238 3.138c.152.202 2.138 3.266 5.181 4.579.724.313 1.288.5 1.729.64.726.231 1.387.198 1.909.12.582-.087 1.794-.734 2.047-1.443.253-.708.253-1.315.177-1.443-.076-.127-.278-.202-.581-.354z"/></svg>
+          Pedir mi Pack por WhatsApp
+        </button>
+        <p class="text-xs text-center text-ink/40">Al confirmar, se abrirá WhatsApp con el resumen de tu pack para coordinar el pago y la entrega.</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ================= CHECKOUT / PERSONALIZACIÓN MODAL ================= -->
 <div id="checkoutModal" class="fixed inset-0 z-[60] hidden">
@@ -889,7 +1066,7 @@
     lightboxPanel.classList.add("opacity-0", "scale-95");
     setTimeout(() => {
       imageLightbox.classList.add("hidden");
-      if (checkoutModal.classList.contains("hidden")) {
+      if (checkoutModal.classList.contains("hidden") && document.getElementById("packBuilderModal").classList.contains("hidden")) {
         document.body.classList.remove("overflow-hidden");
       }
     }, 300);
@@ -960,6 +1137,307 @@ ${addonsText}
     const encoded = encodeURIComponent(message);
     window.open(`${WHATSAPP_LINK}?text=${encoded}`, "_blank");
     closeModal();
+  });
+
+  /* ---------------- Pack Builder ---------------- */
+  const packCatalog = {
+    flores: [
+      { id: "rosa", name: "Rosas", price: 3.5, emoji: "🌹" },
+      { id: "girasol", name: "Girasoles", price: 4.0, emoji: "🌻" },
+    ],
+    chocolates: [
+      { id: "vizio", name: "Chocolate Vizio", price: 8.0, emoji: "🍫" },
+      { id: "donofrio", name: "Chocolate D'onofrio", price: 9.0, emoji: "🍫" },
+    ],
+    peluches: [
+      { id: "peluche", name: "Peluche mediano", price: 25.0, emoji: "🧸" },
+    ],
+  };
+
+  const packQuantities = {};
+  let packPresentation = { name: "Ramo de mano", price: 0 };
+
+  const packBuilderModal = document.getElementById("packBuilderModal");
+  const packModalPanel = packBuilderModal.querySelector(".modal-panel");
+  const packModalOverlay = document.getElementById("packModalOverlay");
+  const openPackBuilderBtn = document.getElementById("openPackBuilderBtn");
+  const closePackModalBtn = document.getElementById("closePackModalBtn");
+  const packPresentationRow = document.getElementById("packPresentationRow");
+  const packDeliveryDate = document.getElementById("packDeliveryDate");
+  const packDeliveryTime = document.getElementById("packDeliveryTime");
+  const packDedicationMsg = document.getElementById("packDedicationMsg");
+  const packTotalEl = document.getElementById("packTotal");
+  const packSubmitBtn = document.getElementById("packSubmitBtn");
+  const packEmptyHint = document.getElementById("packEmptyHint");
+
+  function renderPackRow(containerId, items) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = items.map((item) => {
+      packQuantities[item.id] = packQuantities[item.id] || 0;
+      return `
+        <div class="flex items-center justify-between bg-cream/40 rounded-xl px-4 py-3">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">${item.emoji}</span>
+            <div>
+              <p class="text-sm font-semibold text-ink">${item.name}</p>
+              <p class="text-xs text-ink/50">${formatPrice(item.price)} c/u</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <button type="button" class="pack-qty-btn w-8 h-8 rounded-full border border-blossom-light flex items-center justify-center text-ink/70 hover:bg-blossom-light transition-colors" data-item="${item.id}" data-delta="-1">−</button>
+            <span class="pack-qty-value w-6 text-center font-semibold text-ink" data-item-qty="${item.id}">0</span>
+            <button type="button" class="pack-qty-btn w-8 h-8 rounded-full border border-blossom-light flex items-center justify-center text-ink/70 hover:bg-blossom-light transition-colors" data-item="${item.id}" data-delta="1">+</button>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function allPackItems() {
+    return [...packCatalog.flores, ...packCatalog.chocolates, ...packCatalog.peluches];
+  }
+
+  function updatePackTotal() {
+    const itemsTotal = allPackItems().reduce((sum, item) => sum + item.price * (packQuantities[item.id] || 0), 0);
+    const total = itemsTotal + packPresentation.price;
+    packTotalEl.textContent = formatPrice(total);
+
+    const hasItems = allPackItems().some((item) => (packQuantities[item.id] || 0) > 0);
+    packSubmitBtn.disabled = !hasItems;
+    packEmptyHint.classList.toggle("hidden", hasItems);
+    return total;
+  }
+
+  function initPackBuilder() {
+    renderPackRow("packFlowersRow", packCatalog.flores);
+    renderPackRow("packChocolatesRow", packCatalog.chocolates);
+    renderPackRow("packPlushiesRow", packCatalog.peluches);
+    updatePackTotal();
+  }
+  initPackBuilder();
+
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest(".pack-qty-btn");
+    if (!btn) return;
+    const id = btn.dataset.item;
+    const delta = Number(btn.dataset.delta);
+    packQuantities[id] = Math.max(0, (packQuantities[id] || 0) + delta);
+    const qtyEl = document.querySelector(`[data-item-qty="${id}"]`);
+    if (qtyEl) qtyEl.textContent = packQuantities[id];
+    updatePackTotal();
+  });
+
+  packPresentationRow.addEventListener("click", (e) => {
+    const btn = e.target.closest(".pack-presentation-btn");
+    if (!btn) return;
+    packPresentationRow.querySelectorAll(".pack-presentation-btn").forEach((b) => {
+      b.classList.remove("active-presentation");
+    });
+    btn.classList.add("active-presentation");
+    packPresentation = { name: btn.dataset.presentation, price: parseFloat(btn.dataset.price) };
+    updatePackTotal();
+  });
+
+  function openPackModal() {
+    const today = new Date().toISOString().split("T")[0];
+    packDeliveryDate.min = today;
+    packDeliveryDate.value = today;
+
+    packBuilderModal.classList.remove("hidden");
+    document.body.classList.add("overflow-hidden");
+    requestAnimationFrame(() => {
+      packModalPanel.classList.remove("opacity-0", "translate-y-8");
+    });
+  }
+
+  function closePackModal() {
+    packModalPanel.classList.add("opacity-0", "translate-y-8");
+    setTimeout(() => {
+      packBuilderModal.classList.add("hidden");
+      document.body.classList.remove("overflow-hidden");
+    }, 300);
+  }
+
+  openPackBuilderBtn.addEventListener("click", openPackModal);
+  closePackModalBtn.addEventListener("click", closePackModal);
+  packModalOverlay.addEventListener("click", closePackModal);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !packBuilderModal.classList.contains("hidden")) closePackModal();
+  });
+
+  packSubmitBtn.addEventListener("click", () => {
+    const selectedItems = allPackItems().filter((item) => (packQuantities[item.id] || 0) > 0);
+    if (selectedItems.length === 0) return;
+
+    const itemsText = selectedItems.map((item) => `• ${packQuantities[item.id]}x ${item.name} (${formatPrice(item.price)} c/u)`).join("\n");
+    const total = updatePackTotal();
+
+    const dateValue = packDeliveryDate.value
+      ? new Date(packDeliveryDate.value + "T00:00:00").toLocaleDateString("es-PE", { weekday: "long", year: "numeric", month: "long", day: "numeric" })
+      : "No especificada";
+
+    const message =
+`Hola Florería La Frontera, quisiera armar mi propio pack:
+
+🎁 Presentación: ${packPresentation.name}
+${itemsText}
+
+💌 Mensaje de tarjeta: ${packDedicationMsg.value.trim() || "Sin mensaje"}
+📅 Fecha de entrega: ${dateValue}
+🕐 Horario: ${packDeliveryTime.value || "No especificado"}
+
+💰 Total estimado: ${formatPrice(total)}
+
+¡Quedo atento(a) para coordinar el pago y la entrega!`;
+
+    const encoded = encodeURIComponent(message);
+    window.open(`${WHATSAPP_LINK}?text=${encoded}`, "_blank");
+    closePackModal();
+  });
+
+  /* ---------------- Chatbot Widget ---------------- */
+  const chatToggleBtn = document.getElementById("chatToggleBtn");
+  const chatIconOpen = document.getElementById("chatIconOpen");
+  const chatIconClose = document.getElementById("chatIconClose");
+  const chatPanel = document.getElementById("chatPanel");
+  const chatCloseBtn = document.getElementById("chatCloseBtn");
+  const chatMessagesEl = document.getElementById("chatMessages");
+
+  function chatScrollToBottom() {
+    chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+  }
+
+  function addBotMessage(html) {
+    const div = document.createElement("div");
+    div.className = "flex justify-start";
+    div.innerHTML = `<div class="bg-white rounded-2xl rounded-tl-sm px-4 py-2.5 max-w-[85%] text-sm text-ink shadow-sm">${html}</div>`;
+    chatMessagesEl.appendChild(div);
+    chatScrollToBottom();
+  }
+
+  function addUserMessage(text) {
+    const div = document.createElement("div");
+    div.className = "flex justify-end";
+    div.innerHTML = `<div class="bg-blossom-dark text-white rounded-2xl rounded-tr-sm px-4 py-2.5 max-w-[85%] text-sm"></div>`;
+    div.firstElementChild.textContent = text;
+    chatMessagesEl.appendChild(div);
+    chatScrollToBottom();
+  }
+
+  function removeChatOptions() {
+    const existing = document.getElementById("chatOptionsRow");
+    if (existing) existing.remove();
+  }
+
+  function showChatOptions(options) {
+    removeChatOptions();
+    const row = document.createElement("div");
+    row.id = "chatOptionsRow";
+    row.className = "flex flex-wrap gap-2";
+    options.forEach((opt) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "chat-option-btn bg-white border border-blossom-light text-blossom-dark text-xs font-semibold px-3.5 py-2 rounded-full hover:bg-blossom-light transition-colors";
+      btn.textContent = opt.label;
+      btn.addEventListener("click", () => handleChatOption(opt));
+      row.appendChild(btn);
+    });
+    chatMessagesEl.appendChild(row);
+    chatScrollToBottom();
+  }
+
+  function chatWhatsappLink(text) {
+    return `${WHATSAPP_LINK}?text=${encodeURIComponent(text)}`;
+  }
+
+  function handleChatOption(opt) {
+    addUserMessage(opt.label);
+    removeChatOptions();
+
+    setTimeout(() => {
+      switch (opt.action.type) {
+        case "category": {
+          const cat = opt.action.value;
+          addBotMessage(`¡Genial! Aquí tienes nuestras opciones para <strong>${cat}</strong> 💐`);
+          showChatOptions([
+            { label: "Ver catálogo", action: { type: "viewCatalog", value: cat } },
+            { label: "Hablar por WhatsApp", action: { type: "whatsapp", value: `Hola Florería La Frontera, quisiera ver arreglos para ${cat}.` } },
+            { label: "⬅ Volver", action: { type: "restart" } },
+          ]);
+          break;
+        }
+        case "viewCatalog": {
+          closeChatPanel();
+          const filterBtn = document.querySelector(`#filterRow [data-filter="${opt.action.value}"]`);
+          if (filterBtn) filterBtn.click();
+          document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
+          break;
+        }
+        case "pack": {
+          addBotMessage("¡Perfecto! Elige rosas, chocolates y peluches a tu gusto y armamos tu combo 🎁");
+          showChatOptions([
+            { label: "Abrir Arma tu Pack", action: { type: "openPack" } },
+            { label: "⬅ Volver", action: { type: "restart" } },
+          ]);
+          break;
+        }
+        case "openPack": {
+          closeChatPanel();
+          openPackModal();
+          break;
+        }
+        case "other": {
+          addBotMessage("Cuéntanos qué buscas y uno de nuestros asesores te ayuda enseguida por WhatsApp 💬");
+          showChatOptions([
+            { label: "Escribir por WhatsApp", action: { type: "whatsapp", value: "Hola Florería La Frontera, tengo una consulta." } },
+            { label: "⬅ Volver", action: { type: "restart" } },
+          ]);
+          break;
+        }
+        case "whatsapp": {
+          window.open(chatWhatsappLink(opt.action.value), "_blank");
+          break;
+        }
+        case "restart": {
+          startChat();
+          break;
+        }
+      }
+    }, 350);
+  }
+
+  function startChat() {
+    chatMessagesEl.innerHTML = "";
+    addBotMessage("¡Hola! 🌷 Soy el asistente virtual de Florería La Frontera. ¿Para qué ocasión buscas algo especial?");
+    showChatOptions([
+      { label: "Cumpleaños", action: { type: "category", value: "Cumpleaños" } },
+      { label: "Aniversario", action: { type: "category", value: "Aniversarios" } },
+      { label: "Algo romántico", action: { type: "category", value: "Románticos" } },
+      { label: "Arma tu Pack", action: { type: "pack" } },
+      { label: "Otra cosa", action: { type: "other" } },
+    ]);
+  }
+
+  function openChatPanel() {
+    chatPanel.classList.remove("hidden");
+    chatIconOpen.classList.add("hidden");
+    chatIconClose.classList.remove("hidden");
+    if (chatMessagesEl.children.length === 0) startChat();
+  }
+
+  function closeChatPanel() {
+    chatPanel.classList.add("hidden");
+    chatIconOpen.classList.remove("hidden");
+    chatIconClose.classList.add("hidden");
+  }
+
+  chatToggleBtn.addEventListener("click", () => {
+    if (chatPanel.classList.contains("hidden")) openChatPanel();
+    else closeChatPanel();
+  });
+  chatCloseBtn.addEventListener("click", closeChatPanel);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !chatPanel.classList.contains("hidden")) closeChatPanel();
   });
 
 })();
