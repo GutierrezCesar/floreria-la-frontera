@@ -669,7 +669,7 @@
               <p class="text-sm text-ink/60">Generando tu vista previa con IA…</p>
             </div>
             <img id="packAiPreviewImg" class="hidden w-full rounded-xl shadow-md" alt="Vista previa generada por IA de tu pack personalizado">
-            <p id="packAiPreviewCaption" class="hidden text-xs text-ink/50 mt-3">✨ Vista previa generada por IA — el resultado final puede variar un poco según disponibilidad. </p>
+            <p id="packAiPreviewCaption" class="hidden text-xs text-ink/50 mt-3">✨ Vista previa generada por IA — es solo referencial (la IA a veces no acierta las cantidades exactas ni los colores). El arreglo real lo arma nuestro equipo a mano.</p>
             <p id="packAiPreviewError" class="hidden text-sm text-ink/60 py-4">No pudimos generar la vista previa. <button type="button" id="packAiPreviewRetry" class="text-blossom-dark font-semibold underline">Reintentar</button></p>
           </div>
         </div>
@@ -1159,15 +1159,15 @@ ${addonsText}
   /* ---------------- Pack Builder ---------------- */
   const packCatalog = {
     flores: [
-      { id: "rosa", name: "Rosas", price: 3.5, img: "https://images.unsplash.com/photo-1644248421159-e6e64a7f4ca3?q=80&w=200&auto=format&fit=crop" },
-      { id: "girasol", name: "Girasoles", price: 4.0, img: "https://images.unsplash.com/photo-1676819076406-eb84287c818d?q=80&w=200&auto=format&fit=crop" },
+      { id: "rosa", name: "Rosas", promptName: "pink roses", img: "https://images.unsplash.com/photo-1644248421159-e6e64a7f4ca3?q=80&w=200&auto=format&fit=crop", price: 3.5 },
+      { id: "girasol", name: "Girasoles", promptName: "sunflowers", img: "https://images.unsplash.com/photo-1676819076406-eb84287c818d?q=80&w=200&auto=format&fit=crop", price: 4.0 },
     ],
     chocolates: [
-      { id: "vizio", name: "Chocolate Vizio", price: 8.0, img: "https://images.unsplash.com/photo-1526081347589-7fa3cb41b4b2?q=80&w=200&auto=format&fit=crop" },
-      { id: "donofrio", name: "Chocolate D'onofrio", price: 9.0, img: "https://images.unsplash.com/photo-1526081347589-7fa3cb41b4b2?q=80&w=200&auto=format&fit=crop" },
+      { id: "vizio", name: "Chocolate Vizio", promptName: "small chocolate gift boxes", img: "https://images.unsplash.com/photo-1526081347589-7fa3cb41b4b2?q=80&w=200&auto=format&fit=crop", price: 8.0 },
+      { id: "donofrio", name: "Chocolate D'onofrio", promptName: "small chocolate gift boxes", img: "https://images.unsplash.com/photo-1526081347589-7fa3cb41b4b2?q=80&w=200&auto=format&fit=crop", price: 9.0 },
     ],
     peluches: [
-      { id: "peluche", name: "Peluche mediano", price: 25.0, img: "https://images.unsplash.com/photo-1583478415880-b79447d73a84?q=80&w=200&auto=format&fit=crop" },
+      { id: "peluche", name: "Peluche mediano", promptName: "teddy bear plush toys", img: "https://images.unsplash.com/photo-1583478415880-b79447d73a84?q=80&w=200&auto=format&fit=crop", price: 25.0 },
     ],
   };
 
@@ -1293,9 +1293,13 @@ ${addonsText}
 
   function buildPackPromptText() {
     const selectedItems = allPackItems().filter((item) => (packQuantities[item.id] || 0) > 0);
-    const parts = selectedItems.map((item) => `${packQuantities[item.id]} ${item.name.toLowerCase()}`);
-    const presentationText = packPresentation.name === "Canasta" ? "arranged in a woven gift basket" : "wrapped as a hand-tied bouquet in kraft paper with ribbon";
-    return `professional florist product photo, a beautiful floral gift arrangement with ${parts.join(", ")}, ${presentationText}, soft natural light, clean pastel pink background, high quality, elegant, no text, no watermark`;
+    const itemLines = selectedItems
+      .map((item) => `exactly ${packQuantities[item.id]} ${item.promptName}`)
+      .join(", plus ");
+    const presentationText = packPresentation.name === "Canasta"
+      ? "all placed together inside a single woven wicker gift basket"
+      : "all tied together into a single hand-held bouquet, wrapped in kraft paper with a ribbon";
+    return `Professional florist product photography, one gift arrangement containing ${itemLines}, ${presentationText}. Show the exact item count clearly, each item fully visible and countable, not blended together. Soft studio lighting, clean pastel pink background, high detail, realistic, no text, no watermark, no logo.`;
   }
 
   function generateAiPreview() {
@@ -1309,7 +1313,7 @@ ${addonsText}
 
     const prompt = buildPackPromptText();
     const seed = Math.floor(Math.random() * 100000);
-    const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=640&height=640&seed=${seed}&nologo=true`;
+    const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=640&height=640&seed=${seed}&nologo=true&model=flux`;
 
     const finish = (success) => {
       packAiPreviewLoading.classList.add("hidden");
