@@ -657,6 +657,23 @@
           </div>
         </div>
 
+        <!-- AI Preview -->
+        <div>
+          <button type="button" id="packAiPreviewBtn"
+                  class="w-full flex items-center justify-center gap-2 border-2 border-dashed border-blossom-light text-blossom-dark font-semibold text-sm px-4 py-3.5 rounded-2xl hover:bg-blossom-light/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+            <span>✨</span> Generar vista previa con IA
+          </button>
+          <div id="packAiPreviewResult" class="hidden mt-4 bg-cream/40 rounded-2xl p-4 text-center">
+            <div id="packAiPreviewLoading" class="hidden flex-col items-center gap-3 py-6">
+              <svg class="animate-spin w-8 h-8 text-blossom-dark" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
+              <p class="text-sm text-ink/60">Generando tu vista previa con IA…</p>
+            </div>
+            <img id="packAiPreviewImg" class="hidden w-full rounded-xl shadow-md" alt="Vista previa generada por IA de tu pack personalizado">
+            <p id="packAiPreviewCaption" class="hidden text-xs text-ink/50 mt-3">✨ Vista previa generada por IA — el resultado final puede variar un poco según disponibilidad. </p>
+            <p id="packAiPreviewError" class="hidden text-sm text-ink/60 py-4">No pudimos generar la vista previa. <button type="button" id="packAiPreviewRetry" class="text-blossom-dark font-semibold underline">Reintentar</button></p>
+          </div>
+        </div>
+
         <!-- Total summary -->
         <div class="bg-cream-deep rounded-2xl p-5 flex items-center justify-between">
           <span class="font-semibold text-ink">Total estimado</span>
@@ -1169,6 +1186,13 @@ ${addonsText}
   const packTotalEl = document.getElementById("packTotal");
   const packSubmitBtn = document.getElementById("packSubmitBtn");
   const packEmptyHint = document.getElementById("packEmptyHint");
+  const packAiPreviewBtn = document.getElementById("packAiPreviewBtn");
+  const packAiPreviewResult = document.getElementById("packAiPreviewResult");
+  const packAiPreviewLoading = document.getElementById("packAiPreviewLoading");
+  const packAiPreviewImg = document.getElementById("packAiPreviewImg");
+  const packAiPreviewCaption = document.getElementById("packAiPreviewCaption");
+  const packAiPreviewError = document.getElementById("packAiPreviewError");
+  const packAiPreviewRetry = document.getElementById("packAiPreviewRetry");
 
   function renderPackRow(containerId, items) {
     const container = document.getElementById(containerId);
@@ -1205,6 +1229,7 @@ ${addonsText}
     const hasItems = allPackItems().some((item) => (packQuantities[item.id] || 0) > 0);
     packSubmitBtn.disabled = !hasItems;
     packEmptyHint.classList.toggle("hidden", hasItems);
+    packAiPreviewBtn.disabled = !hasItems;
     return total;
   }
 
@@ -1242,6 +1267,7 @@ ${addonsText}
     const today = new Date().toISOString().split("T")[0];
     packDeliveryDate.min = today;
     packDeliveryDate.value = today;
+    packAiPreviewResult.classList.add("hidden");
 
     packBuilderModal.classList.remove("hidden");
     document.body.classList.add("overflow-hidden");
@@ -1264,6 +1290,46 @@ ${addonsText}
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !packBuilderModal.classList.contains("hidden")) closePackModal();
   });
+
+  function buildPackPromptText() {
+    const selectedItems = allPackItems().filter((item) => (packQuantities[item.id] || 0) > 0);
+    const parts = selectedItems.map((item) => `${packQuantities[item.id]} ${item.name.toLowerCase()}`);
+    const presentationText = packPresentation.name === "Canasta" ? "arranged in a woven gift basket" : "wrapped as a hand-tied bouquet in kraft paper with ribbon";
+    return `professional florist product photo, a beautiful floral gift arrangement with ${parts.join(", ")}, ${presentationText}, soft natural light, clean pastel pink background, high quality, elegant, no text, no watermark`;
+  }
+
+  function generateAiPreview() {
+    packAiPreviewResult.classList.remove("hidden");
+    packAiPreviewLoading.classList.remove("hidden");
+    packAiPreviewLoading.classList.add("flex");
+    packAiPreviewImg.classList.add("hidden");
+    packAiPreviewCaption.classList.add("hidden");
+    packAiPreviewError.classList.add("hidden");
+    packAiPreviewBtn.disabled = true;
+
+    const prompt = buildPackPromptText();
+    const seed = Math.floor(Math.random() * 100000);
+    const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=640&height=640&seed=${seed}&nologo=true`;
+
+    const finish = (success) => {
+      packAiPreviewLoading.classList.add("hidden");
+      packAiPreviewLoading.classList.remove("flex");
+      packAiPreviewBtn.disabled = false;
+      if (success) {
+        packAiPreviewImg.classList.remove("hidden");
+        packAiPreviewCaption.classList.remove("hidden");
+      } else {
+        packAiPreviewError.classList.remove("hidden");
+      }
+    };
+
+    packAiPreviewImg.onload = () => finish(true);
+    packAiPreviewImg.onerror = () => finish(false);
+    packAiPreviewImg.src = url;
+  }
+
+  packAiPreviewBtn.addEventListener("click", generateAiPreview);
+  packAiPreviewRetry.addEventListener("click", generateAiPreview);
 
   packSubmitBtn.addEventListener("click", () => {
     const selectedItems = allPackItems().filter((item) => (packQuantities[item.id] || 0) > 0);
