@@ -657,21 +657,11 @@
           </div>
         </div>
 
-        <!-- AI Preview -->
-        <div>
-          <button type="button" id="packAiPreviewBtn"
-                  class="w-full flex items-center justify-center gap-2 border-2 border-dashed border-blossom-light text-blossom-dark font-semibold text-sm px-4 py-3.5 rounded-2xl hover:bg-blossom-light/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
-            <span>✨</span> Generar vista previa con IA
-          </button>
-          <div id="packAiPreviewResult" class="hidden mt-4 bg-cream/40 rounded-2xl p-4 text-center">
-            <div id="packAiPreviewLoading" class="hidden flex-col items-center gap-3 py-6">
-              <svg class="animate-spin w-8 h-8 text-blossom-dark" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
-              <p class="text-sm text-ink/60">Generando tu vista previa con IA…</p>
-            </div>
-            <img id="packAiPreviewImg" class="hidden w-full rounded-xl shadow-md" alt="Vista previa generada por IA de tu pack personalizado">
-            <p id="packAiPreviewCaption" class="hidden text-xs text-ink/50 mt-3">✨ Vista previa generada por IA — es solo referencial (la IA a veces no acierta las cantidades exactas ni los colores). El arreglo real lo arma nuestro equipo a mano.</p>
-            <p id="packAiPreviewError" class="hidden text-sm text-ink/60 py-4">No pudimos generar la vista previa. <button type="button" id="packAiPreviewRetry" class="text-blossom-dark font-semibold underline">Reintentar</button></p>
-          </div>
+        <!-- Real photo preview -->
+        <div id="packPreviewSection" class="hidden">
+          <label class="block text-sm font-semibold text-ink mb-3">Así de parecido se vería tu pack</label>
+          <div id="packPreviewGallery" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+          <p class="text-xs text-ink/40 mt-3">📸 Fotos reales de arreglos ya entregados, elegidas por tamaño más cercano al que armaste — no es una foto exacta de tu combinación. El arreglo final lo arma nuestro equipo a mano.</p>
         </div>
 
         <!-- Total summary -->
@@ -1159,15 +1149,30 @@ ${addonsText}
   /* ---------------- Pack Builder ---------------- */
   const packCatalog = {
     flores: [
-      { id: "rosa", name: "Rosas", promptName: "pink roses", img: "https://images.unsplash.com/photo-1644248421159-e6e64a7f4ca3?q=80&w=200&auto=format&fit=crop", price: 3.5 },
-      { id: "girasol", name: "Girasoles", promptName: "sunflowers", img: "https://images.unsplash.com/photo-1676819076406-eb84287c818d?q=80&w=200&auto=format&fit=crop", price: 4.0 },
+      {
+        id: "rosa", name: "Rosas", price: 3.5,
+        img: "https://images.unsplash.com/photo-1644248421159-e6e64a7f4ca3?q=80&w=200&auto=format&fit=crop",
+        tiers: [
+          { max: 5, img: "images/ramo-rosas-blancas-libro.jpg", label: "Rosas — ramo chico (referencial)" },
+          { max: 8, img: "images/rosas-azules-caballero.jpg", label: "Rosas — ramo mediano (referencial)" },
+          { max: Infinity, img: "images/rosas-rojas-textura.jpg", label: "Rosas — ramo grande (referencial)" },
+        ],
+      },
+      {
+        id: "girasol", name: "Girasoles", price: 4.0,
+        img: "https://images.unsplash.com/photo-1676819076406-eb84287c818d?q=80&w=200&auto=format&fit=crop",
+        tiers: [
+          { max: 2, img: "images/girasoles-envueltos-periodico.jpg", label: "Girasoles — pocos (referencial)" },
+          { max: Infinity, img: "images/ramo-girasoles-trio.jpg", label: "Girasoles — varios (referencial)" },
+        ],
+      },
     ],
     chocolates: [
-      { id: "vizio", name: "Chocolate Vizio", promptName: "small chocolate gift boxes", img: "https://images.unsplash.com/photo-1526081347589-7fa3cb41b4b2?q=80&w=200&auto=format&fit=crop", price: 8.0 },
-      { id: "donofrio", name: "Chocolate D'onofrio", promptName: "small chocolate gift boxes", img: "https://images.unsplash.com/photo-1526081347589-7fa3cb41b4b2?q=80&w=200&auto=format&fit=crop", price: 9.0 },
+      { id: "vizio", name: "Chocolate Vizio", price: 8.0, img: "https://images.unsplash.com/photo-1526081347589-7fa3cb41b4b2?q=80&w=200&auto=format&fit=crop" },
+      { id: "donofrio", name: "Chocolate D'onofrio", price: 9.0, img: "https://images.unsplash.com/photo-1526081347589-7fa3cb41b4b2?q=80&w=200&auto=format&fit=crop" },
     ],
     peluches: [
-      { id: "peluche", name: "Peluche mediano", promptName: "teddy bear plush toys", img: "https://images.unsplash.com/photo-1583478415880-b79447d73a84?q=80&w=200&auto=format&fit=crop", price: 25.0 },
+      { id: "peluche", name: "Peluche mediano", price: 25.0, img: "https://images.unsplash.com/photo-1583478415880-b79447d73a84?q=80&w=200&auto=format&fit=crop" },
     ],
   };
 
@@ -1186,13 +1191,8 @@ ${addonsText}
   const packTotalEl = document.getElementById("packTotal");
   const packSubmitBtn = document.getElementById("packSubmitBtn");
   const packEmptyHint = document.getElementById("packEmptyHint");
-  const packAiPreviewBtn = document.getElementById("packAiPreviewBtn");
-  const packAiPreviewResult = document.getElementById("packAiPreviewResult");
-  const packAiPreviewLoading = document.getElementById("packAiPreviewLoading");
-  const packAiPreviewImg = document.getElementById("packAiPreviewImg");
-  const packAiPreviewCaption = document.getElementById("packAiPreviewCaption");
-  const packAiPreviewError = document.getElementById("packAiPreviewError");
-  const packAiPreviewRetry = document.getElementById("packAiPreviewRetry");
+  const packPreviewSection = document.getElementById("packPreviewSection");
+  const packPreviewGallery = document.getElementById("packPreviewGallery");
 
   function renderPackRow(containerId, items) {
     const container = document.getElementById(containerId);
@@ -1229,8 +1229,33 @@ ${addonsText}
     const hasItems = allPackItems().some((item) => (packQuantities[item.id] || 0) > 0);
     packSubmitBtn.disabled = !hasItems;
     packEmptyHint.classList.toggle("hidden", hasItems);
-    packAiPreviewBtn.disabled = !hasItems;
+    renderPackPreviewGallery();
     return total;
+  }
+
+  function bestTierPhoto(item, qty) {
+    if (!item.tiers) return { img: item.img, label: item.name };
+    const tier = item.tiers.find((t) => qty <= t.max) || item.tiers[item.tiers.length - 1];
+    return { img: tier.img, label: tier.label };
+  }
+
+  function renderPackPreviewGallery() {
+    const selectedItems = allPackItems().filter((item) => (packQuantities[item.id] || 0) > 0);
+    if (selectedItems.length === 0) {
+      packPreviewSection.classList.add("hidden");
+      return;
+    }
+    packPreviewSection.classList.remove("hidden");
+    packPreviewGallery.innerHTML = selectedItems.map((item) => {
+      const qty = packQuantities[item.id];
+      const match = bestTierPhoto(item, qty);
+      return `
+        <div class="rounded-xl overflow-hidden bg-cream/40">
+          <img src="${match.img}" alt="${match.label}" class="w-full h-28 object-cover">
+          <p class="text-[11px] text-ink/60 px-2 py-1.5 leading-tight">${match.label}</p>
+        </div>
+      `;
+    }).join("");
   }
 
   function initPackBuilder() {
@@ -1267,7 +1292,6 @@ ${addonsText}
     const today = new Date().toISOString().split("T")[0];
     packDeliveryDate.min = today;
     packDeliveryDate.value = today;
-    packAiPreviewResult.classList.add("hidden");
 
     packBuilderModal.classList.remove("hidden");
     document.body.classList.add("overflow-hidden");
@@ -1291,49 +1315,6 @@ ${addonsText}
     if (e.key === "Escape" && !packBuilderModal.classList.contains("hidden")) closePackModal();
   });
 
-  function buildPackPromptText() {
-    const selectedItems = allPackItems().filter((item) => (packQuantities[item.id] || 0) > 0);
-    const itemLines = selectedItems
-      .map((item) => `exactly ${packQuantities[item.id]} ${item.promptName}`)
-      .join(", plus ");
-    const presentationText = packPresentation.name === "Canasta"
-      ? "all placed together inside a single woven wicker gift basket"
-      : "all tied together into a single hand-held bouquet, wrapped in kraft paper with a ribbon";
-    return `Professional florist product photography, one gift arrangement containing ${itemLines}, ${presentationText}. Show the exact item count clearly, each item fully visible and countable, not blended together. Soft studio lighting, clean pastel pink background, high detail, realistic, no text, no watermark, no logo.`;
-  }
-
-  function generateAiPreview() {
-    packAiPreviewResult.classList.remove("hidden");
-    packAiPreviewLoading.classList.remove("hidden");
-    packAiPreviewLoading.classList.add("flex");
-    packAiPreviewImg.classList.add("hidden");
-    packAiPreviewCaption.classList.add("hidden");
-    packAiPreviewError.classList.add("hidden");
-    packAiPreviewBtn.disabled = true;
-
-    const prompt = buildPackPromptText();
-    const seed = Math.floor(Math.random() * 100000);
-    const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=640&height=640&seed=${seed}&nologo=true&model=flux`;
-
-    const finish = (success) => {
-      packAiPreviewLoading.classList.add("hidden");
-      packAiPreviewLoading.classList.remove("flex");
-      packAiPreviewBtn.disabled = false;
-      if (success) {
-        packAiPreviewImg.classList.remove("hidden");
-        packAiPreviewCaption.classList.remove("hidden");
-      } else {
-        packAiPreviewError.classList.remove("hidden");
-      }
-    };
-
-    packAiPreviewImg.onload = () => finish(true);
-    packAiPreviewImg.onerror = () => finish(false);
-    packAiPreviewImg.src = url;
-  }
-
-  packAiPreviewBtn.addEventListener("click", generateAiPreview);
-  packAiPreviewRetry.addEventListener("click", generateAiPreview);
 
   packSubmitBtn.addEventListener("click", () => {
     const selectedItems = allPackItems().filter((item) => (packQuantities[item.id] || 0) > 0);
