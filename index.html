@@ -12,7 +12,7 @@
   "@type": "Florist",
   "name": "Florería La Frontera",
   "description": "Ramos de autor, tulipanes y arreglos florales con entrega rápida en Ayacucho, Perú.",
-  "image": "https://floreria-la-frontera.vercel.app/images/ramo-rosas-blancas-libro.jpg",
+  "image": "https://floreria-la-frontera.vercel.app/images/rosas-rojas-textura.jpg",
   "telephone": "+51957219600",
   "email": "gloriagutierrezrayme5@gmail.com",
   "address": {
@@ -84,7 +84,7 @@
 </script>
 
 <style>
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-padding-top: 96px; }
   body { font-family: 'Poppins', sans-serif; background-color: #ffffff; color: #1a1a1a; }
   .font-serif { font-family: 'Playfair Display', serif; }
 
@@ -95,6 +95,25 @@
   /* Product card hover lift */
   .product-card { transition: transform 0.35s ease, box-shadow 0.35s ease; }
   .product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px -12px rgba(240, 98, 146, 0.28); }
+
+  /* Logo tulip pop-in */
+  .logo-tulip {
+    display: inline-block;
+    font-size: 0.7em;
+    opacity: 0;
+    transform: scale(0.4) rotate(-25deg);
+    transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+  }
+  .group:hover .logo-tulip, .group:focus-visible .logo-tulip {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    animation: tulipWiggle 0.6s ease 0.45s;
+  }
+  @keyframes tulipWiggle {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    30% { transform: rotate(-10deg) scale(1.08); }
+    60% { transform: rotate(8deg) scale(1.03); }
+  }
 
   /* Nav link underline animation */
   .nav-link { position: relative; }
@@ -160,22 +179,55 @@
     color: #fff;
     box-shadow: 3px 3px 0 #25F4EE, -3px -3px 0 #FE2C55;
   }
+
+  /* Chat bubble pulse (softer than WhatsApp's) */
+  .chat-pulse::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: #e05285;
+    animation: pulseRingSoft 2.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  @keyframes pulseRingSoft {
+    0% { transform: scale(1); opacity: 0.45; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+
+  /* Scroll-triggered reveal */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); }
+  .reveal-stagger > * { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+  .reveal-stagger.is-visible > *:nth-child(1) { transition-delay: 0s; }
+  .reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 0.1s; }
+  .reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 0.2s; }
+  .reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 0.3s; }
+  .reveal-stagger.is-visible > * { opacity: 1; transform: translateY(0); }
+
+  /* Sticky header gains depth once the page scrolls */
+  #siteHeader { transition: box-shadow 0.3s ease, background-color 0.3s ease; }
+  #siteHeader.is-scrolled { box-shadow: 0 8px 24px -12px rgba(26, 26, 26, 0.18); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    .reveal, .reveal-stagger > * { opacity: 1; transform: none; }
+  }
 </style>
 </head>
 <body class="antialiased">
 
-<!-- ================= TOP BAR ================= -->
-<div class="bg-ink text-cream text-center text-xs sm:text-sm py-2 px-4 tracking-wide">
-  🌷 Hoy es un buen día para regalar amor. Envíos y atención rápida por WhatsApp.
-</div>
-
 <!-- ================= HEADER ================= -->
 <header id="siteHeader" class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-blossom-light/40 transition-all">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-20">
+    <div class="flex items-center justify-between gap-6 py-5 sm:py-6">
       <!-- Logo -->
-      <a href="#inicio" class="flex flex-col leading-none group">
-        <span class="font-serif text-2xl sm:text-3xl font-bold text-ink group-hover:text-blossom-dark transition-colors">Florería <span class="text-blossom-dark">La Frontera</span></span>
+      <a href="#inicio" class="shrink-0 flex flex-col leading-none group">
+        <span class="whitespace-nowrap font-serif text-2xl sm:text-3xl font-bold text-ink group-hover:text-blossom-dark transition-colors">Florería <span class="text-blossom-dark">La Frontera</span> <span class="logo-tulip" aria-hidden="true">🌷</span></span>
         <span class="text-[10px] sm:text-xs tracking-[0.25em] uppercase text-botanical mt-1">Detalles Inolvidables</span>
       </a>
 
@@ -213,11 +265,11 @@
         </div>
         <a href="https://wa.me/message/2OMDBGCGOVGSI1?text=Hola%20Florer%C3%ADa%20La%20Frontera%2C%20quisiera%20informaci%C3%B3n%20sobre%20un%20arreglo%20floral"
            target="_blank" rel="noopener"
-           class="hidden sm:inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5a] text-white font-semibold text-sm px-4 py-2.5 rounded-full shadow-md hover:shadow-lg transition-all hover:scale-105">
+           class="hidden sm:inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5a] text-white font-semibold text-sm px-4 py-2.5 rounded-full shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-5 h-5 fill-white"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.706 4.605 1.92 6.463L4 29l7.72-1.885A11.94 11.94 0 0 0 16 27c6.628 0 12-5.373 12-12S22.629 3 16.001 3zm0 21.75c-1.994 0-3.85-.583-5.41-1.587l-.388-.24-4.59 1.121 1.169-4.475-.253-.401A9.71 9.71 0 0 1 5.25 15c0-5.937 4.813-10.75 10.751-10.75S26.752 9.063 26.752 15 21.939 24.75 16.001 24.75zm5.55-8.079c-.303-.152-1.794-.885-2.072-.986-.278-.101-.48-.152-.682.152-.202.303-.784.986-.961 1.189-.177.202-.354.227-.657.076-.303-.152-1.28-.472-2.438-1.505-.901-.804-1.51-1.797-1.687-2.1-.177-.303-.019-.467.133-.618.137-.136.303-.354.455-.531.152-.177.202-.303.303-.505.101-.202.05-.379-.025-.531-.076-.152-.682-1.646-.934-2.253-.246-.591-.497-.511-.682-.52l-.581-.01c-.202 0-.531.076-.809.379-.278.303-1.061 1.037-1.061 2.529s1.086 2.935 1.238 3.138c.152.202 2.138 3.266 5.181 4.579.724.313 1.288.5 1.729.64.726.231 1.387.198 1.909.12.582-.087 1.794-.734 2.047-1.443.253-.708.253-1.315.177-1.443-.076-.127-.278-.202-.581-.354z"/></svg>
           WhatsApp
         </a>
-        <button id="mobileMenuBtn" class="lg:hidden p-2 text-ink" aria-label="Abrir menú">
+        <button id="mobileMenuBtn" class="lg:hidden p-2 text-ink" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
@@ -237,7 +289,7 @@
       <a href="#contacto" class="py-3">Contacto</a>
       <a href="https://wa.me/message/2OMDBGCGOVGSI1?text=Hola%20Florer%C3%ADa%20La%20Frontera%2C%20quisiera%20informaci%C3%B3n%20sobre%20un%20arreglo%20floral"
          target="_blank" rel="noopener"
-         class="mt-3 inline-flex items-center justify-center gap-2 bg-[#25D366] text-white font-semibold text-sm px-4 py-3 rounded-full shadow-md">
+         class="mt-3 inline-flex items-center justify-center gap-2 bg-[#25D366] text-white font-semibold text-sm px-4 py-3 rounded-full shadow-md transition-transform active:scale-95">
         Escribir por WhatsApp
       </a>
       <p class="mt-4 mb-2 text-center text-[11px] font-semibold tracking-widest uppercase text-ink/40">Síguenos</p>
@@ -291,15 +343,15 @@
           <input id="heroSearchInput" type="text" placeholder="Busca por ocasión o flor: tulipanes, girasoles..."
                  class="w-full pl-11 pr-4 py-3.5 rounded-full border border-blossom-light bg-white/80 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blossom text-sm placeholder:text-ink/40">
         </div>
-        <button type="submit" class="bg-blossom-dark hover:bg-ink text-white font-semibold px-6 py-3.5 rounded-full transition-colors shadow-md hover:shadow-lg whitespace-nowrap">
+        <button type="submit" class="bg-blossom-dark hover:bg-ink text-white font-semibold px-6 py-3.5 rounded-full transition-all shadow-md hover:shadow-lg active:scale-95 whitespace-nowrap">
           Buscar Arreglo
         </button>
       </form>
       <div class="flex flex-wrap gap-2 justify-center lg:justify-start">
-        <button data-quick-search="Tulipanes" class="quick-tag text-xs font-medium bg-white/70 hover:bg-blossom-light text-ink/70 px-3.5 py-1.5 rounded-full border border-blossom-light/60 transition-colors">Tulipanes</button>
-        <button data-quick-search="Rosas" class="quick-tag text-xs font-medium bg-white/70 hover:bg-blossom-light text-ink/70 px-3.5 py-1.5 rounded-full border border-blossom-light/60 transition-colors">Rosas</button>
-        <button data-quick-search="Girasoles" class="quick-tag text-xs font-medium bg-white/70 hover:bg-blossom-light text-ink/70 px-3.5 py-1.5 rounded-full border border-blossom-light/60 transition-colors">Girasoles</button>
-        <button data-quick-search="Cumpleaños" class="quick-tag text-xs font-medium bg-white/70 hover:bg-blossom-light text-ink/70 px-3.5 py-1.5 rounded-full border border-blossom-light/60 transition-colors">Cumpleaños</button>
+        <button data-quick-search="Tulipanes" class="quick-tag text-xs font-medium bg-white/70 hover:bg-blossom-light text-ink/70 px-3.5 py-1.5 rounded-full border border-blossom-light/60 transition-all hover:scale-105 active:scale-95">Tulipanes</button>
+        <button data-quick-search="Rosas" class="quick-tag text-xs font-medium bg-white/70 hover:bg-blossom-light text-ink/70 px-3.5 py-1.5 rounded-full border border-blossom-light/60 transition-all hover:scale-105 active:scale-95">Rosas</button>
+        <button data-quick-search="Girasoles" class="quick-tag text-xs font-medium bg-white/70 hover:bg-blossom-light text-ink/70 px-3.5 py-1.5 rounded-full border border-blossom-light/60 transition-all hover:scale-105 active:scale-95">Girasoles</button>
+        <button data-quick-search="Cumpleaños" class="quick-tag text-xs font-medium bg-white/70 hover:bg-blossom-light text-ink/70 px-3.5 py-1.5 rounded-full border border-blossom-light/60 transition-all hover:scale-105 active:scale-95">Cumpleaños</button>
       </div>
     </div>
 
@@ -307,8 +359,8 @@
     <div class="relative flex justify-center lg:justify-end animate-fade-in">
       <div class="relative w-full max-w-md">
         <div class="absolute inset-0 bg-blossom-light rounded-[2.5rem] rotate-3 scale-95"></div>
-        <img src="images/ramo-rosas-blancas-libro.jpg"
-             alt="Ramo de rosas y alstroemerias con libro de regalo, Florería La Frontera"
+        <img src="images/rosas-rojas-textura.jpg"
+             alt="Textura de rosas rojas y rosadas, Florería La Frontera"
              class="relative rounded-[2.5rem] w-full h-[420px] sm:h-[480px] object-cover shadow-2xl">
 
         <!-- Floating badge: Freshness guarantee -->
@@ -336,7 +388,7 @@
 <!-- ================= CATÁLOGO ================= -->
 <section id="catalogo" class="py-16 sm:py-24 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center max-w-2xl mx-auto mb-12">
+    <div class="reveal text-center max-w-2xl mx-auto mb-12">
       <span class="text-botanical font-semibold text-sm tracking-widest uppercase">Nuestro Catálogo</span>
       <h2 class="font-serif text-3xl sm:text-4xl font-bold text-ink mt-2 mb-4">Arreglos hechos para cada historia</h2>
       <p class="text-ink/60">Elige un momento especial y personaliza tu ramo con mensaje, fecha y complementos.</p>
@@ -353,14 +405,14 @@
     <!-- Product grid -->
     <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
 
-    <p id="noResults" class="hidden text-center text-ink/50 py-10">No encontramos arreglos con ese criterio. Prueba con otra búsqueda o escríbenos por WhatsApp.</p>
+    <p id="noResults" class="hidden text-center text-ink/70 py-10">No encontramos arreglos con ese criterio. Prueba con otra búsqueda o escríbenos por WhatsApp.</p>
   </div>
 </section>
 
 <!-- ================= ARMA TU PACK ================= -->
 <section id="arma-tu-pack" class="py-16 sm:py-24 bg-cream">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
-    <div class="order-2 lg:order-1 text-center lg:text-left">
+    <div class="reveal order-2 lg:order-1 text-center lg:text-left">
       <span class="text-botanical font-semibold text-sm tracking-widest uppercase">Hecho a tu manera</span>
       <h2 class="font-serif text-3xl sm:text-4xl font-bold text-ink mt-2 mb-4">Arma tu Pack perfecto</h2>
       <p class="text-ink/60 mb-6 max-w-lg mx-auto lg:mx-0">Elige cuántas rosas, chocolates y peluches quieres, y nosotros lo armamos hermoso a tu medida — en ramo de mano o canastita, tú decides.</p>
@@ -369,9 +421,10 @@
         <li class="flex items-center gap-2"><svg class="w-5 h-5 text-botanical shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Chocolates Vizio o D'onofrio</li>
         <li class="flex items-center gap-2"><svg class="w-5 h-5 text-botanical shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Peluches de regalo</li>
         <li class="flex items-center gap-2"><svg class="w-5 h-5 text-botanical shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Ramo de mano o canasta, tú eliges</li>
+        <li class="flex items-center gap-2"><svg class="w-5 h-5 text-botanical shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Te mostramos varias fotos reales parecidas a tu elección</li>
       </ul>
       <div>
-        <button id="openPackBuilderBtn" type="button" class="bg-blossom-dark hover:bg-ink text-white font-semibold px-8 py-4 rounded-full shadow-md hover:shadow-lg transition-all hover:scale-105">
+        <button id="openPackBuilderBtn" type="button" class="bg-blossom-dark hover:bg-ink text-white font-semibold px-8 py-4 rounded-full shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95">
           Personalizar mi Pack
         </button>
       </div>
@@ -404,7 +457,7 @@
 
 <!-- ================= CONFIANZA / VALORES ================= -->
 <section class="py-16 bg-white border-t border-b border-blossom-light/30">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid sm:grid-cols-3 gap-8 text-center">
+  <div class="reveal-stagger max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid sm:grid-cols-3 gap-8 text-center">
     <div class="flex flex-col items-center gap-3">
       <div class="bg-cream rounded-full p-4 shadow-md text-blossom-dark">
         <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
@@ -431,14 +484,14 @@
 
 <!-- ================= CONTACTO ================= -->
 <section id="contacto" class="py-16 sm:py-24">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+  <div class="reveal max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <span class="text-botanical font-semibold text-sm tracking-widest uppercase">Contáctanos</span>
     <h2 class="font-serif text-3xl sm:text-4xl font-bold text-ink mt-2 mb-4">¿Tienes una ocasión especial?</h2>
     <p class="text-ink/60 mb-8 max-w-xl mx-auto">Escríbenos directo por WhatsApp y te ayudamos a armar el arreglo perfecto para ese momento inolvidable.</p>
     <div class="flex items-center justify-center">
       <a href="https://wa.me/message/2OMDBGCGOVGSI1?text=Hola%20Florer%C3%ADa%20La%20Frontera%2C%20quisiera%20informaci%C3%B3n%20sobre%20un%20arreglo%20floral"
          target="_blank" rel="noopener"
-         class="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5a] text-white font-semibold px-6 py-3.5 rounded-full shadow-md hover:shadow-lg transition-all hover:scale-105">
+         class="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5a] text-white font-semibold px-6 py-3.5 rounded-full shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-5 h-5 fill-white"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.706 4.605 1.92 6.463L4 29l7.72-1.885A11.94 11.94 0 0 0 16 27c6.628 0 12-5.373 12-12S22.629 3 16.001 3zm0 21.75c-1.994 0-3.85-.583-5.41-1.587l-.388-.24-4.59 1.121 1.169-4.475-.253-.401A9.71 9.71 0 0 1 5.25 15c0-5.937 4.813-10.75 10.751-10.75S26.752 9.063 26.752 15 21.939 24.75 16.001 24.75zm5.55-8.079c-.303-.152-1.794-.885-2.072-.986-.278-.101-.48-.152-.682.152-.202.303-.784.986-.961 1.189-.177.202-.354.227-.657.076-.303-.152-1.28-.472-2.438-1.505-.901-.804-1.51-1.797-1.687-2.1-.177-.303-.019-.467.133-.618.137-.136.303-.354.455-.531.152-.177.202-.303.303-.505.101-.202.05-.379-.025-.531-.076-.152-.682-1.646-.934-2.253-.246-.591-.497-.511-.682-.52l-.581-.01c-.202 0-.531.076-.809.379-.278.303-1.061 1.037-1.061 2.529s1.086 2.935 1.238 3.138c.152.202 2.138 3.266 5.181 4.579.724.313 1.288.5 1.729.64.726.231 1.387.198 1.909.12.582-.087 1.794-.734 2.047-1.443.253-.708.253-1.315.177-1.443-.076-.127-.278-.202-.581-.354z"/></svg>
         957 219 600
       </a>
@@ -471,7 +524,7 @@
           <span class="social-circle inline-flex items-center justify-center w-14 h-14 rounded-full border-2 border-blossom-light text-ink/70">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-6 h-6 fill-current"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153a4.908 4.908 0 011.153 1.772c.247.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 01-1.153 1.772 4.915 4.915 0 01-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 01-1.772-1.153 4.904 4.904 0 01-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.066.217-1.79.465-2.428a4.88 4.88 0 011.153-1.772A4.897 4.897 0 015.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2zm0 1.802c-2.67 0-2.986.01-4.04.059-.976.045-1.505.207-1.858.344-.466.181-.8.398-1.15.748-.35.35-.566.683-.747 1.15-.137.352-.3.881-.344 1.857-.05 1.054-.06 1.37-.06 4.04 0 2.67.01 2.986.06 4.04.045.976.207 1.505.344 1.858.181.466.397.8.747 1.15.35.35.684.566 1.15.747.353.137.882.3 1.858.344 1.054.05 1.37.06 4.04.06 2.67 0 2.987-.01 4.04-.06.977-.045 1.506-.207 1.858-.344.466-.181.8-.398 1.15-.748.35-.35.566-.683.747-1.15.137-.352.3-.881.344-1.857.05-1.054.06-1.37.06-4.04 0-2.67-.01-2.986-.06-4.04-.045-.976-.207-1.505-.344-1.858a3.09 3.09 0 00-.747-1.15 3.096 3.096 0 00-1.15-.747c-.352-.137-.881-.3-1.857-.344-1.054-.05-1.37-.06-4.04-.06zm0 4.595a5.603 5.603 0 110 11.206 5.603 5.603 0 010-11.206zm0 1.802a3.801 3.801 0 100 7.602 3.801 3.801 0 000-7.602zm5.723-1.998a1.31 1.31 0 11-2.62 0 1.31 1.31 0 012.62 0z"/></svg>
           </span>
-          <span class="text-xs font-medium text-ink/50 group-hover:text-ink/80 transition-colors">Instagram</span>
+          <span class="text-xs font-medium text-ink/70 group-hover:text-ink/80 transition-colors">Instagram</span>
         </a>
         <a href="https://www.facebook.com/profile.php?id=61564404956914" target="_blank" rel="noopener"
            aria-label="Síguenos en Facebook"
@@ -479,7 +532,7 @@
           <span class="social-circle inline-flex items-center justify-center w-14 h-14 rounded-full border-2 border-blossom-light text-ink/70">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="w-6 h-6 fill-current"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/></svg>
           </span>
-          <span class="text-xs font-medium text-ink/50 group-hover:text-ink/80 transition-colors">Facebook</span>
+          <span class="text-xs font-medium text-ink/70 group-hover:text-ink/80 transition-colors">Facebook</span>
         </a>
         <a href="https://www.tiktok.com/@florerialafrontera" target="_blank" rel="noopener"
            aria-label="Síguenos en TikTok"
@@ -487,7 +540,7 @@
           <span class="social-circle inline-flex items-center justify-center w-14 h-14 rounded-full border-2 border-blossom-light text-ink/70">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="w-6 h-6 fill-current"><path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z"/></svg>
           </span>
-          <span class="text-xs font-medium text-ink/50 group-hover:text-ink/80 transition-colors">TikTok</span>
+          <span class="text-xs font-medium text-ink/70 group-hover:text-ink/80 transition-colors">TikTok</span>
         </a>
       </div>
     </div>
@@ -544,7 +597,8 @@
 
 <!-- ================= CHATBOT WIDGET ================= -->
 <button id="chatToggleBtn" type="button" aria-label="Chatea con nosotros"
-        class="fixed bottom-24 right-6 sm:bottom-28 z-50 flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-blossom-dark rounded-full shadow-2xl hover:scale-110 transition-transform">
+        class="fixed bottom-24 right-6 sm:bottom-28 z-50 flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-blossom-dark rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-transform">
+  <span id="chatPulse" class="chat-pulse absolute inset-0 rounded-full pointer-events-none"></span>
   <svg id="chatIconOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-7 h-7 sm:w-8 sm:h-8 fill-white"><path d="M12 2C6.477 2 2 5.925 2 10.75c0 2.716 1.427 5.144 3.66 6.744-.12.99-.457 2.316-1.284 3.626-.16.253.036.58.334.552 1.86-.174 3.55-.892 4.796-1.633.807.19 1.652.29 2.494.29 5.523 0 10-3.925 10-8.75S17.523 2 12 2z"/></svg>
   <svg id="chatIconClose" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="hidden w-7 h-7 sm:w-8 sm:h-8 stroke-white" fill="none" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
 </button>
@@ -558,7 +612,7 @@
         <p class="text-xs text-white/80 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-green-400 inline-block"></span>Asistente virtual</p>
       </div>
     </div>
-    <button id="chatCloseBtn" aria-label="Cerrar chat" class="text-white/80 hover:text-white transition-colors p-1">
+    <button id="chatCloseBtn" aria-label="Cerrar chat" class="flex items-center justify-center w-11 h-11 -mr-2 text-white/80 hover:text-white hover:bg-white/10 rounded-full active:scale-90 transition-all">
       <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
     </button>
   </div>
@@ -568,7 +622,7 @@
 <!-- ================= FLOATING WHATSAPP BUTTON ================= -->
 <a href="https://wa.me/message/2OMDBGCGOVGSI1?text=Hola%20Florer%C3%ADa%20La%20Frontera%2C%20quisiera%20informaci%C3%B3n%20sobre%20un%20arreglo%20floral"
    target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp"
-   class="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-[#25D366] rounded-full shadow-2xl hover:scale-110 transition-transform">
+   class="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-[#25D366] rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-transform">
   <span class="wa-pulse absolute inset-0 rounded-full"></span>
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="relative w-7 h-7 sm:w-8 sm:h-8 fill-white"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.706 4.605 1.92 6.463L4 29l7.72-1.885A11.94 11.94 0 0 0 16 27c6.628 0 12-5.373 12-12S22.629 3 16.001 3zm0 21.75c-1.994 0-3.85-.583-5.41-1.587l-.388-.24-4.59 1.121 1.169-4.475-.253-.401A9.71 9.71 0 0 1 5.25 15c0-5.937 4.813-10.75 10.751-10.75S26.752 9.063 26.752 15 21.939 24.75 16.001 24.75zm5.55-8.079c-.303-.152-1.794-.885-2.072-.986-.278-.101-.48-.152-.682.152-.202.303-.784.986-.961 1.189-.177.202-.354.227-.657.076-.303-.152-1.28-.472-2.438-1.505-.901-.804-1.51-1.797-1.687-2.1-.177-.303-.019-.467.133-.618.137-.136.303-.354.455-.531.152-.177.202-.303.303-.505.101-.202.05-.379-.025-.531-.076-.152-.682-1.646-.934-2.253-.246-.591-.497-.511-.682-.52l-.581-.01c-.202 0-.531.076-.809.379-.278.303-1.061 1.037-1.061 2.529s1.086 2.935 1.238 3.138c.152.202 2.138 3.266 5.181 4.579.724.313 1.288.5 1.729.64.726.231 1.387.198 1.909.12.582-.087 1.794-.734 2.047-1.443.253-.708.253-1.315.177-1.443-.076-.127-.278-.202-.581-.354z"/></svg>
 </a>
@@ -585,7 +639,7 @@
           <p class="text-xs font-semibold text-botanical uppercase tracking-wide">Hecho a tu manera</p>
           <h3 class="font-serif text-xl font-bold text-ink leading-tight">Arma tu Pack</h3>
         </div>
-        <button id="closePackModalBtn" aria-label="Cerrar" class="shrink-0 text-ink/40 hover:text-ink transition-colors p-1">
+        <button id="closePackModalBtn" aria-label="Cerrar" class="shrink-0 flex items-center justify-center w-11 h-11 text-ink/60 hover:text-ink hover:bg-cream rounded-full active:scale-90 transition-all">
           <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
@@ -598,16 +652,16 @@
           <label class="block text-sm font-semibold text-ink mb-3">Presentación</label>
           <div class="grid grid-cols-2 gap-3" id="packPresentationRow">
             <button type="button" data-presentation="Ramo de mano" data-price="0"
-                    class="pack-presentation-btn active-presentation border-2 border-blossom-dark bg-blossom-light/20 rounded-2xl p-4 text-center transition-colors">
+                    class="pack-presentation-btn active-presentation border-2 border-blossom-light/60 rounded-2xl p-4 text-center transition-colors hover:border-blossom">
               <span class="text-2xl block mb-1">💐</span>
               <span class="text-sm font-semibold text-ink">Ramo de mano</span>
-              <span class="block text-xs text-ink/50">Incluido</span>
+              <span class="block text-xs text-ink/70">Incluido</span>
             </button>
             <button type="button" data-presentation="Canasta" data-price="15"
                     class="pack-presentation-btn border-2 border-blossom-light/60 rounded-2xl p-4 text-center transition-colors hover:border-blossom">
               <span class="text-2xl block mb-1">🧺</span>
               <span class="text-sm font-semibold text-ink">Canasta</span>
-              <span class="block text-xs text-ink/50">+ S/ 15.00</span>
+              <span class="block text-xs text-ink/70">+ S/ 15.00</span>
             </button>
           </div>
         </div>
@@ -658,10 +712,14 @@
         </div>
 
         <!-- Real photo preview -->
+        <button type="button" id="showPackPreviewBtn" class="hidden w-full flex items-center justify-center gap-2 border-2 border-blossom-dark text-blossom-dark hover:bg-blossom-light/20 font-semibold text-sm px-4 py-3 rounded-full transition-colors active:scale-95">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+          Ver fotos de cómo se vería mi pack
+        </button>
         <div id="packPreviewSection" class="hidden">
           <label class="block text-sm font-semibold text-ink mb-3">Así de parecido se vería tu pack</label>
-          <div id="packPreviewGallery" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
-          <p class="text-xs text-ink/40 mt-3">📸 Fotos reales de arreglos ya entregados, elegidas por tamaño más cercano al que armaste — no es una foto exacta de tu combinación. El arreglo final lo arma nuestro equipo a mano.</p>
+          <div id="packPreviewGallery"></div>
+          <p class="text-xs text-ink/60 mt-3">📸 Fotos reales de arreglos ya entregados: son opciones parecidas por cantidad, no fotos exactas de tu combinación. El arreglo final lo arma nuestro equipo a mano.</p>
         </div>
 
         <!-- Total summary -->
@@ -674,11 +732,11 @@
 
         <!-- Submit -->
         <button type="button" id="packSubmitBtn" disabled
-                class="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1ebe5a] disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-base px-6 py-4 rounded-full shadow-md hover:shadow-lg transition-all hover:scale-[1.02] disabled:hover:scale-100">
+                class="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1ebe5a] disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-base px-6 py-4 rounded-full shadow-md hover:shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98] disabled:hover:scale-100">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-5 h-5 fill-white"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.706 4.605 1.92 6.463L4 29l7.72-1.885A11.94 11.94 0 0 0 16 27c6.628 0 12-5.373 12-12S22.629 3 16.001 3zm0 21.75c-1.994 0-3.85-.583-5.41-1.587l-.388-.24-4.59 1.121 1.169-4.475-.253-.401A9.71 9.71 0 0 1 5.25 15c0-5.937 4.813-10.75 10.751-10.75S26.752 9.063 26.752 15 21.939 24.75 16.001 24.75zm5.55-8.079c-.303-.152-1.794-.885-2.072-.986-.278-.101-.48-.152-.682.152-.202.303-.784.986-.961 1.189-.177.202-.354.227-.657.076-.303-.152-1.28-.472-2.438-1.505-.901-.804-1.51-1.797-1.687-2.1-.177-.303-.019-.467.133-.618.137-.136.303-.354.455-.531.152-.177.202-.303.303-.505.101-.202.05-.379-.025-.531-.076-.152-.682-1.646-.934-2.253-.246-.591-.497-.511-.682-.52l-.581-.01c-.202 0-.531.076-.809.379-.278.303-1.061 1.037-1.061 2.529s1.086 2.935 1.238 3.138c.152.202 2.138 3.266 5.181 4.579.724.313 1.288.5 1.729.64.726.231 1.387.198 1.909.12.582-.087 1.794-.734 2.047-1.443.253-.708.253-1.315.177-1.443-.076-.127-.278-.202-.581-.354z"/></svg>
           Pedir mi Pack por WhatsApp
         </button>
-        <p class="text-xs text-center text-ink/40">Al confirmar, se abrirá WhatsApp con el resumen de tu pack para coordinar el pago y la entrega.</p>
+        <p class="text-xs text-center text-ink/60">Al confirmar, se abrirá WhatsApp con el resumen de tu pack para coordinar el pago y la entrega.</p>
       </div>
     </div>
   </div>
@@ -700,7 +758,7 @@
             <p id="modalProductPrice" class="text-blossom-dark font-bold text-sm mt-1"></p>
           </div>
         </div>
-        <button id="closeModalBtn" aria-label="Cerrar" class="shrink-0 text-ink/40 hover:text-ink transition-colors p-1">
+        <button id="closeModalBtn" aria-label="Cerrar" class="shrink-0 flex items-center justify-center w-11 h-11 text-ink/60 hover:text-ink hover:bg-cream rounded-full active:scale-90 transition-all">
           <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
@@ -733,7 +791,7 @@
           <label class="block text-sm font-semibold text-ink mb-2">Mensaje para la tarjeta de dedicatoria</label>
           <textarea id="dedicationMsg" rows="3" maxlength="220" placeholder="Escribe aquí tu mensaje especial..."
                     class="w-full px-4 py-3 rounded-xl border border-blossom-light bg-cream/40 focus:outline-none focus:ring-2 focus:ring-blossom text-sm resize-none"></textarea>
-          <p class="text-xs text-ink/40 mt-1 text-right"><span id="msgCount">0</span>/220</p>
+          <p class="text-xs text-ink/60 mt-1 text-right"><span id="msgCount">0</span>/220</p>
         </div>
 
         <!-- Add-ons -->
@@ -769,24 +827,66 @@
 
         <!-- Submit -->
         <button type="submit"
-                class="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1ebe5a] text-white font-bold text-base px-6 py-4 rounded-full shadow-md hover:shadow-lg transition-all hover:scale-[1.02]">
+                class="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1ebe5a] text-white font-bold text-base px-6 py-4 rounded-full shadow-md hover:shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-5 h-5 fill-white"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.706 4.605 1.92 6.463L4 29l7.72-1.885A11.94 11.94 0 0 0 16 27c6.628 0 12-5.373 12-12S22.629 3 16.001 3zm0 21.75c-1.994 0-3.85-.583-5.41-1.587l-.388-.24-4.59 1.121 1.169-4.475-.253-.401A9.71 9.71 0 0 1 5.25 15c0-5.937 4.813-10.75 10.751-10.75S26.752 9.063 26.752 15 21.939 24.75 16.001 24.75zm5.55-8.079c-.303-.152-1.794-.885-2.072-.986-.278-.101-.48-.152-.682.152-.202.303-.784.986-.961 1.189-.177.202-.354.227-.657.076-.303-.152-1.28-.472-2.438-1.505-.901-.804-1.51-1.797-1.687-2.1-.177-.303-.019-.467.133-.618.137-.136.303-.354.455-.531.152-.177.202-.303.303-.505.101-.202.05-.379-.025-.531-.076-.152-.682-1.646-.934-2.253-.246-.591-.497-.511-.682-.52l-.581-.01c-.202 0-.531.076-.809.379-.278.303-1.061 1.037-1.061 2.529s1.086 2.935 1.238 3.138c.152.202 2.138 3.266 5.181 4.579.724.313 1.288.5 1.729.64.726.231 1.387.198 1.909.12.582-.087 1.794-.734 2.047-1.443.253-.708.253-1.315.177-1.443-.076-.127-.278-.202-.581-.354z"/></svg>
           Confirmar y Pedir por WhatsApp
         </button>
-        <p class="text-xs text-center text-ink/40">Al confirmar, se abrirá WhatsApp con el resumen de tu pedido para coordinar el pago y la entrega.</p>
+        <p class="text-xs text-center text-ink/60">Al confirmar, se abrirá WhatsApp con el resumen de tu pedido para coordinar el pago y la entrega.</p>
       </form>
     </div>
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
 (function () {
   "use strict";
 
   const WHATSAPP_LINK = "https://wa.me/message/2OMDBGCGOVGSI1";
+  const SITE_ORIGIN = "https://floreria-la-frontera.vercel.app";
 
-  /* ---------------- Product Data ---------------- */
-  const products = [
+  function toAbsoluteImageUrl(path) {
+    if (!path) return "";
+    if (/^https?:\/\//i.test(path)) return path;
+    return `${SITE_ORIGIN}/${path.replace(/^\//, "")}`;
+  }
+
+  /* ---------------- Disponibilidad de horarios de entrega ---------------- */
+  /* Si la fecha elegida es hoy, oculta los rangos que ya no dejan al menos 1 hora de margen. */
+  function refreshDeliveryTimeOptions(dateInput, timeSelect) {
+    const todayStr = new Date().toISOString().split("T")[0];
+    const isToday = dateInput.value === todayStr;
+    const bufferDeadline = new Date(Date.now() + 60 * 60 * 1000);
+
+    Array.from(timeSelect.options).forEach((opt) => {
+      if (!opt.value) return;
+      if (!isToday) {
+        opt.disabled = false;
+        opt.textContent = opt.textContent.replace(" (ya no disponible)", "");
+        return;
+      }
+      const endTime = opt.value.split(" - ")[1];
+      const [h, m] = endTime.split(":").map(Number);
+      const endDateTime = new Date();
+      endDateTime.setHours(h, m, 0, 0);
+      const noLongerAvailable = endDateTime <= bufferDeadline;
+      opt.disabled = noLongerAvailable;
+      opt.textContent = opt.textContent.replace(" (ya no disponible)", "") + (noLongerAvailable ? " (ya no disponible)" : "");
+    });
+
+    if (timeSelect.options[timeSelect.selectedIndex] && timeSelect.options[timeSelect.selectedIndex].disabled) {
+      timeSelect.value = "";
+    }
+  }
+
+  /* ---------------- Supabase ---------------- */
+  const SUPABASE_URL = "https://lpxxnmoqfueluvixcaer.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_Yn-V9UWd7hzqhmHdoNRIog_SZlVi-2j";
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  /* ---------------- Product Data (cargados desde Supabase, ver loadCatalogData) ---------------- */
+  let products = [];
+  const HARDCODED_PRODUCTS_FALLBACK = [
     {
       id: 1,
       name: "Ramo con Dedicatoria",
@@ -867,6 +967,16 @@
       keywords: "rosas azules elegante esmoquin aniversario formal",
       img: "images/ramo-elegancia-paternal.jpg",
     },
+    {
+      id: 9,
+      name: "Doce Girasoles Sorpresa",
+      description: "12 girasoles en arreglo floral + caja pequeña sorpresa",
+      price: 99.90,
+      category: "Cumpleaños",
+      tag: "",
+      keywords: "girasoles doce caja sorpresa cumpleaños alegria",
+      img: "images/doce-girasoles-caja-sorpresa.jpg",
+    },
   ];
 
   let currentFilter = "Todos";
@@ -911,7 +1021,7 @@
           <p class="text-sm text-ink/60 mb-4 flex-1">${p.description}</p>
           <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <span class="font-bold text-blossom-dark text-lg">${formatPrice(p.price)}</span>
-            <button data-product-id="${p.id}" class="personalize-btn w-full sm:w-auto bg-ink hover:bg-blossom-dark text-white text-sm font-semibold px-4 py-3 sm:py-2.5 rounded-full transition-colors hover:scale-105">
+            <button data-product-id="${p.id}" class="personalize-btn w-full sm:w-auto bg-ink hover:bg-blossom-dark text-white text-sm font-semibold px-4 py-3 sm:py-2.5 rounded-full transition-all hover:scale-105 active:scale-95">
               Personalizar &amp; Pedir
             </button>
           </div>
@@ -927,8 +1037,6 @@
       btn.addEventListener("click", () => openLightbox(Number(btn.dataset.productId)));
     });
   }
-
-  renderProducts();
 
   /* ---------------- Filters ---------------- */
   const filterRow = document.getElementById("filterRow");
@@ -990,7 +1098,11 @@
   /* ---------------- Mobile Menu ---------------- */
   const mobileMenuBtn = document.getElementById("mobileMenuBtn");
   const mobileMenu = document.getElementById("mobileMenu");
-  mobileMenuBtn.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
+  mobileMenuBtn.addEventListener("click", () => {
+    const isOpen = mobileMenu.classList.toggle("hidden") === false;
+    mobileMenuBtn.setAttribute("aria-expanded", String(isOpen));
+    mobileMenuBtn.setAttribute("aria-label", isOpen ? "Cerrar menú" : "Abrir menú");
+  });
 
   /* ---------------- Checkout Modal ---------------- */
   const checkoutModal = document.getElementById("checkoutModal");
@@ -1022,6 +1134,7 @@
     const today = new Date().toISOString().split("T")[0];
     deliveryDate.min = today;
     deliveryDate.value = today;
+    refreshDeliveryTimeOptions(deliveryDate, deliveryTime);
 
     updateTotal();
 
@@ -1045,6 +1158,7 @@
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !checkoutModal.classList.contains("hidden")) closeModal();
   });
+  deliveryDate.addEventListener("change", () => refreshDeliveryTimeOptions(deliveryDate, deliveryTime));
 
   /* ---------------- Image Lightbox ---------------- */
   const imageLightbox = document.getElementById("imageLightbox");
@@ -1054,19 +1168,22 @@
   const lightboxCaption = document.getElementById("lightboxCaption");
   const closeLightboxBtn = document.getElementById("closeLightboxBtn");
 
-  function openLightbox(productId) {
-    const product = products.find((p) => p.id === productId);
-    if (!product) return;
-
-    lightboxImg.src = product.img;
-    lightboxImg.alt = product.name;
-    lightboxCaption.textContent = `${product.name} — ${product.description}`;
+  function openLightboxWithImage(img, alt, caption) {
+    lightboxImg.src = img;
+    lightboxImg.alt = alt;
+    lightboxCaption.textContent = caption;
 
     imageLightbox.classList.remove("hidden");
     document.body.classList.add("overflow-hidden");
     requestAnimationFrame(() => {
       lightboxPanel.classList.remove("opacity-0", "scale-95");
     });
+  }
+
+  function openLightbox(productId) {
+    const product = products.find((p) => p.id === productId);
+    if (!product) return;
+    openLightboxWithImage(product.img, product.name, `${product.name} — ${product.description}`);
   }
 
   function closeLightbox() {
@@ -1131,6 +1248,7 @@
 
 🌸 Arreglo: ${activeProduct.name}
 📝 Descripción: ${activeProduct.description}
+📸 Foto de referencia: ${toAbsoluteImageUrl(activeProduct.img)}
 📅 Fecha de entrega: ${dateFormatted}
 🕐 Horario: ${deliveryTime.value || "No especificado"}
 💌 Mensaje de tarjeta: ${dedicationMsg.value.trim() || "Sin mensaje"}
@@ -1147,15 +1265,21 @@ ${addonsText}
   });
 
   /* ---------------- Pack Builder ---------------- */
-  const packCatalog = {
+  let packCatalog = { flores: [], chocolates: [], peluches: [] };
+  const HARDCODED_PACK_CATALOG_FALLBACK = {
     flores: [
       {
         id: "rosa", name: "Rosas", price: 3.5,
         img: "https://images.unsplash.com/photo-1644248421159-e6e64a7f4ca3?q=80&w=200&auto=format&fit=crop",
         tiers: [
           { max: 5, img: "images/ramo-rosas-blancas-libro.jpg", label: "Rosas — ramo chico (referencial)" },
+          { max: 5, img: "images/pack-fresa-globo-corazon-girasol.jpg", label: "Rosas — pack con globo y bebida, 1 rosa (referencial)" },
+          { max: 5, img: "images/ramo-corbata-girasol-rosas-azules.jpg", label: "Rosas — ramo corbata, 2 rosas azules (referencial)" },
+          { max: 5, img: "images/arreglo-girasoles-rosas-azules.jpg", label: "Rosas — 3 rosas azules + girasoles (referencial)" },
           { max: 8, img: "images/rosas-azules-caballero.jpg", label: "Rosas — ramo mediano (referencial)" },
+          { max: 8, img: "images/canasta-dia-madre-rosas-amarillas.jpg", label: "Rosas — canasta 6 rosas amarillas (referencial)" },
           { max: Infinity, img: "images/rosas-rojas-textura.jpg", label: "Rosas — ramo grande (referencial)" },
+          { max: Infinity, img: "images/macetero-diez-rosas-azules.jpg", label: "Rosas — macetero 10 rosas azules (referencial)" },
         ],
       },
       {
@@ -1163,7 +1287,15 @@ ${addonsText}
         img: "https://images.unsplash.com/photo-1676819076406-eb84287c818d?q=80&w=200&auto=format&fit=crop",
         tiers: [
           { max: 2, img: "images/girasoles-envueltos-periodico.jpg", label: "Girasoles — pocos (referencial)" },
-          { max: Infinity, img: "images/ramo-girasoles-trio.jpg", label: "Girasoles — varios (referencial)" },
+          { max: 2, img: "images/caja-sorpresa-vizio-girasol.jpg", label: "Girasoles — caja sorpresa con chocolate (referencial)" },
+          { max: 2, img: "images/pack-fresa-globo-corazon-girasol.jpg", label: "Girasoles — pack con globo y bebida (referencial)" },
+          { max: 2, img: "images/pack-dia-papa-hamburguesa-cerveza-girasol.jpg", label: "Girasoles — pack Día del Padre (referencial)" },
+          { max: 2, img: "images/ramo-corbata-girasol-rosas-azules.jpg", label: "Girasoles — ramo corbata Día del Padre (referencial)" },
+          { max: 2, img: "images/pack-dia-papa-globo-azul-girasol.jpg", label: "Girasoles — pack globo azul (referencial)" },
+          { max: 2, img: "images/pack-dia-papa-caja-torta-girasol.jpg", label: "Girasoles — pack caja con torta (referencial)" },
+          { max: 6, img: "images/arreglo-seis-girasoles.jpg", label: "Girasoles — seis (referencial)" },
+          { max: 6, img: "images/arreglo-masculino-girasoles.jpg", label: "Girasoles — seis, estilo para él (referencial)" },
+          { max: Infinity, img: "images/doce-girasoles-caja-sorpresa.jpg", label: "Girasoles — doce (referencial)" },
         ],
       },
     ],
@@ -1193,6 +1325,7 @@ ${addonsText}
   const packEmptyHint = document.getElementById("packEmptyHint");
   const packPreviewSection = document.getElementById("packPreviewSection");
   const packPreviewGallery = document.getElementById("packPreviewGallery");
+  const showPackPreviewBtn = document.getElementById("showPackPreviewBtn");
 
   function renderPackRow(containerId, items) {
     const container = document.getElementById(containerId);
@@ -1204,13 +1337,13 @@ ${addonsText}
             <img src="${item.img}" alt="${item.name}" class="w-12 h-12 rounded-lg object-cover shrink-0">
             <div>
               <p class="text-sm font-semibold text-ink">${item.name}</p>
-              <p class="text-xs text-ink/50">${formatPrice(item.price)} c/u</p>
+              <p class="text-xs text-ink/70">${formatPrice(item.price)} c/u</p>
             </div>
           </div>
-          <div class="flex items-center gap-3">
-            <button type="button" class="pack-qty-btn w-8 h-8 rounded-full border border-blossom-light flex items-center justify-center text-ink/70 hover:bg-blossom-light transition-colors" data-item="${item.id}" data-delta="-1">−</button>
+          <div class="flex items-center gap-2">
+            <button type="button" aria-label="Quitar una unidad de ${item.name}" class="pack-qty-btn w-11 h-11 rounded-full border border-blossom-light flex items-center justify-center text-ink/70 hover:bg-blossom-light active:scale-90 transition-all" data-item="${item.id}" data-delta="-1">−</button>
             <span class="pack-qty-value w-6 text-center font-semibold text-ink" data-item-qty="${item.id}">0</span>
-            <button type="button" class="pack-qty-btn w-8 h-8 rounded-full border border-blossom-light flex items-center justify-center text-ink/70 hover:bg-blossom-light transition-colors" data-item="${item.id}" data-delta="1">+</button>
+            <button type="button" aria-label="Agregar una unidad de ${item.name}" class="pack-qty-btn w-11 h-11 rounded-full border border-blossom-light flex items-center justify-center text-ink/70 hover:bg-blossom-light active:scale-90 transition-all" data-item="${item.id}" data-delta="1">+</button>
           </div>
         </div>
       `;
@@ -1229,14 +1362,17 @@ ${addonsText}
     const hasItems = allPackItems().some((item) => (packQuantities[item.id] || 0) > 0);
     packSubmitBtn.disabled = !hasItems;
     packEmptyHint.classList.toggle("hidden", hasItems);
-    renderPackPreviewGallery();
+    showPackPreviewBtn.classList.toggle("hidden", !hasItems);
+    if (!hasItems) packPreviewSection.classList.add("hidden");
     return total;
   }
 
-  function bestTierPhoto(item, qty) {
-    if (!item.tiers) return { img: item.img, label: item.name };
-    const tier = item.tiers.find((t) => qty <= t.max) || item.tiers[item.tiers.length - 1];
-    return { img: tier.img, label: tier.label };
+  function matchingTierPhotos(item, qty) {
+    if (!item.tiers) return [{ img: item.img, label: item.name }];
+    const eligible = item.tiers.filter((t) => qty <= t.max);
+    const pool = eligible.length ? eligible : [item.tiers[item.tiers.length - 1]];
+    const closestMax = Math.min(...pool.map((t) => t.max));
+    return pool.filter((t) => t.max === closestMax).map((t) => ({ img: t.img, label: t.label }));
   }
 
   function renderPackPreviewGallery() {
@@ -1246,16 +1382,33 @@ ${addonsText}
       return;
     }
     packPreviewSection.classList.remove("hidden");
-    packPreviewGallery.innerHTML = selectedItems.map((item) => {
+    packPreviewGallery.innerHTML = selectedItems.map((item, i) => {
       const qty = packQuantities[item.id];
-      const match = bestTierPhoto(item, qty);
+      const matches = matchingTierPhotos(item, qty);
+      const photosHtml = matches.map((match) => `
+        <button type="button" class="pack-preview-btn group relative rounded-xl overflow-hidden bg-cream/40 text-left" data-img="${match.img}" data-alt="${match.label}">
+          <img src="${match.img}" alt="${match.label}" class="w-full aspect-square object-cover cursor-zoom-in">
+          <span class="absolute inset-0 bg-ink/0 group-hover:bg-ink/20 transition-colors flex items-center justify-center">
+            <span class="opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 rounded-full p-2">
+              <svg class="w-4 h-4 text-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M11 8v6M8 11h6"/></svg>
+            </span>
+          </span>
+          <p class="text-[11px] text-ink/60 px-2 py-1.5 leading-tight bg-cream/40">${match.label}</p>
+        </button>
+      `).join("");
       return `
-        <div class="rounded-xl overflow-hidden bg-cream/40">
-          <img src="${match.img}" alt="${match.label}" class="w-full h-28 object-cover">
-          <p class="text-[11px] text-ink/60 px-2 py-1.5 leading-tight">${match.label}</p>
+        <div class="animate-fade-in-up" style="animation-delay: ${i * 0.08}s">
+          <p class="flex items-baseline gap-2 mb-2">
+            <span class="text-sm font-bold text-blossom-dark">${item.name}</span>
+            <span class="text-xs text-ink/50">${qty} und. · ${matches.length > 1 ? matches.length + " opciones parecidas" : "1 opción"}</span>
+          </p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">${photosHtml}</div>
         </div>
       `;
-    }).join("");
+    }).join("<div class=\"h-px bg-blossom-light/40 my-5\"></div>");
+    packPreviewGallery.querySelectorAll(".pack-preview-btn").forEach((btn) => {
+      btn.addEventListener("click", () => openLightboxWithImage(btn.dataset.img, btn.dataset.alt, btn.dataset.alt));
+    });
   }
 
   function initPackBuilder() {
@@ -1264,7 +1417,57 @@ ${addonsText}
     renderPackRow("packPlushiesRow", packCatalog.peluches);
     updatePackTotal();
   }
-  initPackBuilder();
+
+  /* ---------------- Carga de catálogo desde Supabase ---------------- */
+  async function loadCatalogData() {
+    try {
+      const [{ data: productRows, error: productsError }, { data: packItemRows, error: packItemsError }, { data: packTierRows, error: packTiersError }] = await Promise.all([
+        supabaseClient.from("products").select("*").order("id"),
+        supabaseClient.from("pack_items").select("*"),
+        supabaseClient.from("pack_tiers").select("*").order("max_qty"),
+      ]);
+      if (productsError || packItemsError || packTiersError) {
+        throw productsError || packItemsError || packTiersError;
+      }
+
+      products = productRows.map((p) => ({
+        id: Number(p.id),
+        name: p.name,
+        description: p.description,
+        price: Number(p.price),
+        category: p.category,
+        tag: p.tag,
+        keywords: p.keywords,
+        img: p.img_url,
+      }));
+
+      const tiersByItem = {};
+      packTierRows.forEach((t) => {
+        (tiersByItem[t.pack_item_id] = tiersByItem[t.pack_item_id] || []).push({
+          max: t.max_qty >= 999999 ? Infinity : t.max_qty,
+          img: t.img_url,
+          label: t.label,
+        });
+      });
+
+      const itemsByType = { flor: [], chocolate: [], peluche: [] };
+      packItemRows.forEach((it) => {
+        const item = { id: it.id, name: it.name, price: Number(it.price), img: it.img_url };
+        if (tiersByItem[it.id]) item.tiers = tiersByItem[it.id];
+        (itemsByType[it.type] = itemsByType[it.type] || []).push(item);
+      });
+
+      packCatalog = { flores: itemsByType.flor, chocolates: itemsByType.chocolate, peluches: itemsByType.peluche };
+    } catch (err) {
+      console.error("No se pudo cargar el catálogo desde Supabase, usando datos de respaldo.", err);
+      products = HARDCODED_PRODUCTS_FALLBACK;
+      packCatalog = HARDCODED_PACK_CATALOG_FALLBACK;
+    }
+
+    renderProducts();
+    initPackBuilder();
+  }
+  loadCatalogData();
 
   document.addEventListener("click", (e) => {
     const btn = e.target.closest(".pack-qty-btn");
@@ -1288,10 +1491,13 @@ ${addonsText}
     updatePackTotal();
   });
 
+  showPackPreviewBtn.addEventListener("click", renderPackPreviewGallery);
+
   function openPackModal() {
     const today = new Date().toISOString().split("T")[0];
     packDeliveryDate.min = today;
     packDeliveryDate.value = today;
+    refreshDeliveryTimeOptions(packDeliveryDate, packDeliveryTime);
 
     packBuilderModal.classList.remove("hidden");
     document.body.classList.add("overflow-hidden");
@@ -1314,13 +1520,17 @@ ${addonsText}
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !packBuilderModal.classList.contains("hidden")) closePackModal();
   });
-
+  packDeliveryDate.addEventListener("change", () => refreshDeliveryTimeOptions(packDeliveryDate, packDeliveryTime));
 
   packSubmitBtn.addEventListener("click", () => {
     const selectedItems = allPackItems().filter((item) => (packQuantities[item.id] || 0) > 0);
     if (selectedItems.length === 0) return;
 
     const itemsText = selectedItems.map((item) => `• ${packQuantities[item.id]}x ${item.name} (${formatPrice(item.price)} c/u)`).join("\n");
+    const photosText = selectedItems.map((item) => {
+      const match = bestTierPhoto(item, packQuantities[item.id]);
+      return `• ${item.name}: ${toAbsoluteImageUrl(match.img)}`;
+    }).join("\n");
     const total = updatePackTotal();
 
     const dateValue = packDeliveryDate.value
@@ -1332,6 +1542,9 @@ ${addonsText}
 
 🎁 Presentación: ${packPresentation.name}
 ${itemsText}
+
+📸 Fotos de referencia:
+${photosText}
 
 💌 Mensaje de tarjeta: ${packDedicationMsg.value.trim() || "Sin mensaje"}
 📅 Fecha de entrega: ${dateValue}
@@ -1348,6 +1561,7 @@ ${itemsText}
 
   /* ---------------- Chatbot Widget ---------------- */
   const chatToggleBtn = document.getElementById("chatToggleBtn");
+  const chatPulse = document.getElementById("chatPulse");
   const chatIconOpen = document.getElementById("chatIconOpen");
   const chatIconClose = document.getElementById("chatIconClose");
   const chatPanel = document.getElementById("chatPanel");
@@ -1473,6 +1687,7 @@ ${itemsText}
     chatPanel.classList.remove("hidden");
     chatIconOpen.classList.add("hidden");
     chatIconClose.classList.remove("hidden");
+    chatPulse.classList.add("hidden");
     if (chatMessagesEl.children.length === 0) startChat();
   }
 
@@ -1480,6 +1695,7 @@ ${itemsText}
     chatPanel.classList.add("hidden");
     chatIconOpen.classList.remove("hidden");
     chatIconClose.classList.add("hidden");
+    chatPulse.classList.remove("hidden");
   }
 
   chatToggleBtn.addEventListener("click", () => {
@@ -1490,6 +1706,29 @@ ${itemsText}
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !chatPanel.classList.contains("hidden")) closeChatPanel();
   });
+
+  /* ---------------- Scroll reveal ---------------- */
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+  document.querySelectorAll(".reveal, .reveal-stagger").forEach((el) => revealObserver.observe(el));
+
+  /* ---------------- Header scroll shadow ---------------- */
+  const siteHeader = document.getElementById("siteHeader");
+  window.addEventListener("scroll", () => {
+    siteHeader.classList.toggle("is-scrolled", window.scrollY > 12);
+  }, { passive: true });
+
+  const syncHeaderOffset = () => {
+    document.documentElement.style.scrollPaddingTop = siteHeader.offsetHeight + "px";
+  };
+  syncHeaderOffset();
+  window.addEventListener("resize", syncHeaderOffset);
 
 })();
 </script>

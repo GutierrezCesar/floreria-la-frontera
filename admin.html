@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin | Florería La Frontera</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%F0%9F%8C%B7</text></svg>">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          'blossom': { light: '#f8bbd0', DEFAULT: '#f06292', dark: '#e05285' },
+          'cream': { DEFAULT: '#fff0f5', deep: '#fce4ec' },
+          'ink': '#1a1a1a',
+        },
+        fontFamily: {
+          serif: ['"Playfair Display"', 'serif'],
+          sans: ['Poppins', 'sans-serif'],
+        },
+      },
+    },
+  }
+</script>
+<style>
+  body { font-family: 'Poppins', sans-serif; background-color: #fff0f5; color: #1a1a1a; }
+  .font-serif { font-family: 'Playfair Display', serif; }
+  input, select, textarea { font-family: inherit; }
+  .field {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #f8bbd0;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    background-color: #ffffff;
+  }
+  .field:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #e05285;
+    border-color: #e05285;
+  }
+</style>
+</head>
+<body class="antialiased">
+
+<header class="bg-white border-b border-blossom-light/50 sticky top-0 z-10">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+    <div>
+      <span class="font-serif text-xl font-bold text-ink">Florería <span class="text-blossom-dark">La Frontera</span></span>
+      <span class="text-xs text-ink/50 ml-2">Panel de administrador</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span id="sessionEmail" class="text-sm text-ink/60 hidden"></span>
+      <button id="logoutBtn" class="hidden text-sm font-semibold text-blossom-dark hover:text-blossom-darker px-3 py-1.5 rounded-full border border-blossom-light hover:bg-cream-deep transition-colors">Cerrar sesión</button>
+      <a href="index.html" class="text-sm text-ink/50 hover:text-blossom-dark transition-colors">Ver sitio →</a>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+
+  <!-- ============ LOGIN ============ -->
+  <div id="loginSection" class="max-w-sm mx-auto bg-white rounded-2xl shadow-sm border border-blossom-light/40 p-8 mt-10">
+    <h1 class="font-serif text-2xl font-bold text-ink mb-1">Iniciar sesión</h1>
+    <p class="text-sm text-ink/50 mb-6">Solo para administración del catálogo.</p>
+    <form id="loginForm" class="space-y-4">
+      <div>
+        <label class="text-sm font-medium text-ink/70 block mb-1">Correo</label>
+        <input type="email" id="loginEmail" class="field" required autocomplete="username">
+      </div>
+      <div>
+        <label class="text-sm font-medium text-ink/70 block mb-1">Contraseña</label>
+        <input type="password" id="loginPassword" class="field" required autocomplete="current-password">
+      </div>
+      <p id="loginError" class="text-sm text-red-600 hidden"></p>
+      <button type="submit" class="w-full bg-blossom-dark hover:bg-ink text-white font-semibold py-2.5 rounded-full transition-colors">Entrar</button>
+    </form>
+  </div>
+
+  <!-- ============ DASHBOARD ============ -->
+  <div id="dashboardSection" class="hidden space-y-14">
+
+    <!-- Productos -->
+    <section>
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="font-serif text-2xl font-bold text-ink">Productos del catálogo</h2>
+        <button id="addProductBtn" class="bg-ink hover:bg-blossom-dark text-white text-sm font-semibold px-4 py-2 rounded-full transition-colors">+ Agregar producto</button>
+      </div>
+      <div id="productsList" class="space-y-3"></div>
+    </section>
+
+    <!-- Pack items -->
+    <section>
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="font-serif text-2xl font-bold text-ink">Arma tu Pack — ítems base</h2>
+        <button id="addPackItemBtn" class="bg-ink hover:bg-blossom-dark text-white text-sm font-semibold px-4 py-2 rounded-full transition-colors">+ Agregar ítem</button>
+      </div>
+      <p class="text-xs text-ink/50 mb-4">Rosas, girasoles, chocolates, peluches — lo que el cliente elige por cantidad en el Pack Builder.</p>
+      <div id="packItemsList" class="space-y-3"></div>
+    </section>
+
+    <!-- Pack tiers -->
+    <section>
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="font-serif text-2xl font-bold text-ink">Arma tu Pack — fotos por cantidad</h2>
+        <button id="addPackTierBtn" class="bg-ink hover:bg-blossom-dark text-white text-sm font-semibold px-4 py-2 rounded-full transition-colors">+ Agregar foto por cantidad</button>
+      </div>
+      <p class="text-xs text-ink/50 mb-4">Define qué foto real se muestra en la "vista previa" según cuántas unidades elige el cliente. Usa <code>999999</code> en "cantidad máx." para "sin tope".</p>
+      <div id="packTiersList" class="space-y-3"></div>
+    </section>
+
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  const SUPABASE_URL = "https://lpxxnmoqfueluvixcaer.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_Yn-V9UWd7hzqhmHdoNRIog_SZlVi-2j";
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const STORAGE_BUCKET = "product-images";
+
+  const loginSection = document.getElementById("loginSection");
+  const dashboardSection = document.getElementById("dashboardSection");
+  const loginForm = document.getElementById("loginForm");
+  const loginError = document.getElementById("loginError");
+  const sessionEmail = document.getElementById("sessionEmail");
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  const productsList = document.getElementById("productsList");
+  const packItemsList = document.getElementById("packItemsList");
+  const packTiersList = document.getElementById("packTiersList");
+
+  let products = [];
+  let packItems = [];
+  let packTiers = [];
+
+  /* ---------------- Auth ---------------- */
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    loginError.classList.add("hidden");
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value;
+    const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    if (error) {
+      loginError.textContent = "No se pudo iniciar sesión: " + error.message;
+      loginError.classList.remove("hidden");
+    }
+  });
+
+  logoutBtn.addEventListener("click", async () => {
+    await supabaseClient.auth.signOut();
+  });
+
+  supabaseClient.auth.onAuthStateChange((_event, session) => {
+    if (session) {
+      loginSection.classList.add("hidden");
+      dashboardSection.classList.remove("hidden");
+      logoutBtn.classList.remove("hidden");
+      sessionEmail.textContent = session.user.email;
+      sessionEmail.classList.remove("hidden");
+      loadAllData();
+    } else {
+      loginSection.classList.remove("hidden");
+      dashboardSection.classList.add("hidden");
+      logoutBtn.classList.add("hidden");
+      sessionEmail.classList.add("hidden");
+    }
+  });
+
+  /* ---------------- Helpers ---------------- */
+  function uid() {
+    return "tmp-" + Math.random().toString(36).slice(2, 10);
+  }
+
+  async function uploadImage(file, folder) {
+    const cleanName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, "_");
+    const path = `${folder}/${Date.now()}-${cleanName}`;
+    const { error } = await supabaseClient.storage.from(STORAGE_BUCKET).upload(path, file, { upsert: true });
+    if (error) {
+      alert("No se pudo subir la imagen: " + error.message);
+      return null;
+    }
+    const { data } = supabaseClient.storage.from(STORAGE_BUCKET).getPublicUrl(path);
+    return data.publicUrl;
+  }
+
+  async function loadAllData() {
+    const [{ data: p, error: pErr }, { data: pi, error: piErr }, { data: pt, error: ptErr }] = await Promise.all([
+      supabaseClient.from("products").select("*").order("id"),
+      supabaseClient.from("pack_items").select("*").order("id"),
+      supabaseClient.from("pack_tiers").select("*").order("max_qty"),
+    ]);
+    if (pErr || piErr || ptErr) {
+      alert("Error cargando datos: " + (pErr || piErr || ptErr).message);
+      return;
+    }
+    products = p;
+    packItems = pi;
+    packTiers = pt;
+    renderProducts();
+    renderPackItems();
+    renderPackTiers();
+  }
+
+  /* ================= PRODUCTOS ================= */
+  function renderProducts() {
+    productsList.innerHTML = products.map((prod) => productRowHtml(prod)).join("");
+    products.forEach((prod) => wireProductRow(prod.id));
+  }
+
+  function productRowHtml(prod) {
+    const isNew = String(prod.id).startsWith("tmp-");
+    return `
+      <div class="bg-white rounded-xl border border-blossom-light/40 p-4 flex flex-col sm:flex-row gap-4" data-product-row="${prod.id}">
+        <div class="flex flex-col items-center gap-2 shrink-0">
+          <img src="${prod.img_url || 'https://placehold.co/96x96?text=Foto'}" class="w-24 h-24 rounded-lg object-cover border border-blossom-light/40" data-field="img_preview">
+          <label class="text-xs text-blossom-dark hover:underline cursor-pointer">
+            Subir foto
+            <input type="file" accept="image/*" class="hidden" data-field="img_upload">
+          </label>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 flex-1">
+          <div><label class="text-xs text-ink/50 block mb-1">Nombre</label><input class="field" data-field="name" value="${escapeAttr(prod.name)}"></div>
+          <div><label class="text-xs text-ink/50 block mb-1">Precio (S/)</label><input type="number" step="0.10" class="field" data-field="price" value="${prod.price}"></div>
+          <div class="sm:col-span-2"><label class="text-xs text-ink/50 block mb-1">Descripción</label><input class="field" data-field="description" value="${escapeAttr(prod.description)}"></div>
+          <div>
+            <label class="text-xs text-ink/50 block mb-1">Categoría</label>
+            <select class="field" data-field="category">
+              ${["Cumpleaños", "Aniversarios", "Románticos"].map((c) => `<option value="${c}" ${prod.category === c ? "selected" : ""}>${c}</option>`).join("")}
+            </select>
+          </div>
+          <div><label class="text-xs text-ink/50 block mb-1">Tag (opcional)</label><input class="field" data-field="tag" value="${escapeAttr(prod.tag || "")}" placeholder="Más vendido / Entrega Hoy"></div>
+          <div class="sm:col-span-2"><label class="text-xs text-ink/50 block mb-1">Palabras clave (buscador)</label><input class="field" data-field="keywords" value="${escapeAttr(prod.keywords || "")}"></div>
+        </div>
+        <div class="flex sm:flex-col gap-2 shrink-0 justify-end">
+          <button class="bg-blossom-dark hover:bg-ink text-white text-sm font-semibold px-4 py-2 rounded-full transition-colors" data-action="save">${isNew ? "Crear" : "Guardar"}</button>
+          <button class="border border-red-300 text-red-600 hover:bg-red-50 text-sm font-semibold px-4 py-2 rounded-full transition-colors" data-action="delete">Eliminar</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function wireProductRow(id) {
+    const row = productsList.querySelector(`[data-product-row="${id}"]`);
+    if (!row) return;
+
+    row.querySelector('[data-field="img_upload"]').addEventListener("change", async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const url = await uploadImage(file, "products");
+      if (!url) return;
+      row.querySelector('[data-field="img_preview"]').src = url;
+      row.dataset.pendingImgUrl = url;
+    });
+
+    row.querySelector('[data-action="save"]').addEventListener("click", async () => {
+      const payload = {
+        name: row.querySelector('[data-field="name"]').value.trim(),
+        description: row.querySelector('[data-field="description"]').value.trim(),
+        price: parseFloat(row.querySelector('[data-field="price"]').value) || 0,
+        category: row.querySelector('[data-field="category"]').value,
+        tag: row.querySelector('[data-field="tag"]').value.trim(),
+        keywords: row.querySelector('[data-field="keywords"]').value.trim(),
+      };
+      const prod = products.find((p) => String(p.id) === String(id));
+      payload.img_url = row.dataset.pendingImgUrl || prod.img_url || "";
+
+      const isNew = String(id).startsWith("tmp-");
+      if (isNew) {
+        const { data, error } = await supabaseClient.from("products").insert(payload).select().single();
+        if (error) return alert("Error al crear: " + error.message);
+        Object.assign(prod, data);
+      } else {
+        const { error } = await supabaseClient.from("products").update(payload).eq("id", id);
+        if (error) return alert("Error al guardar: " + error.message);
+        Object.assign(prod, payload);
+      }
+      renderProducts();
+    });
+
+    row.querySelector('[data-action="delete"]').addEventListener("click", async () => {
+      const isNew = String(id).startsWith("tmp-");
+      if (!isNew) {
+        if (!confirm("¿Eliminar este producto del catálogo?")) return;
+        const { error } = await supabaseClient.from("products").delete().eq("id", id);
+        if (error) return alert("Error al eliminar: " + error.message);
+      }
+      products = products.filter((p) => String(p.id) !== String(id));
+      renderProducts();
+    });
+  }
+
+  document.getElementById("addProductBtn").addEventListener("click", () => {
+    products.push({ id: uid(), name: "", description: "", price: 0, category: "Cumpleaños", tag: "", keywords: "", img_url: "" });
+    renderProducts();
+  });
+
+  /* ================= PACK ITEMS ================= */
+  function renderPackItems() {
+    packItemsList.innerHTML = packItems.map((it) => packItemRowHtml(it)).join("");
+    packItems.forEach((it) => wirePackItemRow(it.id));
+  }
+
+  function packItemRowHtml(it) {
+    const isNew = it.__isNew;
+    return `
+      <div class="bg-white rounded-xl border border-blossom-light/40 p-4 flex flex-col sm:flex-row gap-4" data-pack-item-row="${it.id}">
+        <div class="flex flex-col items-center gap-2 shrink-0">
+          <img src="${it.img_url || 'https://placehold.co/96x96?text=Foto'}" class="w-24 h-24 rounded-lg object-cover border border-blossom-light/40" data-field="img_preview">
+          <label class="text-xs text-blossom-dark hover:underline cursor-pointer">
+            Subir foto
+            <input type="file" accept="image/*" class="hidden" data-field="img_upload">
+          </label>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 flex-1">
+          <div>
+            <label class="text-xs text-ink/50 block mb-1">ID único (sin espacios, ej. "rosa")</label>
+            <input class="field" data-field="id" value="${escapeAttr(it.id)}" ${isNew ? "" : "disabled"}>
+          </div>
+          <div>
+            <label class="text-xs text-ink/50 block mb-1">Tipo</label>
+            <select class="field" data-field="type">
+              ${["flor", "chocolate", "peluche"].map((t) => `<option value="${t}" ${it.type === t ? "selected" : ""}>${t}</option>`).join("")}
+            </select>
+          </div>
+          <div><label class="text-xs text-ink/50 block mb-1">Nombre</label><input class="field" data-field="name" value="${escapeAttr(it.name)}"></div>
+          <div><label class="text-xs text-ink/50 block mb-1">Precio (S/)</label><input type="number" step="0.10" class="field" data-field="price" value="${it.price}"></div>
+        </div>
+        <div class="flex sm:flex-col gap-2 shrink-0 justify-end">
+          <button class="bg-blossom-dark hover:bg-ink text-white text-sm font-semibold px-4 py-2 rounded-full transition-colors" data-action="save">${isNew ? "Crear" : "Guardar"}</button>
+          <button class="border border-red-300 text-red-600 hover:bg-red-50 text-sm font-semibold px-4 py-2 rounded-full transition-colors" data-action="delete">Eliminar</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function wirePackItemRow(id) {
+    const row = packItemsList.querySelector(`[data-pack-item-row="${id}"]`);
+    if (!row) return;
+    const it = packItems.find((x) => String(x.id) === String(id));
+
+    row.querySelector('[data-field="img_upload"]').addEventListener("change", async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const url = await uploadImage(file, "pack-items");
+      if (!url) return;
+      row.querySelector('[data-field="img_preview"]').src = url;
+      row.dataset.pendingImgUrl = url;
+    });
+
+    row.querySelector('[data-action="save"]').addEventListener("click", async () => {
+      const newId = row.querySelector('[data-field="id"]').value.trim();
+      const payload = {
+        id: newId,
+        type: row.querySelector('[data-field="type"]').value,
+        name: row.querySelector('[data-field="name"]').value.trim(),
+        price: parseFloat(row.querySelector('[data-field="price"]').value) || 0,
+        img_url: row.dataset.pendingImgUrl || it.img_url || "",
+      };
+      if (!payload.id) return alert("El ID no puede estar vacío.");
+
+      if (it.__isNew) {
+        const { data, error } = await supabaseClient.from("pack_items").insert(payload).select().single();
+        if (error) return alert("Error al crear: " + error.message);
+        Object.assign(it, data);
+        delete it.__isNew;
+      } else {
+        const { error } = await supabaseClient.from("pack_items").update(payload).eq("id", id);
+        if (error) return alert("Error al guardar: " + error.message);
+        Object.assign(it, payload);
+      }
+      renderPackItems();
+    });
+
+    row.querySelector('[data-action="delete"]').addEventListener("click", async () => {
+      if (!it.__isNew) {
+        if (!confirm("¿Eliminar este ítem? También se borrarán sus fotos por cantidad asociadas.")) return;
+        const { error } = await supabaseClient.from("pack_items").delete().eq("id", id);
+        if (error) return alert("Error al eliminar: " + error.message);
+        packTiers = packTiers.filter((t) => t.pack_item_id !== id);
+      }
+      packItems = packItems.filter((x) => String(x.id) !== String(id));
+      renderPackItems();
+      renderPackTiers();
+    });
+  }
+
+  document.getElementById("addPackItemBtn").addEventListener("click", () => {
+    packItems.push({ id: uid(), type: "flor", name: "", price: 0, img_url: "", __isNew: true });
+    renderPackItems();
+  });
+
+  /* ================= PACK TIERS ================= */
+  function renderPackTiers() {
+    packTiersList.innerHTML = packTiers.map((t) => packTierRowHtml(t)).join("");
+    packTiers.forEach((t) => wirePackTierRow(t.id));
+  }
+
+  function packTierRowHtml(t) {
+    const isNew = t.__isNew;
+    return `
+      <div class="bg-white rounded-xl border border-blossom-light/40 p-4 flex flex-col sm:flex-row gap-4" data-pack-tier-row="${t.id}">
+        <div class="flex flex-col items-center gap-2 shrink-0">
+          <img src="${t.img_url || 'https://placehold.co/96x96?text=Foto'}" class="w-24 h-24 rounded-lg object-cover border border-blossom-light/40" data-field="img_preview">
+          <label class="text-xs text-blossom-dark hover:underline cursor-pointer">
+            Subir foto
+            <input type="file" accept="image/*" class="hidden" data-field="img_upload">
+          </label>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 flex-1">
+          <div>
+            <label class="text-xs text-ink/50 block mb-1">Ítem</label>
+            <select class="field" data-field="pack_item_id">
+              ${packItems.filter((it) => !it.__isNew).map((it) => `<option value="${it.id}" ${t.pack_item_id === it.id ? "selected" : ""}>${escapeAttr(it.name)} (${it.id})</option>`).join("")}
+            </select>
+          </div>
+          <div><label class="text-xs text-ink/50 block mb-1">Cantidad máx.</label><input type="number" class="field" data-field="max_qty" value="${t.max_qty}"></div>
+          <div class="sm:col-span-2"><label class="text-xs text-ink/50 block mb-1">Etiqueta</label><input class="field" data-field="label" value="${escapeAttr(t.label)}"></div>
+        </div>
+        <div class="flex sm:flex-col gap-2 shrink-0 justify-end">
+          <button class="bg-blossom-dark hover:bg-ink text-white text-sm font-semibold px-4 py-2 rounded-full transition-colors" data-action="save">${isNew ? "Crear" : "Guardar"}</button>
+          <button class="border border-red-300 text-red-600 hover:bg-red-50 text-sm font-semibold px-4 py-2 rounded-full transition-colors" data-action="delete">Eliminar</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function wirePackTierRow(id) {
+    const row = packTiersList.querySelector(`[data-pack-tier-row="${id}"]`);
+    if (!row) return;
+    const t = packTiers.find((x) => String(x.id) === String(id));
+
+    row.querySelector('[data-field="img_upload"]').addEventListener("change", async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const url = await uploadImage(file, "pack-tiers");
+      if (!url) return;
+      row.querySelector('[data-field="img_preview"]').src = url;
+      row.dataset.pendingImgUrl = url;
+    });
+
+    row.querySelector('[data-action="save"]').addEventListener("click", async () => {
+      const payload = {
+        pack_item_id: row.querySelector('[data-field="pack_item_id"]').value,
+        max_qty: parseInt(row.querySelector('[data-field="max_qty"]').value, 10) || 0,
+        label: row.querySelector('[data-field="label"]').value.trim(),
+        img_url: row.dataset.pendingImgUrl || t.img_url || "",
+      };
+      if (t.__isNew) {
+        const { data, error } = await supabaseClient.from("pack_tiers").insert(payload).select().single();
+        if (error) return alert("Error al crear: " + error.message);
+        Object.assign(t, data);
+        delete t.__isNew;
+      } else {
+        const { error } = await supabaseClient.from("pack_tiers").update(payload).eq("id", id);
+        if (error) return alert("Error al guardar: " + error.message);
+        Object.assign(t, payload);
+      }
+      renderPackTiers();
+    });
+
+    row.querySelector('[data-action="delete"]').addEventListener("click", async () => {
+      if (!t.__isNew) {
+        if (!confirm("¿Eliminar esta foto por cantidad?")) return;
+        const { error } = await supabaseClient.from("pack_tiers").delete().eq("id", id);
+        if (error) return alert("Error al eliminar: " + error.message);
+      }
+      packTiers = packTiers.filter((x) => String(x.id) !== String(id));
+      renderPackTiers();
+    });
+  }
+
+  document.getElementById("addPackTierBtn").addEventListener("click", () => {
+    if (!packItems.some((it) => !it.__isNew)) {
+      alert("Primero crea y guarda al menos un ítem del Pack Builder.");
+      return;
+    }
+    packTiers.push({ id: uid(), pack_item_id: packItems.find((it) => !it.__isNew).id, max_qty: 999999, label: "", img_url: "", __isNew: true });
+    renderPackTiers();
+  });
+
+  function escapeAttr(str) {
+    return String(str || "").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+  }
+
+})();
+</script>
+</body>
+</html>
