@@ -13,12 +13,17 @@ create table products (
   tag text not null default '',
   keywords text not null default '',
   img_url text not null,
+  presentation text not null default '',
+  occasion text not null default '',
   created_at timestamptz not null default now()
 );
 
+-- "type" es la categoría del ítem tal como se muestra en el sitio (ej. "Flores", "Chocolates",
+-- "Peluches", "Postres"...) — es texto libre, no una lista fija, para que el admin pueda crear
+-- categorías nuevas sin tocar la base de datos.
 create table pack_items (
   id text primary key,
-  type text not null check (type in ('flor', 'chocolate', 'peluche')),
+  type text not null,
   name text not null,
   price numeric(10,2) not null,
   img_url text not null
@@ -79,11 +84,11 @@ insert into products (name, description, price, category, tag, keywords, img_url
   ('Elegancia Formal', 'Rosas azules envueltas en diseño de esmoquin', 139.90, 'Aniversarios', 'Más vendido', 'rosas azules elegante esmoquin aniversario formal', 'images/ramo-elegancia-paternal.jpg');
 
 insert into pack_items (id, type, name, price, img_url) values
-  ('rosa', 'flor', 'Rosas', 3.5, 'https://images.unsplash.com/photo-1644248421159-e6e64a7f4ca3?q=80&w=200&auto=format&fit=crop'),
-  ('girasol', 'flor', 'Girasoles', 4.0, 'https://images.unsplash.com/photo-1676819076406-eb84287c818d?q=80&w=200&auto=format&fit=crop'),
-  ('vizio', 'chocolate', 'Chocolate Vizio', 8.0, 'https://images.unsplash.com/photo-1526081347589-7fa3cb41b4b2?q=80&w=200&auto=format&fit=crop'),
-  ('donofrio', 'chocolate', 'Chocolate D''onofrio', 9.0, 'https://images.unsplash.com/photo-1526081347589-7fa3cb41b4b2?q=80&w=200&auto=format&fit=crop'),
-  ('peluche', 'peluche', 'Peluche mediano', 25.0, 'https://images.unsplash.com/photo-1583478415880-b79447d73a84?q=80&w=200&auto=format&fit=crop');
+  ('rosa', 'Flores', 'Rosas', 3.5, 'https://images.unsplash.com/photo-1644248421159-e6e64a7f4ca3?q=80&w=200&auto=format&fit=crop'),
+  ('girasol', 'Flores', 'Girasoles', 4.0, 'https://images.unsplash.com/photo-1676819076406-eb84287c818d?q=80&w=200&auto=format&fit=crop'),
+  ('vizio', 'Chocolates', 'Chocolate Vizio', 8.0, 'https://images.unsplash.com/photo-1526081347589-7fa3cb41b4b2?q=80&w=200&auto=format&fit=crop'),
+  ('donofrio', 'Chocolates', 'Chocolate D''onofrio', 9.0, 'https://images.unsplash.com/photo-1526081347589-7fa3cb41b4b2?q=80&w=200&auto=format&fit=crop'),
+  ('peluche', 'Peluches', 'Peluche mediano', 25.0, 'https://images.unsplash.com/photo-1583478415880-b79447d73a84?q=80&w=200&auto=format&fit=crop');
 
 insert into pack_tiers (pack_item_id, max_qty, img_url, label) values
   ('rosa', 5, 'images/ramo-rosas-blancas-libro.jpg', 'Rosas — ramo chico (referencial)'),

@@ -128,8 +128,8 @@
   .nav-link:hover::after { width: 100%; }
 
   /* Modal transition */
-  #checkoutModal { transition: opacity 0.3s ease; }
-  #checkoutModal .modal-panel { transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease; }
+  #cartModal { transition: opacity 0.3s ease; }
+  #cartModal .modal-panel { transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease; }
   #packBuilderModal { transition: opacity 0.3s ease; }
   #packBuilderModal .modal-panel { transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease; }
   .pack-presentation-btn.active-presentation { border-color: #e05285; background-color: rgba(248, 187, 208, 0.2); }
@@ -222,17 +222,71 @@
 <body class="antialiased">
 
 <!-- ================= HEADER ================= -->
-<header id="siteHeader" class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-blossom-light/40 transition-all">
+<header id="siteHeader" class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-blossom-light/40 transition-all">
+
+  <!-- Fila 1: menú móvil + logo centrado + búsqueda + carrito -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between gap-6 py-5 sm:py-6">
-      <!-- Logo -->
-      <a href="#inicio" class="shrink-0 flex flex-col leading-none group">
-        <span class="whitespace-nowrap font-serif text-2xl sm:text-3xl font-bold text-ink group-hover:text-blossom-dark transition-colors">Florería <span class="text-blossom-dark">La Frontera</span> <span class="logo-tulip" aria-hidden="true">🌷</span></span>
-        <span class="text-[10px] sm:text-xs tracking-[0.25em] uppercase text-botanical mt-1">Detalles Inolvidables</span>
+    <div class="grid grid-cols-[auto_1fr_auto] lg:grid-cols-[1fr_auto_1fr] items-center gap-3 py-4 sm:py-5">
+      <button id="mobileMenuBtn" class="lg:hidden justify-self-start p-2 -ml-2 text-ink" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+      <div class="hidden lg:flex items-center gap-1.5 justify-self-start">
+        <a href="https://www.instagram.com/florerialafrontera" target="_blank" rel="noopener"
+           aria-label="Síguenos en Instagram" class="social-icon social-ig">
+          <span class="social-circle inline-flex items-center justify-center w-9 h-9 rounded-full border-2 border-blossom-light text-ink/70">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-4 h-4 fill-current"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153a4.908 4.908 0 011.153 1.772c.247.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 01-1.153 1.772 4.915 4.915 0 01-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 01-1.772-1.153 4.904 4.904 0 01-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.066.217-1.79.465-2.428a4.88 4.88 0 011.153-1.772A4.897 4.897 0 015.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2zm0 1.802c-2.67 0-2.986.01-4.04.059-.976.045-1.505.207-1.858.344-.466.181-.8.398-1.15.748-.35.35-.566.683-.747 1.15-.137.352-.3.881-.344 1.857-.05 1.054-.06 1.37-.06 4.04 0 2.67.01 2.986.06 4.04.045.976.207 1.505.344 1.858.181.466.397.8.747 1.15.35.35.684.566 1.15.747.353.137.882.3 1.858.344 1.054.05 1.37.06 4.04.06 2.67 0 2.987-.01 4.04-.06.977-.045 1.506-.207 1.858-.344.466-.181.8-.398 1.15-.748.35-.35.566-.683.747-1.15.137-.352.3-.881.344-1.857.05-1.054.06-1.37.06-4.04 0-2.67-.01-2.986-.06-4.04-.045-.976-.207-1.505-.344-1.858a3.09 3.09 0 00-.747-1.15 3.096 3.096 0 00-1.15-.747c-.352-.137-.881-.3-1.857-.344-1.054-.05-1.37-.06-4.04-.06zm0 4.595a5.603 5.603 0 110 11.206 5.603 5.603 0 010-11.206zm0 1.802a3.801 3.801 0 100 7.602 3.801 3.801 0 000-7.602zm5.723-1.998a1.31 1.31 0 11-2.62 0 1.31 1.31 0 012.62 0z"/></svg>
+          </span>
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61564404956914" target="_blank" rel="noopener"
+           aria-label="Síguenos en Facebook" class="social-icon social-fb">
+          <span class="social-circle inline-flex items-center justify-center w-9 h-9 rounded-full border-2 border-blossom-light text-ink/70">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="w-4 h-4 fill-current"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/></svg>
+          </span>
+        </a>
+        <a href="https://www.tiktok.com/@florerialafrontera" target="_blank" rel="noopener"
+           aria-label="Síguenos en TikTok" class="social-icon social-tt">
+          <span class="social-circle inline-flex items-center justify-center w-9 h-9 rounded-full border-2 border-blossom-light text-ink/70">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="w-4 h-4 fill-current"><path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z"/></svg>
+          </span>
+        </a>
+      </div>
+
+      <a href="#inicio" class="justify-self-center flex flex-col items-center leading-none group">
+        <span class="whitespace-nowrap font-serif text-xl sm:text-3xl font-bold text-ink group-hover:text-blossom-dark transition-colors">Florería <span class="text-blossom-dark">La Frontera</span> <span class="logo-tulip" aria-hidden="true">🌷</span></span>
+        <span class="hidden sm:block text-[10px] sm:text-xs tracking-[0.25em] uppercase text-botanical mt-1">Detalles Inolvidables</span>
       </a>
 
-      <!-- Desktop Nav -->
-      <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-ink/80">
+      <div class="flex items-center gap-2 sm:gap-3 justify-self-end">
+        <form id="headerSearchForm" class="hidden md:block">
+          <label class="sr-only" for="headerSearchInput">Buscar</label>
+          <input id="headerSearchInput" type="text" placeholder="Buscar arreglo..."
+                 class="w-40 lg:w-56 px-4 py-2 rounded-full border border-blossom-light bg-cream/40 focus:outline-none focus:ring-2 focus:ring-blossom text-sm">
+        </form>
+        <button id="openCartBtn" type="button" aria-label="Ver carrito" class="relative flex items-center justify-center w-11 h-11 rounded-full border-2 border-blossom-light text-ink/70 hover:border-blossom-dark hover:text-blossom-dark active:scale-90 transition-all">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h1.5l1.19 11.9a1.5 1.5 0 001.49 1.35h9.7a1.5 1.5 0 001.49-1.35L20 7H6" />
+            <circle cx="9" cy="20" r="1" fill="currentColor" stroke="none"/>
+            <circle cx="17" cy="20" r="1" fill="currentColor" stroke="none"/>
+          </svg>
+          <span id="cartBadge" class="hidden absolute -top-1.5 -right-1.5 bg-blossom-dark text-white text-[10px] font-bold min-w-[1.25rem] h-5 px-1 rounded-full flex items-center justify-center">0</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fila 2: navegación + menú desplegable + promociones -->
+  <div class="hidden lg:block border-t border-blossom-light/30 bg-white relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-3">
+      <nav class="flex items-center gap-6 text-sm font-medium text-ink/80">
+        <button id="megaMenuBtn" type="button" aria-expanded="false" aria-controls="megaMenu"
+                class="flex items-center gap-1.5 border-2 border-blossom-dark text-blossom-dark rounded-full pl-3 pr-4 py-1.5 text-sm font-semibold hover:bg-blossom-light/20 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          Menú
+        </button>
         <a href="#inicio" class="nav-link hover:text-blossom-dark transition-colors">Inicio</a>
         <a href="#catalogo" data-filter-scroll="Cumpleaños" class="nav-link hover:text-blossom-dark transition-colors">Cumpleaños</a>
         <a href="#catalogo" data-filter-scroll="Aniversarios" class="nav-link hover:text-blossom-dark transition-colors">Aniversarios</a>
@@ -240,40 +294,35 @@
         <a href="#arma-tu-pack" class="nav-link hover:text-blossom-dark transition-colors">Arma tu Pack</a>
         <a href="#contacto" class="nav-link hover:text-blossom-dark transition-colors">Contacto</a>
       </nav>
+      <a href="https://wa.me/message/2OMDBGCGOVGSI1?text=Hola%20Florer%C3%ADa%20La%20Frontera%2C%20quisiera%20conocer%20las%20promociones%20vigentes"
+         target="_blank" rel="noopener"
+         class="border-2 border-blossom-dark text-blossom-dark hover:bg-blossom-dark hover:text-white rounded-full px-5 py-1.5 text-sm font-semibold transition-colors">
+        Promociones
+      </a>
+    </div>
 
-      <!-- CTA + Mobile toggle -->
-      <div class="flex items-center gap-3">
-        <div class="hidden sm:flex items-center gap-2">
-          <a href="https://www.instagram.com/florerialafrontera" target="_blank" rel="noopener"
-             aria-label="Síguenos en Instagram" class="social-icon social-ig">
-            <span class="social-circle inline-flex items-center justify-center w-10 h-10 rounded-full border-2 border-blossom-light text-ink/70">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-[18px] h-[18px] fill-current"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153a4.908 4.908 0 011.153 1.772c.247.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 01-1.153 1.772 4.915 4.915 0 01-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 01-1.772-1.153 4.904 4.904 0 01-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.066.217-1.79.465-2.428a4.88 4.88 0 011.153-1.772A4.897 4.897 0 015.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2zm0 1.802c-2.67 0-2.986.01-4.04.059-.976.045-1.505.207-1.858.344-.466.181-.8.398-1.15.748-.35.35-.566.683-.747 1.15-.137.352-.3.881-.344 1.857-.05 1.054-.06 1.37-.06 4.04 0 2.67.01 2.986.06 4.04.045.976.207 1.505.344 1.858.181.466.397.8.747 1.15.35.35.684.566 1.15.747.353.137.882.3 1.858.344 1.054.05 1.37.06 4.04.06 2.67 0 2.987-.01 4.04-.06.977-.045 1.506-.207 1.858-.344.466-.181.8-.398 1.15-.748.35-.35.566-.683.747-1.15.137-.352.3-.881.344-1.857.05-1.054.06-1.37.06-4.04 0-2.67-.01-2.986-.06-4.04-.045-.976-.207-1.505-.344-1.858a3.09 3.09 0 00-.747-1.15 3.096 3.096 0 00-1.15-.747c-.352-.137-.881-.3-1.857-.344-1.054-.05-1.37-.06-4.04-.06zm0 4.595a5.603 5.603 0 110 11.206 5.603 5.603 0 010-11.206zm0 1.802a3.801 3.801 0 100 7.602 3.801 3.801 0 000-7.602zm5.723-1.998a1.31 1.31 0 11-2.62 0 1.31 1.31 0 012.62 0z"/></svg>
-            </span>
-          </a>
-          <a href="https://www.facebook.com/profile.php?id=61564404956914" target="_blank" rel="noopener"
-             aria-label="Síguenos en Facebook" class="social-icon social-fb">
-            <span class="social-circle inline-flex items-center justify-center w-10 h-10 rounded-full border-2 border-blossom-light text-ink/70">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="w-[18px] h-[18px] fill-current"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/></svg>
-            </span>
-          </a>
-          <a href="https://www.tiktok.com/@florerialafrontera" target="_blank" rel="noopener"
-             aria-label="Síguenos en TikTok" class="social-icon social-tt">
-            <span class="social-circle inline-flex items-center justify-center w-10 h-10 rounded-full border-2 border-blossom-light text-ink/70">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="w-[18px] h-[18px] fill-current"><path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z"/></svg>
-            </span>
-          </a>
+    <!-- Menú desplegable -->
+    <div id="megaMenu" class="hidden absolute left-0 right-0 top-full bg-cream border-t border-b border-blossom-light/40 shadow-lg z-30">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid sm:grid-cols-2 gap-8">
+        <div>
+          <p class="text-xs font-bold text-blossom-dark uppercase tracking-wide mb-3">Categorías</p>
+          <div class="flex flex-col gap-2.5">
+            <a href="#catalogo" data-filter-scroll="Todos" class="text-ink/80 hover:text-blossom-dark transition-colors">Todo el catálogo</a>
+            <a href="#catalogo" data-filter-scroll="Cumpleaños" class="text-ink/80 hover:text-blossom-dark transition-colors">Cumpleaños</a>
+            <a href="#catalogo" data-filter-scroll="Aniversarios" class="text-ink/80 hover:text-blossom-dark transition-colors">Aniversarios</a>
+            <a href="#catalogo" data-filter-scroll="Románticos" class="text-ink/80 hover:text-blossom-dark transition-colors">Tulipanes &amp; Ramos</a>
+            <a href="#arma-tu-pack" class="text-ink/80 hover:text-blossom-dark transition-colors">Arma tu Pack</a>
+          </div>
         </div>
-        <a href="https://wa.me/message/2OMDBGCGOVGSI1?text=Hola%20Florer%C3%ADa%20La%20Frontera%2C%20quisiera%20informaci%C3%B3n%20sobre%20un%20arreglo%20floral"
-           target="_blank" rel="noopener"
-           class="hidden sm:inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5a] text-white font-semibold text-sm px-4 py-2.5 rounded-full shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-5 h-5 fill-white"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.706 4.605 1.92 6.463L4 29l7.72-1.885A11.94 11.94 0 0 0 16 27c6.628 0 12-5.373 12-12S22.629 3 16.001 3zm0 21.75c-1.994 0-3.85-.583-5.41-1.587l-.388-.24-4.59 1.121 1.169-4.475-.253-.401A9.71 9.71 0 0 1 5.25 15c0-5.937 4.813-10.75 10.751-10.75S26.752 9.063 26.752 15 21.939 24.75 16.001 24.75zm5.55-8.079c-.303-.152-1.794-.885-2.072-.986-.278-.101-.48-.152-.682.152-.202.303-.784.986-.961 1.189-.177.202-.354.227-.657.076-.303-.152-1.28-.472-2.438-1.505-.901-.804-1.51-1.797-1.687-2.1-.177-.303-.019-.467.133-.618.137-.136.303-.354.455-.531.152-.177.202-.303.303-.505.101-.202.05-.379-.025-.531-.076-.152-.682-1.646-.934-2.253-.246-.591-.497-.511-.682-.52l-.581-.01c-.202 0-.531.076-.809.379-.278.303-1.061 1.037-1.061 2.529s1.086 2.935 1.238 3.138c.152.202 2.138 3.266 5.181 4.579.724.313 1.288.5 1.729.64.726.231 1.387.198 1.909.12.582-.087 1.794-.734 2.047-1.443.253-.708.253-1.315.177-1.443-.076-.127-.278-.202-.581-.354z"/></svg>
-          WhatsApp
-        </a>
-        <button id="mobileMenuBtn" class="lg:hidden p-2 text-ink" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
+        <div>
+          <p class="text-xs font-bold text-blossom-dark uppercase tracking-wide mb-3">Ocasiones especiales</p>
+          <div class="flex flex-col gap-2.5">
+            <button type="button" class="quick-tag text-left text-ink/80 hover:text-blossom-dark transition-colors" data-quick-search="Día del Padre">Día del Padre</button>
+            <button type="button" class="quick-tag text-left text-ink/80 hover:text-blossom-dark transition-colors" data-quick-search="Día de la Madre">Día de la Madre</button>
+            <button type="button" class="quick-tag text-left text-ink/80 hover:text-blossom-dark transition-colors" data-quick-search="San Valentín">San Valentín</button>
+            <button type="button" class="quick-tag text-left text-ink/80 hover:text-blossom-dark transition-colors" data-quick-search="romántico">Detalle para Enamorar</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -286,7 +335,14 @@
       <a href="#catalogo" data-filter-scroll="Aniversarios" class="py-3 border-b border-blossom-light/30">Aniversarios</a>
       <a href="#catalogo" data-filter-scroll="Románticos" class="py-3 border-b border-blossom-light/30">Tulipanes &amp; Ramos</a>
       <a href="#arma-tu-pack" class="py-3 border-b border-blossom-light/30">Arma tu Pack</a>
-      <a href="#contacto" class="py-3">Contacto</a>
+      <a href="#contacto" class="py-3 border-b border-blossom-light/30">Contacto</a>
+      <a href="https://wa.me/message/2OMDBGCGOVGSI1?text=Hola%20Florer%C3%ADa%20La%20Frontera%2C%20quisiera%20conocer%20las%20promociones%20vigentes"
+         target="_blank" rel="noopener" class="py-3 border-b border-blossom-light/30">Promociones</a>
+      <p class="pt-4 pb-1 text-[11px] font-semibold tracking-widest uppercase text-ink/40">Ocasiones especiales</p>
+      <button type="button" class="quick-tag text-left py-2" data-quick-search="Día del Padre">Día del Padre</button>
+      <button type="button" class="quick-tag text-left py-2" data-quick-search="Día de la Madre">Día de la Madre</button>
+      <button type="button" class="quick-tag text-left py-2" data-quick-search="San Valentín">San Valentín</button>
+      <button type="button" class="quick-tag text-left py-2 border-b border-blossom-light/30" data-quick-search="romántico">Detalle para Enamorar</button>
       <a href="https://wa.me/message/2OMDBGCGOVGSI1?text=Hola%20Florer%C3%ADa%20La%20Frontera%2C%20quisiera%20informaci%C3%B3n%20sobre%20un%20arreglo%20floral"
          target="_blank" rel="noopener"
          class="mt-3 inline-flex items-center justify-center gap-2 bg-[#25D366] text-white font-semibold text-sm px-4 py-3 rounded-full shadow-md transition-transform active:scale-95">
@@ -666,23 +722,8 @@
           </div>
         </div>
 
-        <!-- Flores -->
-        <div>
-          <label class="block text-sm font-semibold text-ink mb-3">Flores</label>
-          <div class="space-y-2" id="packFlowersRow"></div>
-        </div>
-
-        <!-- Chocolates -->
-        <div>
-          <label class="block text-sm font-semibold text-ink mb-3">Chocolates</label>
-          <div class="space-y-2" id="packChocolatesRow"></div>
-        </div>
-
-        <!-- Peluches -->
-        <div>
-          <label class="block text-sm font-semibold text-ink mb-3">Peluches</label>
-          <div class="space-y-2" id="packPlushiesRow"></div>
-        </div>
+        <!-- Ítems del pack (categorías dinámicas, definidas en el admin) -->
+        <div id="packItemsByCategory" class="space-y-6"></div>
 
         <!-- Dedicatoria -->
         <div>
@@ -742,102 +783,100 @@
   </div>
 </div>
 
-<!-- ================= CHECKOUT / PERSONALIZACIÓN MODAL ================= -->
-<div id="checkoutModal" class="fixed inset-0 z-[60] hidden">
-  <div id="modalOverlay" class="absolute inset-0 bg-ink/60 backdrop-blur-sm"></div>
+<!-- ================= CARRITO ================= -->
+<div id="cartModal" class="fixed inset-0 z-[60] hidden">
+  <div id="cartModalOverlay" class="absolute inset-0 bg-ink/60 backdrop-blur-sm"></div>
   <div class="relative min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div class="modal-panel opacity-0 translate-y-8 bg-white w-full sm:max-w-2xl sm:rounded-3xl rounded-t-3xl max-h-[92vh] overflow-y-auto shadow-2xl">
 
       <!-- Modal header -->
-      <div class="sticky top-0 bg-white z-10 flex items-start justify-between gap-4 px-6 sm:px-8 pt-6 pb-4 border-b border-blossom-light/40">
-        <div class="flex items-center gap-4">
-          <img id="modalProductImg" src="" alt="" class="w-16 h-16 rounded-xl object-cover shrink-0">
-          <div>
-            <p class="text-xs font-semibold text-botanical uppercase tracking-wide">Personaliza tu pedido</p>
-            <h3 id="modalProductName" class="font-serif text-xl font-bold text-ink leading-tight"></h3>
-            <p id="modalProductPrice" class="text-blossom-dark font-bold text-sm mt-1"></p>
-          </div>
-        </div>
-        <button id="closeModalBtn" aria-label="Cerrar" class="shrink-0 flex items-center justify-center w-11 h-11 text-ink/60 hover:text-ink hover:bg-cream rounded-full active:scale-90 transition-all">
+      <div class="sticky top-0 bg-white z-10 flex items-center justify-between gap-4 px-6 sm:px-8 pt-6 pb-4 border-b border-blossom-light/40">
+        <h3 class="font-serif text-xl font-bold text-ink">🛍️ Tu carrito</h3>
+        <button id="closeCartModalBtn" aria-label="Cerrar" class="shrink-0 flex items-center justify-center w-11 h-11 text-ink/60 hover:text-ink hover:bg-cream rounded-full active:scale-90 transition-all">
           <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
 
-      <!-- Modal body / form -->
-      <form id="orderForm" class="px-6 sm:px-8 py-6 space-y-6">
+      <div class="px-6 sm:px-8 py-6 space-y-6">
+        <div id="cartItemsList" class="space-y-3"></div>
+        <p id="cartEmptyMsg" class="hidden text-sm text-center text-ink/60 py-4">Tu carrito está vacío. Agrega productos del catálogo para armar tu pedido.</p>
 
-        <!-- Delivery date & time -->
-        <div class="grid sm:grid-cols-2 gap-4">
+        <!-- Modal body / form -->
+        <form id="orderForm" class="space-y-6">
+
+          <!-- Delivery date & time -->
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-semibold text-ink mb-2">Fecha de entrega</label>
+              <input type="date" id="deliveryDate" required
+                     class="w-full px-4 py-3 rounded-xl border border-blossom-light bg-cream/40 focus:outline-none focus:ring-2 focus:ring-blossom text-sm">
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-ink mb-2">Horario de entrega</label>
+              <select id="deliveryTime" required
+                      class="w-full px-4 py-3 rounded-xl border border-blossom-light bg-cream/40 focus:outline-none focus:ring-2 focus:ring-blossom text-sm">
+                <option value="">Selecciona un rango</option>
+                <option value="09:00 - 12:00">09:00 am - 12:00 pm</option>
+                <option value="12:00 - 15:00">12:00 pm - 03:00 pm</option>
+                <option value="15:00 - 18:00">03:00 pm - 06:00 pm</option>
+                <option value="18:00 - 20:00">06:00 pm - 08:00 pm</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Dedication message -->
           <div>
-            <label class="block text-sm font-semibold text-ink mb-2">Fecha de entrega</label>
-            <input type="date" id="deliveryDate" required
-                   class="w-full px-4 py-3 rounded-xl border border-blossom-light bg-cream/40 focus:outline-none focus:ring-2 focus:ring-blossom text-sm">
+            <label class="block text-sm font-semibold text-ink mb-2">Mensaje para la tarjeta de dedicatoria</label>
+            <textarea id="dedicationMsg" rows="3" maxlength="220" placeholder="Escribe aquí tu mensaje especial..."
+                      class="w-full px-4 py-3 rounded-xl border border-blossom-light bg-cream/40 focus:outline-none focus:ring-2 focus:ring-blossom text-sm resize-none"></textarea>
+            <p class="text-xs text-ink/60 mt-1 text-right"><span id="msgCount">0</span>/220</p>
           </div>
+
+          <!-- Add-ons -->
           <div>
-            <label class="block text-sm font-semibold text-ink mb-2">Horario de entrega</label>
-            <select id="deliveryTime" required
-                    class="w-full px-4 py-3 rounded-xl border border-blossom-light bg-cream/40 focus:outline-none focus:ring-2 focus:ring-blossom text-sm">
-              <option value="">Selecciona un rango</option>
-              <option value="09:00 - 12:00">09:00 am - 12:00 pm</option>
-              <option value="12:00 - 15:00">12:00 pm - 03:00 pm</option>
-              <option value="15:00 - 18:00">03:00 pm - 06:00 pm</option>
-              <option value="18:00 - 20:00">06:00 pm - 08:00 pm</option>
-            </select>
+            <label class="block text-sm font-semibold text-ink mb-3">Complementos opcionales (para todo el pedido)</label>
+            <div class="grid sm:grid-cols-3 gap-3">
+              <label class="addon-option cursor-pointer flex flex-col items-center gap-2 border-2 border-blossom-light/60 rounded-2xl p-4 text-center hover:border-blossom transition-colors">
+                <input type="checkbox" class="addon-checkbox hidden" data-name="Caja de Chocolates" data-price="25">
+                <span class="text-3xl">🍫</span>
+                <span class="text-sm font-semibold text-ink">Chocolates</span>
+                <span class="text-xs text-botanical font-bold">+ S/ 25</span>
+              </label>
+              <label class="addon-option cursor-pointer flex flex-col items-center gap-2 border-2 border-blossom-light/60 rounded-2xl p-4 text-center hover:border-blossom transition-colors">
+                <input type="checkbox" class="addon-checkbox hidden" data-name="Peluche" data-price="35">
+                <span class="text-3xl">🧸</span>
+                <span class="text-sm font-semibold text-ink">Peluche</span>
+                <span class="text-xs text-botanical font-bold">+ S/ 35</span>
+              </label>
+              <label class="addon-option cursor-pointer flex flex-col items-center gap-2 border-2 border-blossom-light/60 rounded-2xl p-4 text-center hover:border-blossom transition-colors">
+                <input type="checkbox" class="addon-checkbox hidden" data-name="Globos con Helio" data-price="20">
+                <span class="text-3xl">🎈</span>
+                <span class="text-sm font-semibold text-ink">Globos c/ Helio</span>
+                <span class="text-xs text-botanical font-bold">+ S/ 20</span>
+              </label>
+            </div>
           </div>
-        </div>
 
-        <!-- Dedication message -->
-        <div>
-          <label class="block text-sm font-semibold text-ink mb-2">Mensaje para la tarjeta de dedicatoria</label>
-          <textarea id="dedicationMsg" rows="3" maxlength="220" placeholder="Escribe aquí tu mensaje especial..."
-                    class="w-full px-4 py-3 rounded-xl border border-blossom-light bg-cream/40 focus:outline-none focus:ring-2 focus:ring-blossom text-sm resize-none"></textarea>
-          <p class="text-xs text-ink/60 mt-1 text-right"><span id="msgCount">0</span>/220</p>
-        </div>
-
-        <!-- Add-ons -->
-        <div>
-          <label class="block text-sm font-semibold text-ink mb-3">Complementos opcionales</label>
-          <div class="grid sm:grid-cols-3 gap-3">
-            <label class="addon-option cursor-pointer flex flex-col items-center gap-2 border-2 border-blossom-light/60 rounded-2xl p-4 text-center hover:border-blossom transition-colors">
-              <input type="checkbox" class="addon-checkbox hidden" data-name="Caja de Chocolates" data-price="25">
-              <span class="text-3xl">🍫</span>
-              <span class="text-sm font-semibold text-ink">Chocolates</span>
-              <span class="text-xs text-botanical font-bold">+ S/ 25</span>
-            </label>
-            <label class="addon-option cursor-pointer flex flex-col items-center gap-2 border-2 border-blossom-light/60 rounded-2xl p-4 text-center hover:border-blossom transition-colors">
-              <input type="checkbox" class="addon-checkbox hidden" data-name="Peluche" data-price="35">
-              <span class="text-3xl">🧸</span>
-              <span class="text-sm font-semibold text-ink">Peluche</span>
-              <span class="text-xs text-botanical font-bold">+ S/ 35</span>
-            </label>
-            <label class="addon-option cursor-pointer flex flex-col items-center gap-2 border-2 border-blossom-light/60 rounded-2xl p-4 text-center hover:border-blossom transition-colors">
-              <input type="checkbox" class="addon-checkbox hidden" data-name="Globos con Helio" data-price="20">
-              <span class="text-3xl">🎈</span>
-              <span class="text-sm font-semibold text-ink">Globos c/ Helio</span>
-              <span class="text-xs text-botanical font-bold">+ S/ 20</span>
-            </label>
+          <!-- Total summary -->
+          <div class="bg-cream-deep rounded-2xl p-5 flex items-center justify-between">
+            <span class="font-semibold text-ink">Total estimado</span>
+            <span id="orderTotal" class="font-serif text-2xl font-bold text-blossom-dark">S/ 0.00</span>
           </div>
-        </div>
 
-        <!-- Total summary -->
-        <div class="bg-cream-deep rounded-2xl p-5 flex items-center justify-between">
-          <span class="font-semibold text-ink">Total estimado</span>
-          <span id="orderTotal" class="font-serif text-2xl font-bold text-blossom-dark">S/ 0.00</span>
-        </div>
-
-        <!-- Submit -->
-        <button type="submit"
-                class="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1ebe5a] text-white font-bold text-base px-6 py-4 rounded-full shadow-md hover:shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98]">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-5 h-5 fill-white"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.706 4.605 1.92 6.463L4 29l7.72-1.885A11.94 11.94 0 0 0 16 27c6.628 0 12-5.373 12-12S22.629 3 16.001 3zm0 21.75c-1.994 0-3.85-.583-5.41-1.587l-.388-.24-4.59 1.121 1.169-4.475-.253-.401A9.71 9.71 0 0 1 5.25 15c0-5.937 4.813-10.75 10.751-10.75S26.752 9.063 26.752 15 21.939 24.75 16.001 24.75zm5.55-8.079c-.303-.152-1.794-.885-2.072-.986-.278-.101-.48-.152-.682.152-.202.303-.784.986-.961 1.189-.177.202-.354.227-.657.076-.303-.152-1.28-.472-2.438-1.505-.901-.804-1.51-1.797-1.687-2.1-.177-.303-.019-.467.133-.618.137-.136.303-.354.455-.531.152-.177.202-.303.303-.505.101-.202.05-.379-.025-.531-.076-.152-.682-1.646-.934-2.253-.246-.591-.497-.511-.682-.52l-.581-.01c-.202 0-.531.076-.809.379-.278.303-1.061 1.037-1.061 2.529s1.086 2.935 1.238 3.138c.152.202 2.138 3.266 5.181 4.579.724.313 1.288.5 1.729.64.726.231 1.387.198 1.909.12.582-.087 1.794-.734 2.047-1.443.253-.708.253-1.315.177-1.443-.076-.127-.278-.202-.581-.354z"/></svg>
-          Confirmar y Pedir por WhatsApp
-        </button>
-        <p class="text-xs text-center text-ink/60">Al confirmar, se abrirá WhatsApp con el resumen de tu pedido para coordinar el pago y la entrega.</p>
-      </form>
+          <!-- Submit -->
+          <button type="submit" id="cartSubmitBtn" disabled
+                  class="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1ebe5a] disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-base px-6 py-4 rounded-full shadow-md hover:shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98] disabled:hover:scale-100">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-5 h-5 fill-white"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.706 4.605 1.92 6.463L4 29l7.72-1.885A11.94 11.94 0 0 0 16 27c6.628 0 12-5.373 12-12S22.629 3 16.001 3zm0 21.75c-1.994 0-3.85-.583-5.41-1.587l-.388-.24-4.59 1.121 1.169-4.475-.253-.401A9.71 9.71 0 0 1 5.25 15c0-5.937 4.813-10.75 10.751-10.75S26.752 9.063 26.752 15 21.939 24.75 16.001 24.75zm5.55-8.079c-.303-.152-1.794-.885-2.072-.986-.278-.101-.48-.152-.682.152-.202.303-.784.986-.961 1.189-.177.202-.354.227-.657.076-.303-.152-1.28-.472-2.438-1.505-.901-.804-1.51-1.797-1.687-2.1-.177-.303-.019-.467.133-.618.137-.136.303-.354.455-.531.152-.177.202-.303.303-.505.101-.202.05-.379-.025-.531-.076-.152-.682-1.646-.934-2.253-.246-.591-.497-.511-.682-.52l-.581-.01c-.202 0-.531.076-.809.379-.278.303-1.061 1.037-1.061 2.529s1.086 2.935 1.238 3.138c.152.202 2.138 3.266 5.181 4.579.724.313 1.288.5 1.729.64.726.231 1.387.198 1.909.12.582-.087 1.794-.734 2.047-1.443.253-.708.253-1.315.177-1.443-.076-.127-.278-.202-.581-.354z"/></svg>
+            Pedir por WhatsApp
+          </button>
+          <p class="text-xs text-center text-ink/60">Al confirmar, se abrirá WhatsApp con el resumen de tu pedido. El costo de delivery y el pago se coordinan directamente por WhatsApp.</p>
+        </form>
+      </div>
     </div>
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="vendor/supabase-js.umd.js"></script>
 <script>
 (function () {
   "use strict";
@@ -894,6 +933,8 @@
       price: 129.90,
       category: "Románticos",
       tag: "Más vendido",
+      presentation: "",
+      occasion: "",
       keywords: "rosas blancas libro romantico regalo",
       img: "images/ramo-rosas-blancas-libro.jpg",
     },
@@ -904,6 +945,8 @@
       price: 99.90,
       category: "Cumpleaños",
       tag: "Entrega Hoy",
+      presentation: "",
+      occasion: "",
       keywords: "cumpleaños girasoles vintage alegria",
       img: "images/girasoles-envueltos-periodico.jpg",
     },
@@ -914,6 +957,8 @@
       price: 189.90,
       category: "Aniversarios",
       tag: "Más vendido",
+      presentation: "",
+      occasion: "",
       keywords: "rosas rojas aniversario amor romantico",
       img: "images/rosas-rojas-textura.jpg",
     },
@@ -924,6 +969,8 @@
       price: 89.90,
       category: "Cumpleaños",
       tag: "",
+      presentation: "",
+      occasion: "",
       keywords: "girasoles cumpleaños alegria",
       img: "images/ramo-girasoles-trio.jpg",
     },
@@ -934,6 +981,8 @@
       price: 149.90,
       category: "Románticos",
       tag: "Entrega Hoy",
+      presentation: "",
+      occasion: "",
       keywords: "flores eternas fieltro romantico enamorados",
       img: "images/ramo-flores-fieltro-morado.jpg",
     },
@@ -944,6 +993,8 @@
       price: 219.90,
       category: "Aniversarios",
       tag: "",
+      presentation: "",
+      occasion: "",
       keywords: "aniversario boda premium elegante rosas azules caja",
       img: "images/rosas-azules-caballero.jpg",
     },
@@ -954,6 +1005,8 @@
       price: 109.90,
       category: "Cumpleaños",
       tag: "",
+      presentation: "",
+      occasion: "",
       keywords: "girasoles rosas azules cumpleaños original",
       img: "images/ramo-golden-blue.jpg",
     },
@@ -964,6 +1017,8 @@
       price: 139.90,
       category: "Aniversarios",
       tag: "Más vendido",
+      presentation: "",
+      occasion: "",
       keywords: "rosas azules elegante esmoquin aniversario formal",
       img: "images/ramo-elegancia-paternal.jpg",
     },
@@ -974,6 +1029,8 @@
       price: 99.90,
       category: "Cumpleaños",
       tag: "",
+      presentation: "",
+      occasion: "",
       keywords: "girasoles doce caja sorpresa cumpleaños alegria",
       img: "images/doce-girasoles-caja-sorpresa.jpg",
     },
@@ -990,10 +1047,13 @@
     return "S/ " + n.toFixed(2);
   }
 
+  const OCCASION_ICONS = { "Día del Padre": "👨", "Día de la Madre": "👩", "San Valentín": "❤️" };
+  const PRESENTATION_ICONS = { "Arreglo floral": "💐", "Canasta": "🧺", "Caja sorpresa": "🎁", "Macetero": "🪴" };
+
   function renderProducts() {
     const filtered = products.filter((p) => {
       const matchesFilter = currentFilter === "Todos" || p.category === currentFilter;
-      const haystack = (p.name + " " + p.description + " " + p.keywords + " " + p.category).toLowerCase();
+      const haystack = (p.name + " " + p.description + " " + p.keywords + " " + p.category + " " + p.presentation + " " + p.occasion).toLowerCase();
       const matchesSearch = currentSearch === "" || haystack.includes(currentSearch.toLowerCase());
       return matchesFilter && matchesSearch;
     });
@@ -1010,6 +1070,7 @@
         <button type="button" data-product-id="${p.id}" class="product-image-btn group relative h-56 w-full overflow-hidden" aria-label="Ver imagen ampliada de ${p.name}">
           <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover" loading="lazy">
           ${p.tag ? `<span class="absolute top-3 left-3 bg-blossom-dark text-white text-xs font-bold px-3 py-1.5 rounded-full shadow">${p.tag}</span>` : ""}
+          ${p.occasion ? `<span class="absolute top-3 right-3 bg-ink/80 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow">${OCCASION_ICONS[p.occasion] || "🎉"} ${p.occasion}</span>` : ""}
           <span class="absolute inset-0 bg-ink/0 group-hover:bg-ink/20 transition-colors flex items-center justify-center">
             <span class="opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 rounded-full p-2.5">
               <svg class="w-5 h-5 text-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M11 8v6M8 11h6"/></svg>
@@ -1018,11 +1079,17 @@
         </button>
         <div class="p-5 flex flex-col flex-1">
           <h3 class="font-serif text-lg font-bold text-ink mb-1">${p.name}</h3>
-          <p class="text-sm text-ink/60 mb-4 flex-1">${p.description}</p>
-          <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <span class="font-bold text-blossom-dark text-lg">${formatPrice(p.price)}</span>
-            <button data-product-id="${p.id}" class="personalize-btn w-full sm:w-auto bg-ink hover:bg-blossom-dark text-white text-sm font-semibold px-4 py-3 sm:py-2.5 rounded-full transition-all hover:scale-105 active:scale-95">
-              Personalizar &amp; Pedir
+          <p class="text-sm text-ink/60 mb-3 flex-1">${p.description}</p>
+          ${p.presentation ? `<span class="inline-flex items-center gap-1 self-start text-xs text-ink/60 bg-cream-deep px-2.5 py-1 rounded-full border border-blossom-light/40 mb-3">${PRESENTATION_ICONS[p.presentation] || "🌸"} ${p.presentation}</span>` : ""}
+          <span class="font-bold text-blossom-dark text-lg mb-3">${formatPrice(p.price)}</span>
+          <div class="flex items-center gap-2">
+            <div class="flex items-center gap-1 border border-blossom-light rounded-full px-1 shrink-0">
+              <button type="button" aria-label="Quitar una unidad" class="cart-qty-btn w-9 h-9 rounded-full flex items-center justify-center text-ink/70 hover:bg-blossom-light active:scale-90 transition-all" data-product-id="${p.id}" data-delta="-1">−</button>
+              <span class="w-6 text-center text-sm font-semibold text-ink" data-qty-for="${p.id}">1</span>
+              <button type="button" aria-label="Agregar una unidad" class="cart-qty-btn w-9 h-9 rounded-full flex items-center justify-center text-ink/70 hover:bg-blossom-light active:scale-90 transition-all" data-product-id="${p.id}" data-delta="1">+</button>
+            </div>
+            <button data-product-id="${p.id}" class="add-to-cart-btn flex-1 bg-ink hover:bg-blossom-dark text-white text-sm font-semibold px-4 py-3 sm:py-2.5 rounded-full transition-all hover:scale-105 active:scale-95">
+              Añadir al carrito
             </button>
           </div>
         </div>
@@ -1030,9 +1097,6 @@
       grid.appendChild(card);
     });
 
-    document.querySelectorAll(".personalize-btn").forEach((btn) => {
-      btn.addEventListener("click", () => openModal(Number(btn.dataset.productId)));
-    });
     document.querySelectorAll(".product-image-btn").forEach((btn) => {
       btn.addEventListener("click", () => openLightbox(Number(btn.dataset.productId)));
     });
@@ -1060,17 +1124,49 @@
     if (btn) btn.click();
   }
 
+  /* ---------------- Mobile Menu ---------------- */
+  const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+  const mobileMenu = document.getElementById("mobileMenu");
+  mobileMenuBtn.addEventListener("click", () => {
+    const isOpen = mobileMenu.classList.toggle("hidden") === false;
+    mobileMenuBtn.setAttribute("aria-expanded", String(isOpen));
+    mobileMenuBtn.setAttribute("aria-label", isOpen ? "Cerrar menú" : "Abrir menú");
+  });
+
+  /* ---------------- Menú desplegable (desktop) ---------------- */
+  const megaMenuBtn = document.getElementById("megaMenuBtn");
+  const megaMenu = document.getElementById("megaMenu");
+  megaMenuBtn.addEventListener("click", () => {
+    const isOpen = megaMenu.classList.toggle("hidden") === false;
+    megaMenuBtn.setAttribute("aria-expanded", String(isOpen));
+  });
+  document.addEventListener("click", (e) => {
+    if (megaMenu.classList.contains("hidden")) return;
+    if (megaMenu.contains(e.target) || megaMenuBtn.contains(e.target)) return;
+    megaMenu.classList.add("hidden");
+    megaMenuBtn.setAttribute("aria-expanded", "false");
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !megaMenu.classList.contains("hidden")) {
+      megaMenu.classList.add("hidden");
+      megaMenuBtn.setAttribute("aria-expanded", "false");
+    }
+  });
+
   /* Nav links that jump to catalog & pre-filter */
   document.querySelectorAll("[data-filter-scroll]").forEach((link) => {
     link.addEventListener("click", () => {
       setFilterByLabel(link.dataset.filterScroll);
-      document.getElementById("mobileMenu").classList.add("hidden");
+      mobileMenu.classList.add("hidden");
+      megaMenu.classList.add("hidden");
     });
   });
 
   /* ---------------- Search ---------------- */
   const searchForm = document.getElementById("searchForm");
   const heroSearchInput = document.getElementById("heroSearchInput");
+  const headerSearchForm = document.getElementById("headerSearchForm");
+  const headerSearchInput = document.getElementById("headerSearchInput");
 
   searchForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -1085,6 +1181,12 @@
     document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
   });
 
+  headerSearchForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    heroSearchInput.value = headerSearchInput.value;
+    searchForm.requestSubmit();
+  });
+
   document.querySelectorAll(".quick-tag").forEach((tag) => {
     tag.addEventListener("click", () => {
       const term = tag.dataset.quickSearch;
@@ -1092,23 +1194,21 @@
       currentSearch = term;
       renderProducts();
       document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
+      mobileMenu.classList.add("hidden");
+      megaMenu.classList.add("hidden");
     });
   });
 
-  /* ---------------- Mobile Menu ---------------- */
-  const mobileMenuBtn = document.getElementById("mobileMenuBtn");
-  const mobileMenu = document.getElementById("mobileMenu");
-  mobileMenuBtn.addEventListener("click", () => {
-    const isOpen = mobileMenu.classList.toggle("hidden") === false;
-    mobileMenuBtn.setAttribute("aria-expanded", String(isOpen));
-    mobileMenuBtn.setAttribute("aria-label", isOpen ? "Cerrar menú" : "Abrir menú");
-  });
-
-  /* ---------------- Checkout Modal ---------------- */
-  const checkoutModal = document.getElementById("checkoutModal");
-  const modalPanel = checkoutModal.querySelector(".modal-panel");
-  const modalOverlay = document.getElementById("modalOverlay");
-  const closeModalBtn = document.getElementById("closeModalBtn");
+  /* ---------------- Carrito ---------------- */
+  const cartModal = document.getElementById("cartModal");
+  const cartModalPanel = cartModal.querySelector(".modal-panel");
+  const cartModalOverlay = document.getElementById("cartModalOverlay");
+  const closeCartModalBtn = document.getElementById("closeCartModalBtn");
+  const openCartBtn = document.getElementById("openCartBtn");
+  const cartBadge = document.getElementById("cartBadge");
+  const cartItemsList = document.getElementById("cartItemsList");
+  const cartEmptyMsg = document.getElementById("cartEmptyMsg");
+  const cartSubmitBtn = document.getElementById("cartSubmitBtn");
   const orderForm = document.getElementById("orderForm");
   const deliveryDate = document.getElementById("deliveryDate");
   const deliveryTime = document.getElementById("deliveryTime");
@@ -1116,17 +1216,62 @@
   const msgCount = document.getElementById("msgCount");
   const orderTotal = document.getElementById("orderTotal");
 
-  let activeProduct = null;
+  let cart = {}; // { [productId]: qty }
 
-  function openModal(productId) {
-    activeProduct = products.find((p) => p.id === productId);
-    if (!activeProduct) return;
+  function cartItems() {
+    return Object.entries(cart)
+      .map(([id, qty]) => ({ product: products.find((p) => p.id === Number(id)), qty }))
+      .filter((entry) => entry.product && entry.qty > 0);
+  }
 
-    document.getElementById("modalProductImg").src = activeProduct.img;
-    document.getElementById("modalProductImg").alt = activeProduct.name;
-    document.getElementById("modalProductName").textContent = activeProduct.name;
-    document.getElementById("modalProductPrice").textContent = formatPrice(activeProduct.price);
+  function cartCount() {
+    return Object.values(cart).reduce((sum, qty) => sum + qty, 0);
+  }
 
+  function cartSubtotal() {
+    return cartItems().reduce((sum, { product, qty }) => sum + product.price * qty, 0);
+  }
+
+  function updateCartBadge() {
+    const count = cartCount();
+    cartBadge.textContent = count;
+    cartBadge.classList.toggle("hidden", count === 0);
+  }
+
+  function cartItemHtml(product, qty) {
+    return `
+      <div class="flex items-center gap-3 bg-cream/40 rounded-xl px-4 py-3" data-cart-item="${product.id}">
+        <img src="${product.img}" alt="${product.name}" class="w-14 h-14 rounded-lg object-cover shrink-0">
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-semibold text-ink truncate">${product.name}</p>
+          <p class="text-xs text-ink/60">${formatPrice(product.price)} c/u</p>
+        </div>
+        <div class="flex items-center gap-1.5 shrink-0">
+          <button type="button" aria-label="Quitar una unidad" class="cart-item-qty-btn w-8 h-8 rounded-full border border-blossom-light flex items-center justify-center text-ink/70 hover:bg-blossom-light active:scale-90 transition-all" data-product-id="${product.id}" data-delta="-1">−</button>
+          <span class="w-5 text-center text-sm font-semibold text-ink">${qty}</span>
+          <button type="button" aria-label="Agregar una unidad" class="cart-item-qty-btn w-8 h-8 rounded-full border border-blossom-light flex items-center justify-center text-ink/70 hover:bg-blossom-light active:scale-90 transition-all" data-product-id="${product.id}" data-delta="1">+</button>
+        </div>
+        <button type="button" aria-label="Quitar del carrito" class="cart-item-remove-btn shrink-0 text-ink/40 hover:text-red-500 w-8 h-8 flex items-center justify-center" data-product-id="${product.id}">✕</button>
+      </div>
+    `;
+  }
+
+  function renderCartItems() {
+    const items = cartItems();
+    cartItemsList.innerHTML = items.map(({ product, qty }) => cartItemHtml(product, qty)).join("");
+    cartEmptyMsg.classList.toggle("hidden", items.length !== 0);
+    orderForm.classList.toggle("hidden", items.length === 0);
+    cartSubmitBtn.disabled = items.length === 0;
+    updateCartTotal();
+  }
+
+  function updateCartTotal() {
+    const addonsTotal = getSelectedAddons().reduce((sum, a) => sum + a.price, 0);
+    orderTotal.textContent = formatPrice(cartSubtotal() + addonsTotal);
+  }
+
+  function openCartModal() {
+    renderCartItems();
     orderForm.reset();
     msgCount.textContent = "0";
     document.querySelectorAll(".addon-option").forEach((el) => el.classList.remove("border-blossom", "bg-blossom-light/30"));
@@ -1136,29 +1281,73 @@
     deliveryDate.value = today;
     refreshDeliveryTimeOptions(deliveryDate, deliveryTime);
 
-    updateTotal();
+    updateCartTotal();
 
-    checkoutModal.classList.remove("hidden");
+    cartModal.classList.remove("hidden");
     document.body.classList.add("overflow-hidden");
     requestAnimationFrame(() => {
-      modalPanel.classList.remove("opacity-0", "translate-y-8");
+      cartModalPanel.classList.remove("opacity-0", "translate-y-8");
     });
   }
 
-  function closeModal() {
-    modalPanel.classList.add("opacity-0", "translate-y-8");
+  function closeCartModal() {
+    cartModalPanel.classList.add("opacity-0", "translate-y-8");
     setTimeout(() => {
-      checkoutModal.classList.add("hidden");
+      cartModal.classList.add("hidden");
       document.body.classList.remove("overflow-hidden");
     }, 300);
   }
 
-  closeModalBtn.addEventListener("click", closeModal);
-  modalOverlay.addEventListener("click", closeModal);
+  openCartBtn.addEventListener("click", openCartModal);
+  closeCartModalBtn.addEventListener("click", closeCartModal);
+  cartModalOverlay.addEventListener("click", closeCartModal);
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !checkoutModal.classList.contains("hidden")) closeModal();
+    if (e.key === "Escape" && !cartModal.classList.contains("hidden")) closeCartModal();
   });
   deliveryDate.addEventListener("change", () => refreshDeliveryTimeOptions(deliveryDate, deliveryTime));
+
+  /* Botones +/- de cantidad y "Añadir al carrito" en las tarjetas del catálogo */
+  document.addEventListener("click", (e) => {
+    const stepBtn = e.target.closest(".cart-qty-btn");
+    if (stepBtn) {
+      const valueEl = document.querySelector(`[data-qty-for="${stepBtn.dataset.productId}"]`);
+      if (!valueEl) return;
+      const next = Math.max(1, (parseInt(valueEl.textContent, 10) || 1) + Number(stepBtn.dataset.delta));
+      valueEl.textContent = next;
+      return;
+    }
+
+    const addBtn = e.target.closest(".add-to-cart-btn");
+    if (addBtn) {
+      const id = Number(addBtn.dataset.productId);
+      const valueEl = document.querySelector(`[data-qty-for="${id}"]`);
+      const qty = valueEl ? (parseInt(valueEl.textContent, 10) || 1) : 1;
+      cart[id] = (cart[id] || 0) + qty;
+      if (valueEl) valueEl.textContent = "1";
+      updateCartBadge();
+      const originalText = addBtn.textContent;
+      addBtn.textContent = "✓ Agregado";
+      setTimeout(() => { addBtn.textContent = originalText; }, 1200);
+      return;
+    }
+
+    const cartQtyBtn = e.target.closest(".cart-item-qty-btn");
+    if (cartQtyBtn) {
+      const id = Number(cartQtyBtn.dataset.productId);
+      cart[id] = Math.max(0, (cart[id] || 0) + Number(cartQtyBtn.dataset.delta));
+      if (cart[id] === 0) delete cart[id];
+      renderCartItems();
+      updateCartBadge();
+      return;
+    }
+
+    const removeBtn = e.target.closest(".cart-item-remove-btn");
+    if (removeBtn) {
+      delete cart[Number(removeBtn.dataset.productId)];
+      renderCartItems();
+      updateCartBadge();
+    }
+  });
 
   /* ---------------- Image Lightbox ---------------- */
   const imageLightbox = document.getElementById("imageLightbox");
@@ -1190,7 +1379,7 @@
     lightboxPanel.classList.add("opacity-0", "scale-95");
     setTimeout(() => {
       imageLightbox.classList.add("hidden");
-      if (checkoutModal.classList.contains("hidden") && document.getElementById("packBuilderModal").classList.contains("hidden")) {
+      if (cartModal.classList.contains("hidden") && document.getElementById("packBuilderModal").classList.contains("hidden")) {
         document.body.classList.remove("overflow-hidden");
       }
     }, 300);
@@ -1213,7 +1402,7 @@
       setTimeout(() => {
         label.classList.toggle("border-blossom", checkbox.checked);
         label.classList.toggle("bg-blossom-light/30", checkbox.checked);
-        updateTotal();
+        updateCartTotal();
       }, 0);
     });
   });
@@ -1225,19 +1414,16 @@
     }));
   }
 
-  function updateTotal() {
-    if (!activeProduct) return;
-    const addonsTotal = getSelectedAddons().reduce((sum, a) => sum + a.price, 0);
-    orderTotal.textContent = formatPrice(activeProduct.price + addonsTotal);
-  }
-
   orderForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    if (!activeProduct) return;
+    const items = cartItems();
+    if (items.length === 0) return;
 
+    const itemsText = items.map(({ product, qty }) => `• ${qty}x ${product.name} (${formatPrice(product.price)} c/u)`).join("\n");
+    const photosText = items.map(({ product }) => `• ${product.name}: ${toAbsoluteImageUrl(product.img)}`).join("\n");
     const addons = getSelectedAddons();
     const addonsText = addons.length ? addons.map((a) => `• ${a.name} (+${formatPrice(a.price)})`).join("\n") : "Ninguno";
-    const total = activeProduct.price + addons.reduce((s, a) => s + a.price, 0);
+    const total = cartSubtotal() + addons.reduce((s, a) => s + a.price, 0);
 
     const dateFormatted = new Date(deliveryDate.value + "T00:00:00").toLocaleDateString("es-PE", {
       weekday: "long", year: "numeric", month: "long", day: "numeric",
@@ -1246,9 +1432,11 @@
     const message =
 `Hola Florería La Frontera, quisiera pedir:
 
-🌸 Arreglo: ${activeProduct.name}
-📝 Descripción: ${activeProduct.description}
-📸 Foto de referencia: ${toAbsoluteImageUrl(activeProduct.img)}
+${itemsText}
+
+📸 Fotos de referencia:
+${photosText}
+
 📅 Fecha de entrega: ${dateFormatted}
 🕐 Horario: ${deliveryTime.value || "No especificado"}
 💌 Mensaje de tarjeta: ${dedicationMsg.value.trim() || "Sin mensaje"}
@@ -1257,17 +1445,19 @@ ${addonsText}
 
 💰 Total estimado: ${formatPrice(total)}
 
-¡Quedo atento(a) para coordinar el pago y la entrega!`;
+¡Quedo atento(a) para coordinar el pago, el delivery y la entrega!`;
 
     const encoded = encodeURIComponent(message);
     window.open(`${WHATSAPP_LINK}?text=${encoded}`, "_blank");
-    closeModal();
+    cart = {};
+    updateCartBadge();
+    closeCartModal();
   });
 
   /* ---------------- Pack Builder ---------------- */
-  let packCatalog = { flores: [], chocolates: [], peluches: [] };
+  let packCatalog = {};
   const HARDCODED_PACK_CATALOG_FALLBACK = {
-    flores: [
+    Flores: [
       {
         id: "rosa", name: "Rosas", price: 3.5,
         img: "https://images.unsplash.com/photo-1644248421159-e6e64a7f4ca3?q=80&w=200&auto=format&fit=crop",
@@ -1299,11 +1489,11 @@ ${addonsText}
         ],
       },
     ],
-    chocolates: [
+    Chocolates: [
       { id: "vizio", name: "Chocolate Vizio", price: 8.0, img: "https://images.unsplash.com/photo-1526081347589-7fa3cb41b4b2?q=80&w=200&auto=format&fit=crop" },
       { id: "donofrio", name: "Chocolate D'onofrio", price: 9.0, img: "https://images.unsplash.com/photo-1526081347589-7fa3cb41b4b2?q=80&w=200&auto=format&fit=crop" },
     ],
-    peluches: [
+    Peluches: [
       { id: "peluche", name: "Peluche mediano", price: 25.0, img: "https://images.unsplash.com/photo-1583478415880-b79447d73a84?q=80&w=200&auto=format&fit=crop" },
     ],
   };
@@ -1350,8 +1540,20 @@ ${addonsText}
     }).join("");
   }
 
+  function renderPackCategories() {
+    const container = document.getElementById("packItemsByCategory");
+    const categories = Object.keys(packCatalog);
+    container.innerHTML = categories.map((category, i) => `
+      <div>
+        <label class="block text-sm font-semibold text-ink mb-3">${category}</label>
+        <div class="space-y-2" id="packCategoryRow-${i}"></div>
+      </div>
+    `).join("");
+    categories.forEach((category, i) => renderPackRow(`packCategoryRow-${i}`, packCatalog[category]));
+  }
+
   function allPackItems() {
-    return [...packCatalog.flores, ...packCatalog.chocolates, ...packCatalog.peluches];
+    return Object.values(packCatalog).flat();
   }
 
   function updatePackTotal() {
@@ -1412,9 +1614,7 @@ ${addonsText}
   }
 
   function initPackBuilder() {
-    renderPackRow("packFlowersRow", packCatalog.flores);
-    renderPackRow("packChocolatesRow", packCatalog.chocolates);
-    renderPackRow("packPlushiesRow", packCatalog.peluches);
+    renderPackCategories();
     updatePackTotal();
   }
 
@@ -1437,6 +1637,8 @@ ${addonsText}
         price: Number(p.price),
         category: p.category,
         tag: p.tag,
+        presentation: p.presentation || "",
+        occasion: p.occasion || "",
         keywords: p.keywords,
         img: p.img_url,
       }));
@@ -1450,14 +1652,14 @@ ${addonsText}
         });
       });
 
-      const itemsByType = { flor: [], chocolate: [], peluche: [] };
+      const itemsByType = {};
       packItemRows.forEach((it) => {
         const item = { id: it.id, name: it.name, price: Number(it.price), img: it.img_url };
         if (tiersByItem[it.id]) item.tiers = tiersByItem[it.id];
         (itemsByType[it.type] = itemsByType[it.type] || []).push(item);
       });
 
-      packCatalog = { flores: itemsByType.flor, chocolates: itemsByType.chocolate, peluches: itemsByType.peluche };
+      packCatalog = itemsByType;
     } catch (err) {
       console.error("No se pudo cargar el catálogo desde Supabase, usando datos de respaldo.", err);
       products = HARDCODED_PRODUCTS_FALLBACK;
@@ -1528,7 +1730,7 @@ ${addonsText}
 
     const itemsText = selectedItems.map((item) => `• ${packQuantities[item.id]}x ${item.name} (${formatPrice(item.price)} c/u)`).join("\n");
     const photosText = selectedItems.map((item) => {
-      const match = bestTierPhoto(item, packQuantities[item.id]);
+      const match = matchingTierPhotos(item, packQuantities[item.id])[0];
       return `• ${item.name}: ${toAbsoluteImageUrl(match.img)}`;
     }).join("\n");
     const total = updatePackTotal();
