@@ -142,6 +142,47 @@
   /* Filter pill active state handled via JS toggling classes */
   .filter-pill { transition: all 0.25s ease; }
 
+  /* Hero: carrusel de fotos */
+  .hero-slide { transition: opacity 0.7s ease; }
+  @keyframes heroArrowHeartbeat {
+    0%, 100% { box-shadow: 0 4px 14px rgba(224, 82, 133, 0.5), 0 0 0 0 rgba(224, 82, 133, 0.45); }
+    50% { box-shadow: 0 4px 14px rgba(224, 82, 133, 0.5), 0 0 0 9px rgba(224, 82, 133, 0); }
+  }
+  .hero-arrow-btn {
+    width: 48px; height: 48px;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, #f8bbd0, #e05285);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 14px rgba(224, 82, 133, 0.5);
+    transform: translateY(-50%);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    animation: heroArrowHeartbeat 2.2s ease-in-out infinite;
+  }
+  .hero-arrow-btn:hover { transform: translateY(-50%) scale(1.14); box-shadow: 0 6px 20px rgba(224, 82, 133, 0.65); animation: none; }
+  .hero-arrow-btn:active { transform: translateY(-50%) scale(0.92); }
+  .hero-arrow-heart { width: 22px; height: 22px; }
+  .hero-arrow-heart-prev { transform: rotate(90deg); }
+  .hero-arrow-heart-next { transform: rotate(-90deg); }
+  .hero-dot {
+    width: 8px; height: 8px; border-radius: 9999px;
+    background: rgba(255,255,255,0.5);
+    transition: background 0.25s ease, width 0.25s ease;
+  }
+  .hero-dot.active-hero-dot { background: #fff; width: 22px; }
+
+  /* Fila de íconos por categoría / ocasión */
+  .occasion-icon-btn { display: flex; flex-direction: column; align-items: center; gap: 0.85rem; width: 132px; }
+  .occasion-icon-photo {
+    display: block; width: 112px; height: 112px; border-radius: 9999px; overflow: hidden;
+    border: 4px solid transparent;
+    box-shadow: 0 6px 18px rgba(240, 98, 146, 0.3);
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+  .occasion-icon-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .occasion-icon-btn:hover .occasion-icon-photo { transform: translateY(-4px) scale(1.05); border-color: #e05285; }
+  .occasion-icon-label { font-size: 0.9rem; font-weight: 600; color: #1a1a1a; text-align: center; }
+
   /* Dual-thumb price range slider (vista de categoría) */
   .price-range-input {
     position: absolute;
@@ -295,10 +336,11 @@
       </a>
 
       <div class="flex items-center gap-2 sm:gap-3 justify-self-end">
-        <form id="headerSearchForm" class="hidden md:block">
+        <form id="headerSearchForm" class="hidden md:block relative">
           <label class="sr-only" for="headerSearchInput">Buscar</label>
+          <svg class="w-4 h-4 text-blossom-dark/60 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
           <input id="headerSearchInput" type="text" placeholder="Buscar arreglo..."
-                 class="w-40 lg:w-56 px-4 py-2 rounded-full border border-blossom-light bg-cream/40 focus:outline-none focus:ring-2 focus:ring-blossom text-sm">
+                 class="w-40 lg:w-56 pl-9 pr-4 py-2 rounded-full border border-blossom-light bg-cream/40 focus:outline-none focus:ring-2 focus:ring-blossom text-sm">
         </form>
         <button id="openCartBtn" type="button" aria-label="Ver carrito" class="relative flex items-center justify-center w-11 h-11 rounded-full border-2 border-blossom-light text-ink/70 hover:border-blossom-dark hover:text-blossom-dark active:scale-90 transition-all">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
@@ -323,12 +365,10 @@
           </svg>
           Menú
         </button>
-        <a href="#inicio" class="nav-link hover:text-blossom-dark transition-colors">Inicio</a>
         <a href="#catalogo" data-filter-scroll="Cumpleaños" class="nav-link hover:text-blossom-dark transition-colors">Cumpleaños</a>
         <a href="#catalogo" data-filter-scroll="Aniversarios" class="nav-link hover:text-blossom-dark transition-colors">Aniversarios</a>
         <a href="#catalogo" data-filter-scroll="Románticos" class="nav-link hover:text-blossom-dark transition-colors">Tulipanes &amp; Ramos</a>
-        <a href="#arma-tu-pack" class="nav-link hover:text-blossom-dark transition-colors">Arma tu Pack</a>
-        <a href="#contacto" class="nav-link hover:text-blossom-dark transition-colors">Contacto</a>
+        <a href="#arma-tu-pack" data-filter-scroll="Arma tu Pack" class="nav-link hover:text-blossom-dark transition-colors">Arma tu Pack</a>
       </nav>
       <a href="https://wa.me/message/2OMDBGCGOVGSI1?text=Hola%20Florer%C3%ADa%20La%20Frontera%2C%20quisiera%20conocer%20las%20promociones%20vigentes"
          target="_blank" rel="noopener"
@@ -347,7 +387,7 @@
             <a href="#catalogo" data-filter-scroll="Cumpleaños" class="text-ink/80 hover:text-blossom-dark transition-colors">Cumpleaños</a>
             <a href="#catalogo" data-filter-scroll="Aniversarios" class="text-ink/80 hover:text-blossom-dark transition-colors">Aniversarios</a>
             <a href="#catalogo" data-filter-scroll="Románticos" class="text-ink/80 hover:text-blossom-dark transition-colors">Tulipanes &amp; Ramos</a>
-            <a href="#arma-tu-pack" class="text-ink/80 hover:text-blossom-dark transition-colors">Arma tu Pack</a>
+            <a href="#arma-tu-pack" data-filter-scroll="Arma tu Pack" class="text-ink/80 hover:text-blossom-dark transition-colors">Arma tu Pack</a>
           </div>
         </div>
         <div>
@@ -366,12 +406,10 @@
   <!-- Mobile Nav Panel -->
   <div id="mobileMenu" class="hidden lg:hidden bg-cream border-t border-blossom-light/40 px-4 pb-5 pt-2">
     <nav class="flex flex-col gap-1 text-ink/85 font-medium">
-      <a href="#inicio" class="py-3 border-b border-blossom-light/30">Inicio</a>
       <a href="#catalogo" data-filter-scroll="Cumpleaños" class="py-3 border-b border-blossom-light/30">Cumpleaños</a>
       <a href="#catalogo" data-filter-scroll="Aniversarios" class="py-3 border-b border-blossom-light/30">Aniversarios</a>
       <a href="#catalogo" data-filter-scroll="Románticos" class="py-3 border-b border-blossom-light/30">Tulipanes &amp; Ramos</a>
-      <a href="#arma-tu-pack" class="py-3 border-b border-blossom-light/30">Arma tu Pack</a>
-      <a href="#contacto" class="py-3 border-b border-blossom-light/30">Contacto</a>
+      <a href="#arma-tu-pack" data-filter-scroll="Arma tu Pack" class="py-3 border-b border-blossom-light/30">Arma tu Pack</a>
       <a href="https://wa.me/message/2OMDBGCGOVGSI1?text=Hola%20Florer%C3%ADa%20La%20Frontera%2C%20quisiera%20conocer%20las%20promociones%20vigentes"
          target="_blank" rel="noopener" class="py-3 border-b border-blossom-light/30">Promociones</a>
       <p class="pt-4 pb-1 text-[11px] font-semibold tracking-widest uppercase text-ink/40">Ocasiones especiales</p>
@@ -461,6 +499,15 @@
 
       <!-- Grid de productos -->
       <div>
+        <div id="categoryPackBanner" class="hidden mb-8 bg-cream rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6 border border-blossom-light/40">
+          <div class="flex-1 text-center sm:text-left">
+            <h3 class="font-serif text-xl font-bold text-ink mb-1">Arma tu Pack perfecto</h3>
+            <p class="text-sm text-ink/60">Elige cuántas rosas, chocolates y peluches quieres, y nosotros lo armamos hermoso a tu medida — en ramo de mano o canastita, tú decides.</p>
+          </div>
+          <button type="button" id="categoryOpenPackBuilderBtn" class="shrink-0 bg-blossom-dark hover:bg-ink text-white font-semibold px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95">
+            Personalizar mi Pack
+          </button>
+        </div>
         <div id="categoryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
         <p id="categoryNoResults" class="hidden text-center text-ink/70 py-10">No encontramos arreglos con esos filtros. Prueba quitando alguno o escríbenos por WhatsApp.</p>
       </div>
@@ -471,70 +518,113 @@
 <div id="homeSections">
 
 <!-- ================= HERO ================= -->
-<section id="inicio" class="relative overflow-hidden pt-14 pb-20 sm:pt-20 sm:pb-28">
-  <!-- Decorative blobs -->
-  <div class="absolute -top-24 -left-24 w-72 h-72 bg-blossom-light/30 rounded-full blur-3xl"></div>
-  <div class="absolute -bottom-16 -right-16 w-80 h-80 bg-cream-deep/60 rounded-full blur-3xl"></div>
+<section id="inicio" class="relative overflow-hidden pt-6 pb-16 sm:pt-8 sm:pb-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
-    <!-- Text -->
-    <div class="text-center lg:text-left animate-fade-in-up">
-      <span class="inline-block bg-blossom-light/50 text-blossom-dark text-xs font-semibold tracking-wider uppercase px-4 py-1.5 rounded-full mb-5">
-        Ramos de Autor · Entrega el mismo día
-      </span>
-      <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-ink leading-[1.1] mb-6">
-        Crea momentos e historias <span class="text-blossom-dark italic">inolvidables</span> con nuestras flores
-      </h1>
-      <p class="text-base sm:text-lg text-ink/70 max-w-xl mx-auto lg:mx-0 mb-8">
-        Flores frescas seleccionadas a diario y entregadas con cuidado el mismo día. Cada arreglo se arma a mano para que tu detalle diga exactamente lo que sientes.
-      </p>
+    <!-- Buscador: solo en mobile, en md+ ya está el buscador del header -->
+    <form id="searchForm" class="md:hidden flex flex-col sm:flex-row gap-3 mb-4">
+      <div class="relative flex-1">
+        <svg class="w-5 h-5 text-ink/40 absolute left-4 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+        <input id="heroSearchInput" type="text" placeholder="Busca por ocasión o flor: tulipanes, girasoles..."
+               class="w-full pl-11 pr-4 py-3.5 rounded-full border border-blossom-light bg-white/80 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blossom text-sm placeholder:text-ink/40">
+      </div>
+      <button type="submit" class="bg-blossom-dark hover:bg-ink text-white font-semibold px-6 py-3.5 rounded-full transition-all shadow-md hover:shadow-lg active:scale-95 whitespace-nowrap">
+        Buscar Arreglo
+      </button>
+    </form>
+    <div class="md:hidden flex flex-wrap gap-2 mb-8">
+      <button data-quick-search="Tulipanes" class="quick-tag text-xs font-medium bg-white/70 hover:bg-blossom-light text-ink/70 px-3.5 py-1.5 rounded-full border border-blossom-light/60 transition-all hover:scale-105 active:scale-95">Tulipanes</button>
+      <button data-quick-search="Rosas" class="quick-tag text-xs font-medium bg-white/70 hover:bg-blossom-light text-ink/70 px-3.5 py-1.5 rounded-full border border-blossom-light/60 transition-all hover:scale-105 active:scale-95">Rosas</button>
+      <button data-quick-search="Girasoles" class="quick-tag text-xs font-medium bg-white/70 hover:bg-blossom-light text-ink/70 px-3.5 py-1.5 rounded-full border border-blossom-light/60 transition-all hover:scale-105 active:scale-95">Girasoles</button>
+      <button data-quick-search="Cumpleaños" class="quick-tag text-xs font-medium bg-white/70 hover:bg-blossom-light text-ink/70 px-3.5 py-1.5 rounded-full border border-blossom-light/60 transition-all hover:scale-105 active:scale-95">Cumpleaños</button>
+    </div>
 
-      <!-- Quick search: solo en mobile, en md+ ya está el buscador del header -->
-      <form id="searchForm" class="md:hidden flex flex-col sm:flex-row gap-3 max-w-lg mx-auto lg:mx-0 mb-6">
-        <div class="relative flex-1">
-          <svg class="w-5 h-5 text-ink/40 absolute left-4 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
-          <input id="heroSearchInput" type="text" placeholder="Busca por ocasión o flor: tulipanes, girasoles..."
-                 class="w-full pl-11 pr-4 py-3.5 rounded-full border border-blossom-light bg-white/80 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blossom text-sm placeholder:text-ink/40">
+    <!-- Banner: carrusel de fotos + panel de fecha especial -->
+    <div class="grid lg:grid-cols-3 gap-4 sm:gap-5 mb-14 sm:mb-20">
+      <div class="lg:col-span-2 relative rounded-[2rem] overflow-hidden h-[360px] sm:h-[440px] shadow-xl bg-ink">
+        <div class="hero-slide absolute inset-0 opacity-100" data-hero-slide="0">
+          <img src="images/rosas-rojas-textura.jpg" alt="Rosas rojas y rosadas, Florería La Frontera" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/15 to-transparent"></div>
+          <div class="absolute inset-0 flex flex-col items-start justify-end pt-6 pr-6 pb-6 pl-16 sm:pt-12 sm:pr-12 sm:pb-12 sm:pl-24 text-white">
+            <h1 class="font-serif text-2xl sm:text-4xl font-bold leading-tight mb-5 max-w-md">Crea momentos e historias inolvidables con nuestras flores</h1>
+            <a href="https://wa.me/message/2OMDBGCGOVGSI1?text=Hola%20Florer%C3%ADa%20La%20Frontera%2C%20quisiera%20informaci%C3%B3n%20sobre%20un%20arreglo%20floral"
+               target="_blank" rel="noopener"
+               class="bg-white text-ink hover:bg-blossom-light font-semibold px-6 py-3 rounded-full transition-all hover:scale-105 active:scale-95 inline-block">Escríbenos por WhatsApp</a>
+          </div>
         </div>
-        <button type="submit" class="bg-blossom-dark hover:bg-ink text-white font-semibold px-6 py-3.5 rounded-full transition-all shadow-md hover:shadow-lg active:scale-95 whitespace-nowrap">
-          Buscar Arreglo
+        <div class="hero-slide absolute inset-0 opacity-0 pointer-events-none" data-hero-slide="1">
+          <img src="images/doce-girasoles-caja-sorpresa.jpg" alt="Girasoles y caja sorpresa para armar tu pack" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/15 to-transparent"></div>
+          <div class="absolute inset-0 flex flex-col items-start justify-end pt-6 pr-6 pb-6 pl-16 sm:pt-12 sm:pr-12 sm:pb-12 sm:pl-24 text-white">
+            <h2 class="font-serif text-2xl sm:text-4xl font-bold leading-tight mb-5 max-w-md">Arma tu Pack: rosas, chocolates y peluches a tu gusto</h2>
+            <button type="button" data-filter-scroll="Arma tu Pack" class="bg-white text-ink hover:bg-blossom-light font-semibold px-6 py-3 rounded-full transition-all hover:scale-105 active:scale-95">Personalizar mi Pack</button>
+          </div>
+        </div>
+        <div class="hero-slide absolute inset-0 opacity-0 pointer-events-none" data-hero-slide="2">
+          <img src="images/rosas-azules-caballero.jpg" alt="Rosas azules premium para aniversarios" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/15 to-transparent"></div>
+          <div class="absolute inset-0 flex flex-col items-start justify-end pt-6 pr-6 pb-6 pl-16 sm:pt-12 sm:pr-12 sm:pb-12 sm:pl-24 text-white">
+            <h2 class="font-serif text-2xl sm:text-4xl font-bold leading-tight mb-5 max-w-md">Para cada aniversario, un detalle único</h2>
+            <button type="button" data-filter-scroll="Aniversarios" class="bg-white text-ink hover:bg-blossom-light font-semibold px-6 py-3 rounded-full transition-all hover:scale-105 active:scale-95">Ver Aniversarios</button>
+          </div>
+        </div>
+
+        <button type="button" id="heroPrevBtn" aria-label="Foto anterior" class="hero-arrow-btn absolute left-3 sm:left-5 top-1/2">
+          <svg class="hero-arrow-heart hero-arrow-heart-prev" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
         </button>
-      </form>
-      <div class="flex flex-wrap gap-2 justify-center lg:justify-start">
-        <button data-quick-search="Tulipanes" class="quick-tag text-xs font-medium bg-white/70 hover:bg-blossom-light text-ink/70 px-3.5 py-1.5 rounded-full border border-blossom-light/60 transition-all hover:scale-105 active:scale-95">Tulipanes</button>
-        <button data-quick-search="Rosas" class="quick-tag text-xs font-medium bg-white/70 hover:bg-blossom-light text-ink/70 px-3.5 py-1.5 rounded-full border border-blossom-light/60 transition-all hover:scale-105 active:scale-95">Rosas</button>
-        <button data-quick-search="Girasoles" class="quick-tag text-xs font-medium bg-white/70 hover:bg-blossom-light text-ink/70 px-3.5 py-1.5 rounded-full border border-blossom-light/60 transition-all hover:scale-105 active:scale-95">Girasoles</button>
-        <button data-quick-search="Cumpleaños" class="quick-tag text-xs font-medium bg-white/70 hover:bg-blossom-light text-ink/70 px-3.5 py-1.5 rounded-full border border-blossom-light/60 transition-all hover:scale-105 active:scale-95">Cumpleaños</button>
+        <button type="button" id="heroNextBtn" aria-label="Foto siguiente" class="hero-arrow-btn absolute right-3 sm:right-5 top-1/2">
+          <svg class="hero-arrow-heart hero-arrow-heart-next" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </button>
+        <div id="heroDots" class="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+          <button type="button" class="hero-dot" data-hero-dot="0" aria-label="Ir a la foto 1"></button>
+          <button type="button" class="hero-dot" data-hero-dot="1" aria-label="Ir a la foto 2"></button>
+          <button type="button" class="hero-dot" data-hero-dot="2" aria-label="Ir a la foto 3"></button>
+        </div>
+      </div>
+
+      <!-- Panel: ver catálogo completo -->
+      <div class="rounded-[2rem] bg-gradient-to-br from-blossom-light/70 via-blossom-light/40 to-cream p-7 sm:p-8 flex flex-col justify-center gap-4 shadow-xl text-center lg:text-left">
+        <span class="inline-block self-center lg:self-start bg-white/70 text-blossom-dark text-xs font-semibold tracking-wider uppercase px-4 py-1.5 rounded-full">Catálogo completo</span>
+        <h3 class="font-serif text-2xl font-bold text-ink">¿Buscas algo especial?</h3>
+        <p class="text-sm text-ink/70">Explora todo nuestro catálogo: cumpleaños, aniversarios, románticos y más, en un solo lugar.</p>
+        <button type="button" data-filter-scroll="Todos"
+                class="inline-flex items-center justify-center gap-2 bg-blossom-dark hover:bg-ink text-white font-semibold px-6 py-3 rounded-full transition-all hover:scale-105 active:scale-95 self-center lg:self-start">
+          Ver catálogo completo
+        </button>
       </div>
     </div>
 
-    <!-- Image -->
-    <div class="relative flex justify-center lg:justify-end animate-fade-in">
-      <div class="relative w-full max-w-md">
-        <div class="absolute inset-0 bg-blossom-light rounded-[2.5rem] rotate-3 scale-95"></div>
-        <img src="images/rosas-rojas-textura.jpg"
-             alt="Textura de rosas rojas y rosadas, Florería La Frontera"
-             class="relative rounded-[2.5rem] w-full h-[420px] sm:h-[480px] object-cover shadow-2xl">
-
-        <!-- Floating badge: Freshness guarantee -->
-        <div class="absolute -bottom-6 -left-6 sm:-left-10 bg-white rounded-2xl shadow-xl px-5 py-4 flex items-center gap-3 animate-float">
-          <div class="bg-botanical/10 rounded-full p-2.5">
-            <svg class="w-6 h-6 text-botanical" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-          </div>
-          <div>
-            <p class="text-sm font-bold text-ink leading-tight">Garantía de<br>Frescura 100%</p>
-          </div>
-        </div>
-
-        <!-- Floating badge: delivery -->
-        <div class="absolute top-4 -right-4 sm:-right-8 bg-white rounded-2xl shadow-xl px-4 py-3 animate-float" style="animation-delay: -1.5s;">
-          <p class="text-xs font-semibold text-blossom-dark flex items-center gap-1.5">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-            Entrega Rápida Hoy
-          </p>
-        </div>
+    <!-- Fila de íconos por categoría / ocasión -->
+    <div class="reveal">
+      <h2 class="text-center font-serif text-2xl sm:text-3xl font-bold text-ink mb-8">Tenemos arreglos para cada ocasión</h2>
+      <div class="flex flex-wrap justify-center gap-x-6 gap-y-7 sm:gap-x-10">
+        <button type="button" data-filter-scroll="Cumpleaños" class="occasion-icon-btn">
+          <span class="occasion-icon-photo"><img src="images/girasoles-envueltos-periodico.jpg" alt="Cumpleaños"></span>
+          <span class="occasion-icon-label">Cumpleaños</span>
+        </button>
+        <button type="button" data-filter-scroll="Aniversarios" class="occasion-icon-btn">
+          <span class="occasion-icon-photo"><img src="images/rosas-azules-caballero.jpg" alt="Aniversarios"></span>
+          <span class="occasion-icon-label">Aniversarios</span>
+        </button>
+        <button type="button" data-filter-scroll="Románticos" class="occasion-icon-btn">
+          <span class="occasion-icon-photo"><img src="images/ramo-rosas-blancas-libro.jpg" alt="Románticos"></span>
+          <span class="occasion-icon-label">Románticos</span>
+        </button>
+        <button type="button" data-filter-scroll="Día del Padre" class="occasion-icon-btn">
+          <span class="occasion-icon-photo"><img src="images/pack-dia-papa-globo-azul-girasol.jpg" alt="Día del Padre"></span>
+          <span class="occasion-icon-label">Día del Padre</span>
+        </button>
+        <button type="button" data-filter-scroll="Día de la Madre" class="occasion-icon-btn">
+          <span class="occasion-icon-photo"><img src="images/canasta-dia-madre-rosas-amarillas.jpg" alt="Día de la Madre"></span>
+          <span class="occasion-icon-label">Día de la Madre</span>
+        </button>
+        <button type="button" data-filter-scroll="San Valentín" class="occasion-icon-btn">
+          <span class="occasion-icon-photo"><img src="images/pack-fresa-globo-corazon-girasol.jpg" alt="San Valentín"></span>
+          <span class="occasion-icon-label">San Valentín</span>
+        </button>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -1222,6 +1312,42 @@
     if (btn) btn.click();
   }
 
+  /* ---------------- Hero: carrusel de fotos ---------------- */
+  const heroSlideEls = document.querySelectorAll(".hero-slide");
+  const heroDotEls = document.querySelectorAll("#heroDots .hero-dot");
+  const heroPrevBtn = document.getElementById("heroPrevBtn");
+  const heroNextBtn = document.getElementById("heroNextBtn");
+  let heroSlideIndex = 0;
+  let heroAutoplayTimer = null;
+
+  function showHeroSlide(index) {
+    heroSlideIndex = (index + heroSlideEls.length) % heroSlideEls.length;
+    heroSlideEls.forEach((slide, i) => {
+      const isActive = i === heroSlideIndex;
+      slide.classList.toggle("opacity-100", isActive);
+      slide.classList.toggle("opacity-0", !isActive);
+      slide.classList.toggle("pointer-events-none", !isActive);
+    });
+    heroDotEls.forEach((dot, i) => {
+      dot.classList.toggle("active-hero-dot", i === heroSlideIndex);
+    });
+  }
+
+  function restartHeroAutoplay() {
+    clearInterval(heroAutoplayTimer);
+    heroAutoplayTimer = setInterval(() => showHeroSlide(heroSlideIndex + 1), 7000);
+  }
+
+  if (heroSlideEls.length > 0) {
+    heroPrevBtn.addEventListener("click", () => { showHeroSlide(heroSlideIndex - 1); restartHeroAutoplay(); });
+    heroNextBtn.addEventListener("click", () => { showHeroSlide(heroSlideIndex + 1); restartHeroAutoplay(); });
+    heroDotEls.forEach((dot, i) => {
+      dot.addEventListener("click", () => { showHeroSlide(i); restartHeroAutoplay(); });
+    });
+    showHeroSlide(0);
+    restartHeroAutoplay();
+  }
+
   /* ---------------- Mobile Menu ---------------- */
   const mobileMenuBtn = document.getElementById("mobileMenuBtn");
   const mobileMenu = document.getElementById("mobileMenu");
@@ -1261,10 +1387,14 @@
   const categoryGrid = document.getElementById("categoryGrid");
   const categoryNoResults = document.getElementById("categoryNoResults");
   const categoryClearFiltersBtn = document.getElementById("categoryClearFiltersBtn");
+  const categoryPackBanner = document.getElementById("categoryPackBanner");
+  const categoryOpenPackBuilderBtn = document.getElementById("categoryOpenPackBuilderBtn");
   const priceRangeMin = document.getElementById("priceRangeMin");
   const priceRangeMax = document.getElementById("priceRangeMax");
   const priceRangeTrack = document.getElementById("priceRangeTrack");
   const priceRangeLabel = document.getElementById("priceRangeLabel");
+
+  const OCCASION_FILTER_VALUES = ["Día del Padre", "Día de la Madre", "San Valentín"];
 
   let categoryLabels = new Set();
   let occasionLabels = new Set();
@@ -1310,20 +1440,23 @@
   }
 
   function openCategoryView(filterLabel) {
-    categoryLabels = filterLabel && filterLabel !== "Todos" ? new Set([filterLabel]) : new Set();
-    occasionLabels = new Set();
+    const isPackTab = filterLabel === "Arma tu Pack";
+    const isOccasionTab = OCCASION_FILTER_VALUES.includes(filterLabel);
+    categoryLabels = (filterLabel && filterLabel !== "Todos" && !isPackTab && !isOccasionTab) ? new Set([filterLabel]) : new Set();
+    occasionLabels = isOccasionTab ? new Set([filterLabel]) : new Set();
     computePriceBounds();
 
     categoryView.querySelectorAll(".category-cat-checkbox").forEach((cb) => {
       cb.checked = categoryLabels.has(cb.value);
     });
     categoryView.querySelectorAll(".category-occ-checkbox").forEach((cb) => {
-      cb.checked = false;
+      cb.checked = occasionLabels.has(cb.value);
     });
 
-    const title = filterLabel && filterLabel !== "Todos" ? filterLabel : "Todo el catálogo";
+    const title = isPackTab ? "Arma tu Pack" : (filterLabel && filterLabel !== "Todos" ? filterLabel : "Todo el catálogo");
     categoryTitle.textContent = title;
     categoryBreadcrumbLabel.textContent = title;
+    categoryPackBanner.classList.toggle("hidden", !isPackTab);
 
     renderCategoryGrid();
     homeSections.classList.add("hidden");
@@ -1368,6 +1501,7 @@
   });
   categoryBackBtn.addEventListener("click", closeCategoryView);
   categoryBreadcrumbHome.addEventListener("click", closeCategoryView);
+  categoryOpenPackBuilderBtn.addEventListener("click", openPackModal);
 
   /* Nav links de categoría abren la vista independiente (tipo página aparte, sin recargar) */
   document.querySelectorAll("[data-filter-scroll]").forEach((link) => {
