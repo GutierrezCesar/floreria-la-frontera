@@ -142,6 +142,42 @@
   /* Filter pill active state handled via JS toggling classes */
   .filter-pill { transition: all 0.25s ease; }
 
+  /* Dual-thumb price range slider (vista de categoría) */
+  .price-range-input {
+    position: absolute;
+    top: -8px;
+    left: 0;
+    width: 100%;
+    height: 24px;
+    margin: 0;
+    background: transparent;
+    pointer-events: none;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .price-range-input::-webkit-slider-runnable-track { background: transparent; }
+  .price-range-input::-moz-range-track { background: transparent; }
+  .price-range-input::-webkit-slider-thumb {
+    pointer-events: auto;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: #e05285;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.35);
+    cursor: pointer;
+  }
+  .price-range-input::-moz-range-thumb {
+    pointer-events: auto;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: #e05285;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.35);
+    cursor: pointer;
+  }
+
   /* WhatsApp pulse */
   .wa-pulse::before {
     content: '';
@@ -373,6 +409,67 @@
   </div>
 </header>
 
+<!-- ================= VISTA DE CATEGORÍA (simulada, tipo página independiente) ================= -->
+<section id="categoryView" class="hidden py-10 sm:py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav class="flex items-center gap-2 text-sm text-ink/50 mb-6" aria-label="Ruta de navegación">
+      <button type="button" id="categoryBreadcrumbHome" class="hover:text-blossom-dark transition-colors">Inicio</button>
+      <span aria-hidden="true">›</span>
+      <span id="categoryBreadcrumbLabel" class="text-ink/80 font-medium">Cumpleaños</span>
+    </nav>
+
+    <div class="flex items-center justify-between gap-4 mb-8 flex-wrap">
+      <h1 id="categoryTitle" class="font-serif text-3xl sm:text-4xl font-bold text-ink">Cumpleaños</h1>
+      <button type="button" id="categoryBackBtn" class="inline-flex items-center gap-1.5 text-sm font-semibold text-blossom-dark hover:text-ink transition-colors">
+        ← Volver al inicio
+      </button>
+    </div>
+
+    <div class="grid lg:grid-cols-[240px_1fr] gap-10">
+      <!-- Sidebar de filtros -->
+      <aside class="space-y-8">
+        <div>
+          <h3 class="font-serif font-bold text-ink mb-3">Categoría</h3>
+          <div class="space-y-2 text-sm text-ink/70" id="categoryCategoryFilters">
+            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Cumpleaños" class="category-cat-checkbox w-4 h-4 accent-blossom-dark"> Cumpleaños</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Aniversarios" class="category-cat-checkbox w-4 h-4 accent-blossom-dark"> Aniversarios</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Románticos" class="category-cat-checkbox w-4 h-4 accent-blossom-dark"> Románticos</label>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-serif font-bold text-ink mb-3">Ocasión especial</h3>
+          <div class="space-y-2 text-sm text-ink/70" id="categoryOccasionFilters">
+            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Día del Padre" class="category-occ-checkbox w-4 h-4 accent-blossom-dark"> Día del Padre</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Día de la Madre" class="category-occ-checkbox w-4 h-4 accent-blossom-dark"> Día de la Madre</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="San Valentín" class="category-occ-checkbox w-4 h-4 accent-blossom-dark"> San Valentín</label>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-serif font-bold text-ink mb-3">Rango de precio</h3>
+          <div class="price-range relative h-1.5 rounded-full bg-blossom-light/50 mt-6 mb-4">
+            <div id="priceRangeTrack" class="absolute h-1.5 rounded-full bg-blossom-dark"></div>
+            <input type="range" id="priceRangeMin" class="price-range-input" min="0" max="300" step="1" value="0" aria-label="Precio mínimo">
+            <input type="range" id="priceRangeMax" class="price-range-input" min="0" max="300" step="1" value="300" aria-label="Precio máximo">
+          </div>
+          <p class="text-sm text-ink/70" id="priceRangeLabel">S/ 0 – S/ 300</p>
+        </div>
+
+        <button type="button" id="categoryClearFiltersBtn" class="text-sm font-semibold text-blossom-dark hover:text-ink transition-colors">Limpiar filtros</button>
+      </aside>
+
+      <!-- Grid de productos -->
+      <div>
+        <div id="categoryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+        <p id="categoryNoResults" class="hidden text-center text-ink/70 py-10">No encontramos arreglos con esos filtros. Prueba quitando alguno o escríbenos por WhatsApp.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="homeSections">
+
 <!-- ================= HERO ================= -->
 <section id="inicio" class="relative overflow-hidden pt-14 pb-20 sm:pt-20 sm:pb-28">
   <!-- Decorative blobs -->
@@ -392,8 +489,8 @@
         Flores frescas seleccionadas a diario y entregadas con cuidado el mismo día. Cada arreglo se arma a mano para que tu detalle diga exactamente lo que sientes.
       </p>
 
-      <!-- Quick search -->
-      <form id="searchForm" class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto lg:mx-0 mb-6">
+      <!-- Quick search: solo en mobile, en md+ ya está el buscador del header -->
+      <form id="searchForm" class="md:hidden flex flex-col sm:flex-row gap-3 max-w-lg mx-auto lg:mx-0 mb-6">
         <div class="relative flex-1">
           <svg class="w-5 h-5 text-ink/40 absolute left-4 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
           <input id="heroSearchInput" type="text" placeholder="Busca por ocasión o flor: tulipanes, girasoles..."
@@ -602,6 +699,8 @@
     </div>
   </div>
 </section>
+
+</div><!-- /#homeSections -->
 
 <!-- ================= FOOTER ================= -->
 <footer class="bg-ink text-cream/80 py-10">
@@ -1050,23 +1149,9 @@
   const OCCASION_ICONS = { "Día del Padre": "👨", "Día de la Madre": "👩", "San Valentín": "❤️" };
   const PRESENTATION_ICONS = { "Arreglo floral": "💐", "Canasta": "🧺", "Caja sorpresa": "🎁", "Macetero": "🪴" };
 
-  function renderProducts() {
-    const filtered = products.filter((p) => {
-      const matchesFilter = currentFilter === "Todos" || p.category === currentFilter;
-      const haystack = (p.name + " " + p.description + " " + p.keywords + " " + p.category + " " + p.presentation + " " + p.occasion).toLowerCase();
-      const matchesSearch = currentSearch === "" || haystack.includes(currentSearch.toLowerCase());
-      return matchesFilter && matchesSearch;
-    });
-
-    grid.innerHTML = "";
-    noResults.classList.toggle("hidden", filtered.length !== 0);
-
-    filtered.forEach((p, i) => {
-      const card = document.createElement("div");
-      card.className = "product-card animate-fade-in-up bg-cream rounded-3xl overflow-hidden shadow-sm border border-blossom-light/30 flex flex-col";
-      card.style.animationDelay = (i * 0.05) + "s";
-
-      card.innerHTML = `
+  function productCardHtml(p, i) {
+    return `
+      <div class="product-card animate-fade-in-up bg-cream rounded-3xl overflow-hidden shadow-sm border border-blossom-light/30 flex flex-col" style="animation-delay: ${(i * 0.05)}s">
         <button type="button" data-product-id="${p.id}" class="product-image-btn group relative h-56 w-full overflow-hidden" aria-label="Ver imagen ampliada de ${p.name}">
           <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover" loading="lazy">
           ${p.tag ? `<span class="absolute top-3 left-3 bg-blossom-dark text-white text-xs font-bold px-3 py-1.5 rounded-full shadow">${p.tag}</span>` : ""}
@@ -1093,13 +1178,26 @@
             </button>
           </div>
         </div>
-      `;
-      grid.appendChild(card);
-    });
+      </div>
+    `;
+  }
 
-    document.querySelectorAll(".product-image-btn").forEach((btn) => {
+  function renderProductsInto(containerEl, noResultsEl, filtered) {
+    containerEl.innerHTML = filtered.map((p, i) => productCardHtml(p, i)).join("");
+    noResultsEl.classList.toggle("hidden", filtered.length !== 0);
+    containerEl.querySelectorAll(".product-image-btn").forEach((btn) => {
       btn.addEventListener("click", () => openLightbox(Number(btn.dataset.productId)));
     });
+  }
+
+  function renderProducts() {
+    const filtered = products.filter((p) => {
+      const matchesFilter = currentFilter === "Todos" || p.category === currentFilter;
+      const haystack = (p.name + " " + p.description + " " + p.keywords + " " + p.category + " " + p.presentation + " " + p.occasion).toLowerCase();
+      const matchesSearch = currentSearch === "" || haystack.includes(currentSearch.toLowerCase());
+      return matchesFilter && matchesSearch;
+    });
+    renderProductsInto(grid, noResults, filtered);
   }
 
   /* ---------------- Filters ---------------- */
@@ -1153,10 +1251,136 @@
     }
   });
 
-  /* Nav links that jump to catalog & pre-filter */
+  /* ---------------- Vista de categoría (independiente, simulada en el mismo archivo) ---------------- */
+  const homeSections = document.getElementById("homeSections");
+  const categoryView = document.getElementById("categoryView");
+  const categoryBreadcrumbLabel = document.getElementById("categoryBreadcrumbLabel");
+  const categoryBreadcrumbHome = document.getElementById("categoryBreadcrumbHome");
+  const categoryTitle = document.getElementById("categoryTitle");
+  const categoryBackBtn = document.getElementById("categoryBackBtn");
+  const categoryGrid = document.getElementById("categoryGrid");
+  const categoryNoResults = document.getElementById("categoryNoResults");
+  const categoryClearFiltersBtn = document.getElementById("categoryClearFiltersBtn");
+  const priceRangeMin = document.getElementById("priceRangeMin");
+  const priceRangeMax = document.getElementById("priceRangeMax");
+  const priceRangeTrack = document.getElementById("priceRangeTrack");
+  const priceRangeLabel = document.getElementById("priceRangeLabel");
+
+  let categoryLabels = new Set();
+  let occasionLabels = new Set();
+  let priceBoundsMin = 0;
+  let priceBoundsMax = 300;
+
+  function computePriceBounds() {
+    if (products.length === 0) return;
+    const prices = products.map((p) => p.price);
+    priceBoundsMin = Math.max(0, Math.floor(Math.min(...prices) / 10) * 10);
+    priceBoundsMax = Math.ceil(Math.max(...prices) / 10) * 10;
+    [priceRangeMin, priceRangeMax].forEach((input) => {
+      input.min = priceBoundsMin;
+      input.max = priceBoundsMax;
+    });
+    priceRangeMin.value = priceBoundsMin;
+    priceRangeMax.value = priceBoundsMax;
+    updatePriceRangeUI();
+  }
+
+  function updatePriceRangeUI() {
+    const minVal = Number(priceRangeMin.value);
+    const maxVal = Number(priceRangeMax.value);
+    const span = (priceBoundsMax - priceBoundsMin) || 1;
+    const leftPct = ((Math.min(minVal, maxVal) - priceBoundsMin) / span) * 100;
+    const rightPct = ((Math.max(minVal, maxVal) - priceBoundsMin) / span) * 100;
+    priceRangeTrack.style.left = leftPct + "%";
+    priceRangeTrack.style.width = (rightPct - leftPct) + "%";
+    priceRangeLabel.textContent = `S/ ${Math.min(minVal, maxVal)} – S/ ${Math.max(minVal, maxVal)}`;
+  }
+
+  function renderCategoryGrid() {
+    const minVal = Math.min(Number(priceRangeMin.value), Number(priceRangeMax.value));
+    const maxVal = Math.max(Number(priceRangeMin.value), Number(priceRangeMax.value));
+    const filtered = products.filter((p) => {
+      const matchesCategory = categoryLabels.size === 0 || categoryLabels.has(p.category);
+      const haystack = (p.name + " " + p.description + " " + p.keywords + " " + p.category + " " + p.presentation + " " + p.occasion).toLowerCase();
+      const matchesOccasion = occasionLabels.size === 0 || [...occasionLabels].some((label) => haystack.includes(label.toLowerCase()));
+      const matchesPrice = p.price >= minVal && p.price <= maxVal;
+      return matchesCategory && matchesOccasion && matchesPrice;
+    });
+    renderProductsInto(categoryGrid, categoryNoResults, filtered);
+  }
+
+  function openCategoryView(filterLabel) {
+    categoryLabels = filterLabel && filterLabel !== "Todos" ? new Set([filterLabel]) : new Set();
+    occasionLabels = new Set();
+    computePriceBounds();
+
+    categoryView.querySelectorAll(".category-cat-checkbox").forEach((cb) => {
+      cb.checked = categoryLabels.has(cb.value);
+    });
+    categoryView.querySelectorAll(".category-occ-checkbox").forEach((cb) => {
+      cb.checked = false;
+    });
+
+    const title = filterLabel && filterLabel !== "Todos" ? filterLabel : "Todo el catálogo";
+    categoryTitle.textContent = title;
+    categoryBreadcrumbLabel.textContent = title;
+
+    renderCategoryGrid();
+    homeSections.classList.add("hidden");
+    categoryView.classList.remove("hidden");
+    window.scrollTo({ top: 0, behavior: "auto" });
+    mobileMenu.classList.add("hidden");
+    megaMenu.classList.add("hidden");
+  }
+
+  function closeCategoryView() {
+    if (categoryView.classList.contains("hidden")) return;
+    categoryView.classList.add("hidden");
+    homeSections.classList.remove("hidden");
+  }
+
+  categoryView.querySelectorAll(".category-cat-checkbox").forEach((cb) => {
+    cb.addEventListener("change", () => {
+      if (cb.checked) categoryLabels.add(cb.value); else categoryLabels.delete(cb.value);
+      renderCategoryGrid();
+    });
+  });
+  categoryView.querySelectorAll(".category-occ-checkbox").forEach((cb) => {
+    cb.addEventListener("change", () => {
+      if (cb.checked) occasionLabels.add(cb.value); else occasionLabels.delete(cb.value);
+      renderCategoryGrid();
+    });
+  });
+  [priceRangeMin, priceRangeMax].forEach((input) => {
+    input.addEventListener("input", () => {
+      updatePriceRangeUI();
+      renderCategoryGrid();
+    });
+  });
+  categoryClearFiltersBtn.addEventListener("click", () => {
+    categoryLabels = new Set();
+    occasionLabels = new Set();
+    categoryView.querySelectorAll(".category-cat-checkbox, .category-occ-checkbox").forEach((cb) => { cb.checked = false; });
+    priceRangeMin.value = priceBoundsMin;
+    priceRangeMax.value = priceBoundsMax;
+    updatePriceRangeUI();
+    renderCategoryGrid();
+  });
+  categoryBackBtn.addEventListener("click", closeCategoryView);
+  categoryBreadcrumbHome.addEventListener("click", closeCategoryView);
+
+  /* Nav links de categoría abren la vista independiente (tipo página aparte, sin recargar) */
   document.querySelectorAll("[data-filter-scroll]").forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      openCategoryView(link.dataset.filterScroll);
+    });
+  });
+
+  /* Inicio / Arma tu Pack / Contacto / logo: si la vista de categoría está abierta, cerrarla antes de saltar a su sección */
+  document.querySelectorAll('a[href^="#"]:not([data-filter-scroll])').forEach((link) => {
     link.addEventListener("click", () => {
-      setFilterByLabel(link.dataset.filterScroll);
+      closeCategoryView();
       mobileMenu.classList.add("hidden");
       megaMenu.classList.add("hidden");
     });
@@ -1178,6 +1402,7 @@
     });
     filterRow.querySelector('[data-filter="Todos"]').classList.add("active-filter", "bg-blossom-dark", "text-white", "border-blossom-dark");
     renderProducts();
+    closeCategoryView();
     document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
   });
 
@@ -1193,6 +1418,7 @@
       heroSearchInput.value = term;
       currentSearch = term;
       renderProducts();
+      closeCategoryView();
       document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
       mobileMenu.classList.add("hidden");
       megaMenu.classList.add("hidden");
@@ -1667,6 +1893,7 @@ ${addonsText}
     }
 
     renderProducts();
+    computePriceBounds();
     initPackBuilder();
   }
   loadCatalogData();
@@ -1835,9 +2062,7 @@ ${photosText}
         }
         case "viewCatalog": {
           closeChatPanel();
-          const filterBtn = document.querySelector(`#filterRow [data-filter="${opt.action.value}"]`);
-          if (filterBtn) filterBtn.click();
-          document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
+          openCategoryView(opt.action.value);
           break;
         }
         case "pack": {
